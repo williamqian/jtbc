@@ -44,8 +44,7 @@ jtbc.console = {
     var tthis = this;
     var obj = argObj;
     var html = argHTML;
-    obj.html(html.replace(new RegExp('&##::~~~::##&', 'gm'), ']]>'));
-    obj.find('dfn').each(function(){
+    obj.html(html).find('dfn').each(function(){
       var myObj = $(this);
       if (myObj.attr('url')) obj.append('<script type="text/javascript" src="' + tthis.para['root'] + myObj.attr('url') + '"></script>');
       else if (myObj.attr('cssurl')) obj.append('<link rel="stylesheet" href="' + tthis.para['root'] + myObj.attr('cssurl') + '" />');

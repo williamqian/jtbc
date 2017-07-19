@@ -120,9 +120,9 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $username = self::getHTTPPara('username');
-    $password = self::getHTTPPara('password');
-    $remember = self::getHTTPPara('remember');
+    $username = request::getHTTPPara('username');
+    $password = request::getHTTPPara('password');
+    $remember = request::getHTTPPara('remember');
     if (!$account -> checkLoginErrorMax($username))
     {
       if ($account -> checkLoginInfo($username, $password))
@@ -133,7 +133,7 @@ class ui extends page {
         setcookie(APPNAME . 'console[username]', $username, $cookiesExpireTime, COOKIESPATH);
         setcookie(APPNAME . 'console[authentication]', md5(WEBKEY . md5($password)), $cookiesExpireTime, COOKIESPATH);
         $logString = tpl::take('manage.log-login-1', 'lng');
-        $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
       }
       else $message = tpl::take('manage.msg-login-1', 'lng');
     }
@@ -142,7 +142,7 @@ class ui extends page {
       $message = tpl::take('manage.msg-login-2', 'lng');
       $message = str_replace('{$num}', tpl::take('config.login-error-max', 'cfg'), $message);
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -153,7 +153,7 @@ class ui extends page {
     $message = '';
     $account = self::account();
     $account -> logout();
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -162,9 +162,9 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $password = self::getHTTPPara('password', 'post');
-    $newpassword = self::getHTTPPara('newpassword', 'post');
-    $newcpassword = self::getHTTPPara('newcpassword', 'post');
+    $password = request::getHTTPPara('password', 'post');
+    $newpassword = request::getHTTPPara('newpassword', 'post');
+    $newcpassword = request::getHTTPPara('newcpassword', 'post');
     if (base::isEmpty($password)) $message = tpl::take('manage.text-modifypassword-error-1', 'lng');
     else if (base::isEmpty($newpassword)) $message = tpl::take('manage.text-modifypassword-error-2', 'lng');
     else if ($newpassword != $newcpassword) $message = tpl::take('manage.text-modifypassword-error-3', 'lng');
@@ -177,14 +177,14 @@ class ui extends page {
         {
           $status = 1;
           $logString = tpl::take('manage.log-modifypassword-1', 'lng');
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           $message = tpl::take('manage.text-modifypassword-done', 'lng');
         }
         else $message = tpl::take('manage.text-modifypassword-error-4', 'lng');
       }
       else $message = tpl::take('manage.text-modifypassword-error-4', 'lng');
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -193,60 +193,13 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $lang = base::getNum(self::getHTTPPara('lang', 'get'), 0);
+    $lang = base::getNum(request::getHTTPPara('lang', 'get'), 0);
     $account = self::account();
     if ($account -> checkLogin())
     {
       if ($account -> setLang($lang)) $status = 1;
     }
-    $tmpstr = self::formatXMLResult($status, $message);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'login':
-        $tmpstr = self::moduleActionLogin();
-        break;
-      case 'logout':
-        $tmpstr = self::moduleActionLogout();
-        break;
-      case 'modifypassword':
-        $tmpstr = self::moduleActionModifyPassword();
-        break;
-      case 'setlang':
-        $tmpstr = self::moduleActionSetLang();
-        break;
-    }
-    return $tmpstr;
-  }
-
-  public static function getResult()
-  {
-    $tmpstr = '';
-    $type = self::getHTTPPara('type', 'get');
-    switch($type)
-    {
-      case 'dashbord':
-        $tmpstr = self::moduleDashbord();
-        break;
-      case 'modifypassword':
-        $tmpstr = self::moduleModifyPassword();
-        break;
-      case 'getlang':
-        $tmpstr = self::moduleGetLang();
-        break;
-      case 'action':
-        $tmpstr = self::moduleAction();
-        break;
-      default:
-        $tmpstr = self::moduleDefault();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 }

@@ -51,8 +51,8 @@ class ui extends page {
     $tmpstr = '';
     $currentNode = '';
     $currentValue = '';
-    $node = base::getString(self::getHTTPPara('node', 'get'));
-    $symbol = base::getString(self::getHTTPPara('symbol', 'get'));
+    $node = base::getString(request::getHTTPPara('node', 'get'));
+    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
     if (base::isEmpty($symbol)) $symbol = '.tpl.index';
     $account = self::account();
     $tmpstr = tpl::take('manage.list-disabled', 'tpl');
@@ -106,9 +106,9 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $node = base::getString(self::getHTTPPara('node', 'post'));
-    $symbol = base::getString(self::getHTTPPara('symbol', 'post'));
-    $content = base::getString(self::getHTTPPara('content', 'post'));
+    $node = base::getString(request::getHTTPPara('node', 'post'));
+    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
+    $content = base::getString(request::getHTTPPara('content', 'post'));
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -129,26 +129,13 @@ class ui extends page {
           $logString = tpl::take('manage.log-edit-1', 'lng');
           $logString = str_replace('{$symbol}', $symbol, $logString);
           $logString = str_replace('{$node}', $node, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
       else array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
     }
     if (count($error) != 0) $message = implode('|', $error);
-    $tmpstr = self::formatXMLResult($status, $message);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'edit':
-        $tmpstr = self::moduleActionEdit();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -156,23 +143,11 @@ class ui extends page {
   {
     $tmpstr = '';
     $account = self::account();
-    $type = self::getHTTPPara('type', 'get');
     if ($account -> checkLogin())
     {
       if ($account -> checkPopedom(self::getPara('genre')))
       {
-        switch($type)
-        {
-          case 'list':
-            $tmpstr = self::moduleList();
-            break;
-          case 'action':
-            $tmpstr = self::moduleAction();
-            break;
-          default:
-            $tmpstr = self::moduleList();
-            break;
-        }
+        $tmpstr = parent::getResult();
       }
     }
     return $tmpstr;

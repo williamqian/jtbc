@@ -34,5 +34,13 @@
       <name><![CDATA[menu-7]]></name>
       <zh-cn><![CDATA[联系我们]]></zh-cn>
     </item>
+    <item>
+      <name><![CDATA[keywords]]></name>
+      <zh-cn><![CDATA[JTBC,CMS,网站管理系统,网站内容管理系统]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[description]]></name>
+      <zh-cn><![CDATA[JTBC是一款将功能栏目作为模块核心的网站内容管理系统，采用语言/模板/程序两两分离的分布式存储架构，遵循MIT开源协议。]]></zh-cn>
+    </item>
   </item_list>
 </xml>

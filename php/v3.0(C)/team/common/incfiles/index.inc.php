@@ -1,11 +1,16 @@
 <?php
 namespace jtbc;
 class ui extends page {
+  public static function start()
+  {
+    self::setPageTitle(tpl::take('index.title', 'lng'));
+  }
+
   public static function moduleList()
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(self::getHTTPPara('page', 'get'), 0);
+    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -44,20 +49,11 @@ class ui extends page {
     return $tmpstr;
   }
 
-  public static function getResult()
+  public static function moduleDefault()
   {
-    $tmpstr = '';
-    $type = self::getHTTPPara('type', 'get');
-    self::setTitle(tpl::take('index.title', 'lng'));
-    switch($type)
-    {
-      case 'list':
-        $tmpstr = self::moduleList();
-        break;
-      default:
-        $tmpstr = self::moduleList();
-        break;
-    }
+    $tmpstr = tpl::take('index.default', 'tpl');
+    $tmpstr = tpl::parse($tmpstr);
+    if (base::isEmpty($tmpstr)) $tmpstr = self::moduleList();
     return $tmpstr;
   }
 }

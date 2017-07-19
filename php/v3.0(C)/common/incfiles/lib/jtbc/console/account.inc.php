@@ -5,6 +5,7 @@
 namespace jtbc\console {
   use jtbc\base;
   use jtbc\tpl;
+  use jtbc\request;
   use jtbc\page;
   use jtbc\smart;
   class account
@@ -87,7 +88,7 @@ namespace jtbc\console {
             $rsPassword = base::getString($rs[$prefix . 'password']);
             if ($rsPassword == md5($password) || md5(WEBKEY . $rsPassword) == $authentication)
             {
-              if (base::isEmpty($authentication)) $db -> exec("update " . $table . " set " . $prefix . "lasttime='" . addslashes(base::getDateTime()) . "'," . $prefix . "lastip='" . addslashes(page::getRemortIP()) . "' where " . $prefix . "id=" . $rsID);
+              if (base::isEmpty($authentication)) $db -> exec("update " . $table . " set " . $prefix . "lasttime='" . addslashes(base::getDateTime()) . "'," . $prefix . "lastip='" . addslashes(request::getRemortIP()) . "' where " . $prefix . "id=" . $rsID);
               if ($rsRole == -1)
               {
                 $rsr = array('super' => 1);

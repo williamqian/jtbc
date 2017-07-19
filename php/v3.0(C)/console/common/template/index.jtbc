@@ -7,7 +7,7 @@
   </configure>
   <item_list>
     <item>
-      <name><![CDATA[index]]></name>
+      <name><![CDATA[default]]></name>
       <default><![CDATA[<!DOCTYPE html>
 <html>
 <head>

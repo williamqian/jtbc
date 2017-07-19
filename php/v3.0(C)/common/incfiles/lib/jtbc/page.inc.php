@@ -33,38 +33,17 @@ namespace jtbc {
     {
       $status = $argStatus;
       $html = $argHTML;
-      $html = str_replace(']]>', '&##::~~~::##&', $html);
+      $html = str_replace(']]>', ']]]]><![CDATA[>', $html);
       $tmpstr = '<?xml version="1.0" encoding="utf-8"?><result status="' . base::getNum($status, 0) . '"><![CDATA[' . $html . ']]></result>';
       return $tmpstr;
     }
 
-    public static function formatXMLResult($argStatus, $argMessage, $argPara = '')
+    public static function formatMsgResult($argStatus, $argMessage, $argPara = '')
     {
       $status = $argStatus;
       $message = $argMessage;
       $para = $argPara;
       $tmpstr = '<?xml version="1.0" encoding="utf-8"?><result status="' . base::getNum($status, 0) . '" message="' . base::htmlEncode($message) . '" para="' . base::htmlEncode($para) . '"></result>';
-      return $tmpstr;
-    }
-
-    public static function getHTTPPara($argName, $argType = 'auto')
-    {
-      $tmpstr = '';
-      $name = $argName;
-      $type = $argType;
-      if ($type == 'auto')
-      {
-        $tmpstr = base::getString(@$_POST[$name]);
-        if (base::isEmpty($tmpstr)) $tmpstr = base::getString(@$_GET[$name]);
-      }
-      else if ($type == 'post')
-      {
-        $tmpstr = base::getString(@$_POST[$name]);
-      }
-      else if ($type == 'get')
-      {
-        $tmpstr = base::getString(@$_GET[$name]);
-      }
       return $tmpstr;
     }
 
@@ -78,16 +57,29 @@ namespace jtbc {
       return self::$para[$argName];
     }
 
-    public static function getRemortIP()
+    public static function getResult()
     {
-      $IPaddress = '';
-      if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $IPaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-      else if (isset($_SERVER['HTTP_CLIENT_IP'])) $IPaddress = $_SERVER['HTTP_CLIENT_IP'];
-      else $IPaddress = $_SERVER['REMOTE_ADDR'];
-      return $IPaddress;
+      $tmpstr = '';
+      $type = request::getHTTPPara('type', 'get');
+      $action = request::getHTTPPara('action', 'get');
+      if (base::isEmpty($type)) $type = 'default';
+      $class = get_called_class();
+      $module = 'module' . ucfirst($type);
+      if ($type == 'action') $module = 'moduleAction' . ucfirst($action);
+      if (method_exists($class, 'start')) call_user_func(array($class, 'start'));
+      if (method_exists($class, $module)) $tmpstr = call_user_func(array($class, $module));
+      return $tmpstr;
     }
 
-    public static function getTitle()
+    public static function getPagePara($argName)
+    {
+      $name = $argName;
+      $para = @self::$para[$name];
+      if (base::isEmpty($para)) $para = tpl::take('global.public.' . $name, 'lng');
+      return $para;
+    }
+
+    public static function getPageTitle()
     {
       $tmpstr = '';
       $title = self::$title;
@@ -102,50 +94,19 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function setTitle($argTitle)
+    public static function setPagePara($argName, $argValue)
+    {
+      $name = $argName;
+      $value = $argValue;
+      self::$para[$name] = $value;
+      return $value;
+    }
+
+    public static function setPageTitle($argTitle)
     {
       $title = $argTitle;
       if (!base::isEmpty($title)) array_push(self::$title, $title);
-      return self::getTitle();
-    }
-
-    public static function replaceQuerystring($argStrers, $argValue = '', $argUrs = '')
-    {
-      $tmpstr = '';
-      $strers = $argStrers;
-      $value = $argValue;
-      $urs = $argUrs;
-      if (base::isEmpty($urs)) $urs = @$_SERVER['QUERY_STRING'];
-      if (base::getLeft($urs, 1) == '?') $urs = base::getLRStr($urs, '?', 'rightr');
-      $myAry = array();
-      if (!base::isEmpty($urs))
-      {
-        $paraAry = explode('&', $urs);
-        foreach ($paraAry as $key => $val)
-        {
-          $paraItem = trim($val);
-          if (!base::isEmpty($paraItem))
-          {
-            $paraItemAry = explode('=', $paraItem);
-            if (count($paraItemAry) == 2) $myAry[$paraItemAry[0]] = $paraItemAry[1];
-          }
-        }
-      }
-      if (is_array($strers))
-      {
-        foreach ($strers as $key => $val) $myAry[$key] = $val;
-      }
-      else
-      {
-        $myAry[$strers] = $value;
-      }
-      foreach ($myAry as $key => $val)
-      {
-        if (!is_null($val)) $tmpstr .= $key . '=' . $val . '&';
-      }
-      if (!base::isEmpty($tmpstr)) $tmpstr = base::getLRStr($tmpstr, '&', 'leftr');
-      $tmpstr = '?' . $tmpstr;
-      return $tmpstr;
+      return self::getPageTitle();
     }
 
     public static function init()

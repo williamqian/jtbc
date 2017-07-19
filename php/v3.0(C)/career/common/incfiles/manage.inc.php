@@ -30,7 +30,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $id = base::getNum(self::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
@@ -64,8 +64,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(self::getHTTPPara('page', 'get'), 0);
-    $publish = base::getNum(self::getHTTPPara('publish', 'get'), -1);
+    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
+    $publish = base::getNum(request::getHTTPPara('publish', 'get'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -119,9 +119,9 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $topic = self::getHTTPPara('topic', 'post');
-    $intro = self::getHTTPPara('intro', 'post');
-    $email = self::getHTTPPara('email', 'post');
+    $topic = request::getHTTPPara('topic', 'post');
+    $intro = request::getHTTPPara('intro', 'post');
+    $email = request::getHTTPPara('email', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -143,7 +143,7 @@ class ui extends page {
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(self::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
           $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -151,13 +151,13 @@ class ui extends page {
             $status = 1;
             $logString = tpl::take('manage.log-add-1', 'lng');
             $logString = str_replace('{$id}', $db -> lastInsertId, $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           }
         }
       }
     }
     if (count($error) != 0) $message = implode('|', $error);
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -168,10 +168,10 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(self::getHTTPPara('id', 'get'), 0);
-    $topic = self::getHTTPPara('topic', 'post');
-    $intro = self::getHTTPPara('intro', 'post');
-    $email = self::getHTTPPara('email', 'post');
+    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $topic = request::getHTTPPara('topic', 'post');
+    $intro = request::getHTTPPara('intro', 'post');
+    $email = request::getHTTPPara('email', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -192,7 +192,7 @@ class ui extends page {
           $preset = array();
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(self::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
           $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -201,13 +201,13 @@ class ui extends page {
             $message = tpl::take('manage.text-tips-edit-done', 'lng');
             $logString = tpl::take('manage.log-edit-1', 'lng');
             $logString = str_replace('{$id}', $id, $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           }
         }
       }
     }
     if (count($error) != 0) $message = implode('|', $error);
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -217,8 +217,8 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(self::getHTTPPara('ids', 'get'));
-    $batch = base::getString(self::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::getHTTPPara('ids', 'get'));
+    $batch = base::getString(request::getHTTPPara('batch', 'get'));
     if (base::cIdAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
@@ -236,10 +236,10 @@ class ui extends page {
         $logString = tpl::take('manage.log-batch-1', 'lng');
         $logString = str_replace('{$id}', $ids, $logString);
         $logString = str_replace('{$batch}', $batch, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -248,7 +248,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(self::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {
@@ -263,32 +263,10 @@ class ui extends page {
         $status = 1;
         $logString = tpl::take('manage.log-delete-1', 'lng');
         $logString = str_replace('{$id}', $id, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'add':
-        $tmpstr = self::moduleActionAdd();
-        break;
-      case 'edit':
-        $tmpstr = self::moduleActionEdit();
-        break;
-      case 'batch':
-        $tmpstr = self::moduleActionBatch();
-        break;
-      case 'delete':
-        $tmpstr = self::moduleActionDelete();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -296,29 +274,11 @@ class ui extends page {
   {
     $tmpstr = '';
     $account = self::account();
-    $type = self::getHTTPPara('type', 'get');
     if ($account -> checkLogin())
     {
       if ($account -> checkPopedom(self::getPara('genre')))
       {
-        switch($type)
-        {
-          case 'add':
-            $tmpstr = self::moduleAdd();
-            break;
-          case 'edit':
-            $tmpstr = self::moduleEdit();
-            break;
-          case 'list':
-            $tmpstr = self::moduleList();
-            break;
-          case 'action':
-            $tmpstr = self::moduleAction();
-            break;
-          default:
-            $tmpstr = self::moduleList();
-            break;
-        }
+        $tmpstr = parent::getResult();
       }
     }
     return $tmpstr;

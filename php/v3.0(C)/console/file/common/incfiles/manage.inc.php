@@ -32,7 +32,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $pathnavHTML = tpl::take('::console.link', 'tpl', 0, array('text' => '/', 'link' => '?type=list'));
     if (base::isEmpty($path)) $path = $pathRoot;
@@ -110,7 +110,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $filemode = 'xml';
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $filetype = strtolower(base::getLRStr($path, '.', 'right'));
     $pathnavHTML = tpl::take('::console.link', 'tpl', 0, array('text' => '/', 'link' => '?type=list'));
@@ -165,7 +165,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $val = base::getString(self::getHTTPPara('val', 'get'));
+    $val = base::getString(request::getHTTPPara('val', 'get'));
     if (is_dir($val))
     {
       $message = $val;
@@ -176,7 +176,7 @@ class ui extends page {
     {
       $message = tpl::take('manage.text-file-info', 'lng', 0, array('size' => base::htmlEncode(base::formatFileSize(filesize($val)))));
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -185,8 +185,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $name = base::getString(self::getHTTPPara('name', 'get'));
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $name = base::getString(request::getHTTPPara('name', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
@@ -203,11 +203,11 @@ class ui extends page {
           $status = 1;
           $logString = tpl::take('manage.log-addfolder-1', 'lng');
           $logString = str_replace('{$path}', $myPath . $name, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -216,7 +216,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
@@ -236,11 +236,11 @@ class ui extends page {
           $status = 1;
           $logString = tpl::take('manage.log-addfile-1', 'lng');
           $logString = str_replace('{$path}', $myPath . $filename, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -249,8 +249,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $content = base::getString(self::getHTTPPara('content', 'post'));
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $content = base::getString(request::getHTTPPara('content', 'post'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
@@ -267,14 +267,14 @@ class ui extends page {
           $status = 1;
           $logString = tpl::take('manage.log-editfile-1', 'lng');
           $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
         }
         else $message = tpl::take('manage.text-tips-edit-error-2', 'lng');
       }
       else $message = tpl::take('manage.text-tips-edit-error-1', 'lng');
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -283,8 +283,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $name = base::getString(self::getHTTPPara('name', 'get'));
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $name = base::getString(request::getHTTPPara('name', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
@@ -302,11 +302,11 @@ class ui extends page {
           $logString = tpl::take('manage.log-rename-1', 'lng');
           $logString = str_replace('{$name}', $name, $logString);
           $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -315,7 +315,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $path = base::getString(self::getHTTPPara('path', 'get'));
+    $path = base::getString(request::getHTTPPara('path', 'get'));
     $pathRoot = smart::getActualRoute('./', 1);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
@@ -333,7 +333,7 @@ class ui extends page {
           $status = 1;
           $logString = tpl::take('manage.log-delete-1', 'lng');
           $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
       else if (is_dir($path))
@@ -343,36 +343,11 @@ class ui extends page {
           $status = 1;
           $logString = tpl::take('manage.log-delete-2', 'lng');
           $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'addfolder':
-        $tmpstr = self::moduleActionAddFolder();
-        break;
-      case 'addfile':
-        $tmpstr = self::moduleActionAddFile();
-        break;
-      case 'editfile':
-        $tmpstr = self::moduleActionEditFile();
-        break;
-      case 'rename':
-        $tmpstr = self::moduleActionRename();
-        break;
-      case 'delete':
-        $tmpstr = self::moduleActionDelete();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -380,29 +355,11 @@ class ui extends page {
   {
     $tmpstr = '';
     $account = self::account();
-    $type = self::getHTTPPara('type', 'get');
     if ($account -> checkLogin())
     {
       if ($account -> checkPopedom(self::getPara('genre')))
       {
-        switch($type)
-        {
-          case 'list':
-            $tmpstr = self::moduleList();
-            break;
-          case 'edit':
-            $tmpstr = self::moduleEdit();
-            break;
-          case 'getinfo':
-            $tmpstr = self::moduleGetInfo();
-            break;
-          case 'action':
-            $tmpstr = self::moduleAction();
-            break;
-          default:
-            $tmpstr = self::moduleList();
-            break;
-        }
+        $tmpstr = parent::getResult();
       }
     }
     return $tmpstr;

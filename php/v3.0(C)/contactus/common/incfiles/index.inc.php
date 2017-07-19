@@ -1,10 +1,14 @@
 <?php
 namespace jtbc;
 class ui extends page {
-  public static function getResult()
+  public static function start()
   {
-    self::setTitle(tpl::take('index.title', 'lng'));
-    $tmpstr = tpl::take('index.index', 'tpl');
+    self::setPageTitle(tpl::take('index.title', 'lng'));
+  }
+
+  public static function moduleDefault()
+  {
+    $tmpstr = tpl::take('index.default', 'tpl');
     $tmpstr = tpl::parse($tmpstr);
     return $tmpstr;
   }

@@ -148,6 +148,7 @@ namespace jtbc {
                   if (!function_exists($funName))
                   {
                     if (method_exists($ns . '\\page', $funName)) $strers = str_replace('$' . $funName, $ns . '\\page::' . $funName, $strers);
+                    else if (method_exists($ns . '\\request', $funName)) $strers = str_replace('$' . $funName, $ns . '\\request::' . $funName, $strers);
                     else if (method_exists($ns . '\\base', $funName)) $strers = str_replace('$' . $funName, $ns . '\\base::' . $funName, $strers);
                     else if (method_exists($ns . '\\tpl', $funName)) $strers = str_replace('$' . $funName, $ns . '\\tpl::' . $funName, $strers);
                     else if (method_exists($ns . '\\smart', $funName)) $strers = str_replace('$' . $funName, $ns . '\\smart::' . $funName, $strers);
@@ -160,6 +161,7 @@ namespace jtbc {
             else
             {
               if (method_exists($ns . '\\page', $fun)) eval('$tstr = ' . $ns . '\\page::' . $strers . ';');
+              else if (method_exists($ns . '\\request', $fun)) eval('$tstr = ' . $ns . '\\request::' . $strers . ';');
               else if (method_exists($ns . '\\base', $fun)) eval('$tstr = ' . $ns . '\\base::' . $strers . ';');
               else if (method_exists($ns . '\\tpl', $fun)) eval('$tstr = ' . $ns . '\\tpl::' . $strers . ';');
               else if (method_exists($ns . '\\smart', $fun)) eval('$tstr = ' . $ns . '\\smart::' . $strers . ';');
@@ -468,6 +470,32 @@ namespace jtbc {
     public static function takeByNode($argStrers, $argNodeName = null, $argType = null, $argParse = 0, $argVars = null)
     {
       return self::take($argStrers, $argType, $argParse, $argVars, $argNodeName);
+    }
+
+    public static function takeAndFormat($argStrers, $argType, $argTpl)
+    {
+      $tmpstr = '';
+      $type = $argType;
+      $strers = $argStrers;
+      $tpl = $argTpl;
+      $xmlAry = self::take($strers, $type);
+      if (is_array($xmlAry))
+      {
+        $tmpstr = self::take($tpl, 'tpl');
+        $tpl = new tpl();
+        $tpl -> tplString = $tmpstr;
+        $loopString = $tpl -> getLoopString('{@}');
+        foreach ($xmlAry as $key => $val)
+        {
+          $loopLineString = $loopString;
+          $loopLineString = str_replace('{$key}', base::htmlEncode($key), $loopLineString);
+          $loopLineString = str_replace('{$val}', base::htmlEncode($val), $loopLineString);
+          $tpl -> insertLoopLine($loopLineString);
+        }
+        $tmpstr = $tpl -> mergeTemplate();
+        $tmpstr = self::parse($tmpstr);
+      }
+      return $tmpstr;
     }
 
     public static function pagi($argNum1, $argNum2, $argBaseLink, $argTplId = '', $argPagiId = 'pagi', $argPagiLen = 5)

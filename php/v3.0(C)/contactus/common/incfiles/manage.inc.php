@@ -34,8 +34,8 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(self::getHTTPPara('id', 'get'), 0);
-    $title = self::getHTTPPara('title', 'post');
+    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $title = request::getHTTPPara('title', 'post');
     if (!$account -> checkPopedom(self::getPara('genre')))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -46,20 +46,20 @@ class ui extends page {
       if (count($error) == 0)
       {
         $langText = $account -> getLangText();
-        $bool = tpl::bring('index.title', 'lng', self::getHTTPPara('title', 'post'), $langText);
-        if ($bool) $bool = tpl::bring('index.content', 'lng', self::getHTTPPara('content', 'post'), $langText);
-        if ($bool) $bool = tpl::bring('index.att', 'lng', self::getHTTPPara('att', 'post'), $langText);
+        $bool = tpl::bring('index.title', 'lng', request::getHTTPPara('title', 'post'), $langText);
+        if ($bool) $bool = tpl::bring('index.content', 'lng', request::getHTTPPara('content', 'post'), $langText);
+        if ($bool) $bool = tpl::bring('index.att', 'lng', request::getHTTPPara('att', 'post'), $langText);
         if ($bool)
         {
           $status = 1;
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
           $logString = tpl::take('manage.log-edit-1', 'lng');
-          $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
         }
       }
     }
     if (count($error) != 0) $message = implode('|', $error);
-    $tmpstr = self::formatXMLResult($status, $message);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -89,28 +89,12 @@ class ui extends page {
           {
             $logString = tpl::take('manage.log-upload-1', 'lng');
             $logString = str_replace('{$filepath}', $paraArray['filepath'], $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, self::getRemortIP());
+            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           }
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message, $para);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'edit':
-        $tmpstr = self::moduleActionEdit();
-        break;
-      case 'upload':
-        $tmpstr = self::moduleActionUpload();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message, $para);
     return $tmpstr;
   }
 
@@ -118,23 +102,11 @@ class ui extends page {
   {
     $tmpstr = '';
     $account = self::account();
-    $type = self::getHTTPPara('type', 'get');
     if ($account -> checkLogin())
     {
       if ($account -> checkPopedom(self::getPara('genre')))
       {
-        switch($type)
-        {
-          case 'edit':
-            $tmpstr = self::moduleEdit();
-            break;
-          case 'action':
-            $tmpstr = self::moduleAction();
-            break;
-          default:
-            $tmpstr = self::moduleEdit();
-            break;
-        }
+        $tmpstr = parent::getResult();
       }
     }
     return $tmpstr;

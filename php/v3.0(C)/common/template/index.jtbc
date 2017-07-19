@@ -7,7 +7,7 @@
   </configure>
   <item_list>
     <item>
-      <name><![CDATA[index]]></name>
+      <name><![CDATA[default]]></name>
       <default><![CDATA[{$=take('.public.header')}
   <div class="home">
     <div class="banner">

@@ -14,8 +14,10 @@
 <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
 <meta name="format-detection" content="telephone=no,email=no,adress=no" />
 <meta http-equiv="Content-Type" content="text/html; charset={$=CHARSET}" />
+<meta name="keywords" content="{$=htmlEncode($getPagePara('keywords'))}" />
+<meta name="description" content="{$=htmlEncode($getPagePara('description'))}" />
 <meta name="viewport" content="width=640,target-densitydpi=device-dpi,user-scalable=no" />
-<title>{$=getTitle()}</title>
+<title>{$=htmlEncode($getPageTitle())}</title>
 <script type="text/javascript" src="{$=$global.assetspath}/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="{$=$global.assetspath}/js/jtbc.js"></script>
 <script type="text/javascript" src="{$=$global.assetspath}/js/jtbc.frontend.js"></script>

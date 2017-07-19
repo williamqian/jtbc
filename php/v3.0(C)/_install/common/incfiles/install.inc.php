@@ -6,14 +6,14 @@ class ui extends page {
     $status = 0;
     $message = '';
     $para = '1';
-    $db_host = self::getHTTPPara('db_host', 'post');
-    $db_username = self::getHTTPPara('db_username', 'post');
-    $db_password = self::getHTTPPara('db_password', 'post');
-    $db_database = self::getHTTPPara('db_database', 'post');
-    $username = self::getHTTPPara('username', 'post');
-    $password = self::getHTTPPara('password', 'post');
-    $cpassword = self::getHTTPPara('cpassword', 'post');
-    $email = self::getHTTPPara('email', 'post');
+    $db_host = request::getHTTPPara('db_host', 'post');
+    $db_username = request::getHTTPPara('db_username', 'post');
+    $db_password = request::getHTTPPara('db_password', 'post');
+    $db_database = request::getHTTPPara('db_database', 'post');
+    $username = request::getHTTPPara('username', 'post');
+    $password = request::getHTTPPara('password', 'post');
+    $cpassword = request::getHTTPPara('cpassword', 'post');
+    $email = request::getHTTPPara('email', 'post');
     if (SITESTATUS == 0)
     {
       if (base::isEmpty($db_host)) $message = tpl::take('install.text-tips-install-error-1', 'lng');
@@ -54,7 +54,7 @@ class ui extends page {
               $preset[$prefix . 'password'] = md5($password);
               $preset[$prefix . 'email'] = $email;
               $preset[$prefix . 'role'] = -1;
-              $preset[$prefix . 'lastip'] = self::getRemortIP();
+              $preset[$prefix . 'lastip'] = request::getRemortIP();
               $preset[$prefix . 'lasttime'] = base::getDateTime();
               $preset[$prefix . 'time'] = base::getDateTime();
               $sqlstr = smart::getAutoInsertSQLByVars($table, $preset);
@@ -99,33 +99,7 @@ class ui extends page {
         }
       }
     }
-    $tmpstr = self::formatXMLResult($status, $message, $para);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'install':
-        $tmpstr = self::moduleActionInstall();
-        break;
-    }
-    return $tmpstr;
-  }
-
-  public static function getResult()
-  {
-    $tmpstr = '';
-    $type = self::getHTTPPara('type', 'get');
-    switch($type)
-    {
-      case 'action':
-        $tmpstr = self::moduleAction();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message, $para);
     return $tmpstr;
   }
 }

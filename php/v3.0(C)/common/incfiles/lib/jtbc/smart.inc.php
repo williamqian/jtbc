@@ -286,7 +286,7 @@ namespace jtbc {
                 if (base::isEmpty($requestValue))
                 {
                   if (is_array($source)) $requestValue = base::getString($source[$requestName]);
-                  else $requestValue = base::getString(page::getHTTPPara($requestName, 'post'));
+                  else $requestValue = base::getString(request::getHTTPPara($requestName, 'post'));
                 }
               }
             }
@@ -398,7 +398,7 @@ namespace jtbc {
                 if (base::isEmpty($requestValue))
                 {
                   if (is_array($source)) $requestValue = base::getString($source[$requestName]);
-                  else $requestValue = base::getString(page::getHTTPPara($requestName, 'post'));
+                  else $requestValue = base::getString(request::getHTTPPara($requestName, 'post'));
                 }
               }
             }

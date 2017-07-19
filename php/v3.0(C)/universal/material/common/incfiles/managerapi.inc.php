@@ -35,10 +35,10 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $selectmode = 'single';
-    $mode = base::getString(self::getHTTPPara('mode', 'get'));
-    $keyword = base::getString(self::getHTTPPara('keyword', 'get'));
-    $sort = base::getNum(self::getHTTPPara('sort', 'get'), 1);
-    $filegroup = base::getNum(self::getHTTPPara('filegroup', 'get'), -1);
+    $mode = base::getString(request::getHTTPPara('mode', 'get'));
+    $keyword = base::getString(request::getHTTPPara('keyword', 'get'));
+    $sort = base::getNum(request::getHTTPPara('sort', 'get'), 1);
+    $filegroup = base::getNum(request::getHTTPPara('filegroup', 'get'), -1);
     if ($mode == 'multiple') $selectmode = 'multiple';
     $db = self::db();
     if (!is_null($db))
@@ -86,24 +86,11 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(self::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
     $table = tpl::take('config.db_table', 'cfg');
     $prefix = tpl::take('config.db_prefix', 'cfg');
     if (smart::dbFieldNumberAdd($table, $prefix, 'hot', $id)) $status = 1;
-    $tmpstr = self::formatXMLResult($status, $message);
-    return $tmpstr;
-  }
-
-  public static function moduleAction()
-  {
-    $tmpstr = '';
-    $action = self::getHTTPPara('action', 'get');
-    switch($action)
-    {
-      case 'hot':
-        $tmpstr = self::moduleActionHot();
-        break;
-    }
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -111,18 +98,9 @@ class ui extends page {
   {
     $tmpstr = '';
     $account = self::account();
-    $type = self::getHTTPPara('type', 'get');
     if ($account -> checkLogin())
     {
-      switch($type)
-      {
-        case 'list':
-          $tmpstr = self::moduleList();
-          break;
-        case 'action':
-          $tmpstr = self::moduleAction();
-          break;
-      }
+      $tmpstr = parent::getResult();
     }
     return $tmpstr;
   }

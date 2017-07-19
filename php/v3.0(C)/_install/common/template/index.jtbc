@@ -14,7 +14,7 @@
 <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
 <meta name="format-detection" content="telephone=no,email=no,adress=no" />
 <meta http-equiv="Content-Type" content="text/html; charset={$=CHARSET}" />
-<title>{$=getTitle()}</title>
+<title>{$=getPageTitle()}</title>
 <script type="text/javascript" src="{$=$global.assetspath}/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="{$=$global.assetspath}/js/jtbc.js"></script>
 <script type="text/javascript" src="{$=$assetspath}/js/jtbc.install.js"></script>
