@@ -215,6 +215,30 @@ CREATE TABLE `jtbc_universal_category` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for jtbc_universal_link
+-- ----------------------------
+DROP TABLE IF EXISTS `jtbc_universal_link`;
+CREATE TABLE `jtbc_universal_link` (
+  `ul_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ul_topic` varchar(50) DEFAULT NULL,
+  `ul_image` varchar(200) DEFAULT NULL,
+  `ul_url` varchar(200) DEFAULT NULL,
+  `ul_target` varchar(50) DEFAULT NULL,
+  `ul_sort` int(11) DEFAULT '0',
+  `ul_publish` int(11) DEFAULT '0',
+  `ul_time` datetime DEFAULT NULL,
+  `ul_lang` int(11) DEFAULT '0',
+  `ul_delete` int(11) DEFAULT '0',
+  PRIMARY KEY (`ul_id`),
+  KEY `ul_publish` (`ul_publish`,`ul_lang`,`ul_delete`),
+  KEY `ul_sort` (`ul_sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of jtbc_universal_link
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for jtbc_universal_material
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_universal_material`;
