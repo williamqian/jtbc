@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 22 22">
+<g fill="#ffffff">
+	<polygon style="fill-rule:evenodd;clip-rule:evenodd;" points="8,11.5 20.75,11.5 18,16 19,16 22,11 19,6 18,6 20.75,10.502 
+		8,10.502 	"/>
+	<polygon style="fill-rule:evenodd;clip-rule:evenodd;" points="0,22 15,22 15,15.5 14,15.5 14,21 1,21 1,1 14,1 14,6.5 15,6.5 
+		15,0 0,0 	"/>
+</g>
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,zh-cn</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[menu-1]]></name>
+      <zh-cn><![CDATA[首页]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-2]]></name>
+      <zh-cn><![CDATA[关于我们]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-3]]></name>
+      <zh-cn><![CDATA[产品案例]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-4]]></name>
+      <zh-cn><![CDATA[核心团队]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-5]]></name>
+      <zh-cn><![CDATA[诚募英才]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-6]]></name>
+      <zh-cn><![CDATA[新闻动态]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[menu-7]]></name>
+      <zh-cn><![CDATA[联系我们]]></zh-cn>
+    </item>
+  </item_list>
+</xml>

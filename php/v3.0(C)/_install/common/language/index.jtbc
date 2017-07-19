@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,zh-cn</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[title]]></name>
+      <zh-cn><![CDATA[安装]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-ver]]></name>
+      <zh-cn><![CDATA[版本号：]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-license]]></name>
+      <zh-cn><![CDATA[The MIT License
+
+Copyright 2017 上海七慧网络科技有限公司
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-agree]]></name>
+      <zh-cn><![CDATA[我同意上述使用协议]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-db_host]]></name>
+      <zh-cn><![CDATA[服务器地址]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-db_username]]></name>
+      <zh-cn><![CDATA[用户名]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-db_password]]></name>
+      <zh-cn><![CDATA[密码]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-db_database]]></name>
+      <zh-cn><![CDATA[数据库名]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-username]]></name>
+      <zh-cn><![CDATA[用户名]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-password]]></name>
+      <zh-cn><![CDATA[密码]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-cpassword]]></name>
+      <zh-cn><![CDATA[确认密码]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-email]]></name>
+      <zh-cn><![CDATA[电子邮件]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-btn-prev]]></name>
+      <zh-cn><![CDATA[上一步]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-btn-next]]></name>
+      <zh-cn><![CDATA[下一步]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-btn-done]]></name>
+      <zh-cn><![CDATA[完成安装]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-link-1]]></name>
+      <zh-cn><![CDATA[官网]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-link-2]]></name>
+      <zh-cn><![CDATA[联系我们]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-step-1]]></name>
+      <zh-cn><![CDATA[1.使用协议]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-step-2]]></name>
+      <zh-cn><![CDATA[2.数据库设置]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-step-2-tit]]></name>
+      <zh-cn><![CDATA[数据库信息]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-step-3]]></name>
+      <zh-cn><![CDATA[3.完成安装]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-step-3-tit]]></name>
+      <zh-cn><![CDATA[管理员信息]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-loading]]></name>
+      <zh-cn><![CDATA[正在安装中，请稍后..]]></zh-cn>
+    </item>
+  </item_list>
+</xml>

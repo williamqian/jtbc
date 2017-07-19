@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,default</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[index]]></name>
+      <default><![CDATA[<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Content-Type" content="text/html; charset={$=CHARSET}" />
+<title>{$=getTitle()}</title>
+<script type="text/javascript" src="{$=$global.assetspath}/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="{$=$global.assetspath}/js/jtbc.js"></script>
+<script type="text/javascript" src="{$=$assetspath}/js/jtbc.install.js"></script>
+<link type="text/css" rel="stylesheet" href="{$=$assetspath}/install.css" />
+</head>
+<body>
+<div class="install">
+  <div class="nav">
+    <h1>JTBC</h1>
+    <h2>{$=take('index.text-ver', 'lng')}{$=VERSION}</h2>
+    <div class="link"><a href="http://www.jtbc.cn/?from=install" target="_blank">{$=take('index.text-link-1', 'lng')}</a>&nbsp; | &nbsp;<a href="http://www.jtbc.cn/contact/?from=install" target="_blank">{$=take('index.text-link-2', 'lng')}</a></div>
+    <div class="step"><span class="on">{$=take('index.text-step-1', 'lng')}</span><span>{$=take('index.text-step-2', 'lng')}</span><span>{$=take('index.text-step-3', 'lng')}</span></div>
+  </div>
+  <div class="tab_content">
+    <form class="form" action="install.php?type=action&amp;action=install" onsubmit="return false;">
+      <div class="item on">
+        <div class="license"><textarea readonly="readonly">{$=take('index.text-license', 'lng')}</textarea></div>
+      </div>
+      <div class="item">
+        <div class="database">
+          <div class="mysql">
+            <div class="info">
+              <h3><span>{$=take('index.text-step-2-tit', 'lng')}</span></h3>
+              <ul>
+                <li><input type="text" name="db_host" class="text" placeholder="{$=take('index.text-db_host', 'lng')}" /></li>
+                <li><input type="text" name="db_username" class="text" placeholder="{$=take('index.text-db_username', 'lng')}" /></li>
+                <li><input type="password" name="db_password" class="text" placeholder="{$=take('index.text-db_password', 'lng')}" /></li>
+                <li><input type="text" name="db_database" class="text" placeholder="{$=take('index.text-db_database', 'lng')}" /></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="database">
+          <div class="admin">
+            <div class="info">
+              <h3><span>{$=take('index.text-step-3-tit', 'lng')}</span></h3>
+              <ul>
+                <li><input type="text" name="username" class="text" placeholder="{$=take('index.text-username', 'lng')}" /></li>
+                <li><input type="password" name="password" class="text" placeholder="{$=take('index.text-password', 'lng')}" /></li>
+                <li><input type="password" name="cpassword" class="text" placeholder="{$=take('index.text-cpassword', 'lng')}" /></li>
+                <li><input type="text" name="email" class="text" placeholder="{$=take('index.text-email', 'lng')}" /></li>
+              </ul>
+              <button type="submit" class="submit"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="handle">
+    <div class="item on">
+      <div class="left"><label><input type="checkbox" name="agree" class="agree" checked="checked" />{$=take('index.text-agree', 'lng')}</label></div>
+      <div class="right"><button class="btn step-1-next">{$=take('index.text-btn-next', 'lng')}</button></div>
+      <div class="clear"></div>
+    </div>
+    <div class="item">
+      <div class="left"><button class="btn step-2-prev">{$=take('index.text-btn-prev', 'lng')}</button></div>
+      <div class="right"><button class="btn step-2-next">{$=take('index.text-btn-next', 'lng')}</button></div>
+      <div class="clear"></div>
+    </div>
+    <div class="item">
+      <div class="left"><button class="btn step-3-prev">{$=take('index.text-btn-prev', 'lng')}</button></div>
+      <div class="right"><button class="btn btn-done step-3-done">{$=take('index.text-btn-done', 'lng')}</button></div>
+      <div class="clear"></div>
+    </div>
+    <div class="msg" loading="{$=take('index.text-loading', 'lng')}"></div>
+  </div>
+</div>
+<script type="text/javascript">$(document).ready(function() { jtbc.install.ready(); });</script>
+</body>
+</html>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[file-const]]></name>
+      <default><![CDATA[]]></default>
+    </item>
+    <item>
+      <name><![CDATA[file-index]]></name>
+      <default><![CDATA[<?php
+require_once('common/incfiles/page.inc.php');
+require_once('common/incfiles/index.inc.php');
+header('content-type: text/html; charset=' . CHARSET);
+echo jtbc\ui::getResult();
+?>]]></default>
+    </item>
+  </item_list>
+</xml>

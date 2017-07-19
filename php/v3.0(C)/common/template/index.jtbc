@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,default</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[index]]></name>
+      <default><![CDATA[{$=take('.public.header')}
+  <div class="home">
+    <div class="banner">
+      <h2>{$=take('index.slogan', 'lng')}</h2>
+      <h3>{$=take('index.intro', 'lng')}</h3>
+      <a class="more" href="{$=getActualRoute('aboutus')}">{$=take('index.text-more', 'lng')}</a>
+    </div>
+    <div class="home_item">
+      <h2>{$=take('global.case:index.title', 'lng')}</h2>
+      <div class="cupboard">
+        <div class="full pictures clear_float">
+          <jtbc $function="transfer" $parameter="genre=case;type=new;limit=3">
+            <div class="item">
+              <a href="{$-baseurl}{$=htmlEncode($createURL('detail', '{$id}', null, '{$-genre}'))}">
+                <p class="image"><img src="{$-baseurl}{$image}" alt="" /></p>
+                <p class="topic">{$topic}</p>
+              </a>
+            </div>
+          </jtbc>
+        </div>
+      </div>
+    </div>
+    <div class="home_item">
+      <h2>{$=take('global.team:index.title', 'lng')}</h2>
+      <div class="cupboard">
+        <div class="full synopsis clear_float">
+          <jtbc $function="transfer" $parameter="genre=team;type=new;limit=4">
+            <div class="item">
+              <p class="photo"><img src="{$-baseurl}{$photo}" alt="" /></p>
+              <p class="topic">{$topic} <em>({$position})</em></p>
+              <p class="intro">{$=encodeTextArea($GLOBALS['RST_intro'])}</p>
+              <p class="clear"></p>
+            </div>
+          </jtbc>
+        </div>
+      </div>
+    </div>
+  </div>
+{$=take('.public.footer')}]]></default>
+    </item>
+  </item_list>
+</xml>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,default</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[editor-src]]></name>
+      <default><![CDATA[<dfn url="{$=$assetspath}/editor/ckeditor/ckeditor.js"></dfn><dfn url="{$=$assetspath}/editor/jtbc.editor.js"></dfn>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[pagi-1]]></name>
+      <default><![CDATA[<span>{$-page1}/{$-page2}</span><a class="link" link="{$-firstpagelink}">&laquo;</a>{@}<a class="link {$-class}" link="{$-link}">{$-num}</a>{@}<a class="link" link="{$-lastpagelink}">&raquo;</a><input type="text" id="{$-pagiid}-input" class="pagenum" value="{$-next-page-num}" /><a baselink="{$-baselink}" class="go">GO</a>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[pagi-2]]></name>
+      <default><![CDATA[<a class="link" href="{$-firstpagelink}">&laquo;</a>{@}<a class="link {$-class}" href="{$-link}">{$-num}</a>{@}<a class="link" href="{$-lastpagelink}">&raquo;</a>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_unselect]]></name>
+      <default><![CDATA[<option value="{$value}">{$explain}</option>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_select]]></name>
+      <default><![CDATA[<option value="{$value}" selected="selected">{$explain}</option>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_unradio]]></name>
+      <default><![CDATA[<label><input type="radio" class="radio" name="{$name}" value="{$value}" />{$explain}</label>&nbsp;]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_radio]]></name>
+      <default><![CDATA[<label><input type="radio" class="radio" name="{$name}" value="{$value}" checked="checked" />{$explain}</label>&nbsp;]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_uncheckbox]]></name>
+      <default><![CDATA[<label><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" />{$explain}</label>&nbsp;]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_checkbox]]></name>
+      <default><![CDATA[<label><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" checked="checked" />{$explain}</label>&nbsp;]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_unlabel]]></name>
+      <default><![CDATA[<label for="{$name}{$value}" val="{$value}">{$explain}</label>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_label]]></name>
+      <default><![CDATA[<label for="{$name}{$value}" val="{$value}" class="on">{$explain}</label>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_unlabelcheckbox]]></name>
+      <default><![CDATA[<label class="checkbox"><input type="checkbox" name="{$name}" value="{$value}" /><vicon></vicon><span class="text">{$explain}</span></label>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[xmlselect_labelcheckbox]]></name>
+      <default><![CDATA[<label class="checkbox"><input type="checkbox" name="{$name}" value="{$value}" checked="checked" /><vicon></vicon><span class="text">{$explain}</span></label>]]></default>
+    </item>
+  </item_list>
+</xml>

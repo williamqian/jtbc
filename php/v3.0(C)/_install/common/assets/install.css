@@ -1,0 +1,138 @@
+html {
+  width: 100%; overflow-y: scroll
+}
+body {
+  width: 100%; min-width: 800px; margin: 0px; padding: 0px; background: #f8f8f8; font-size: 12px; text-size-adjust: none; color: #000; font-family: Arial, Verdana, "NSimSun"
+}
+ul,ol {
+  list-style: none
+}
+form,dl,dt,dd,ul,ol,input,select,textarea,h1,h2,h3,h4,h5,h6 {
+  margin: 0px; padding: 0px
+}
+input,button,select,textarea {
+  font-size: 12px; color: #000; outline: none
+}
+img {
+  border: 0px
+}
+a {
+  color: #000; text-decoration: none
+}
+a:hover {
+  color: #000; text-decoration: none
+}
+a.link {
+  cursor: pointer
+}
+input.agree {
+  vertical-align: middle; margin-right: 5px
+}
+input.text {
+  width: 358px; height: 28px; line-height: 28px; padding: 0px 10px; border: #d1d1d1 1px solid; box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.08); transition: all .3s ease
+}
+input.text:focus {
+  border-color: #5b9dd9; box-shadow: 0px 0px 2px rgba(30, 140, 190, 0.8)
+}
+button.btn {
+  width: 118px; height: 34px; font-size: 14px; color: #fff; text-align: center; background: linear-gradient(#51a5fd, #1486ff); border: #0074ee 1px solid; border-radius: 5px; cursor: pointer
+}
+button.btn:focus {
+  border-color: #000 !important
+}
+button.btn.btn-done {
+  background: linear-gradient(#ff7058, #f1543f); border-color: #f1543f
+}
+.clear {
+  clear: both
+}
+.hide {
+  display: none !important
+}
+.install {
+  width: 700px; background: #fff; border-radius: 5px; margin-left: -350px; margin-top: -260px; position: fixed; top: 50%; left: 50%; z-index: 100
+}
+.install div.nav {
+  height: 99px; border: #0062ea 1px solid; background: linear-gradient(#51a5fd, #1486ff); border-top-left-radius: 5px; border-top-right-radius: 5px; position: relative; z-index: 100
+}
+.install div.nav h1 {
+  font-size: 30px; font-weight: normal; padding: 15px 0px 0px 20px; color: #fff; line-height: 100%
+}
+.install div.nav h2 {
+  font-size: 12px; font-weight: normal; padding: 20px 0px 0px 20px; color: #badbff; line-height: 100%
+}
+.install div.nav div.link {
+  color: #fff; position: absolute; top: 20px; right: 20px; z-index: 100
+}
+.install div.nav div.link a {
+  color: #fff
+}
+.install div.nav div.step {
+  font-size: 0px; position: absolute; right: 0px; bottom: -2px; z-index: 100
+}
+.install div.nav div.step span {
+  display: inline-block; width: 110px; padding-bottom: 20px; font-size: 14px; color: #fff; line-height: 100%; text-align: center; cursor: default
+}
+.install div.nav div.step span.on {
+  background: url(arrow.1.svg) bottom center no-repeat; background-size: 20px 20px
+}
+.install div.tab_content {
+  border-left: #979797 1px solid; border-right: #979797 1px solid
+}
+.install div.tab_content div.item {
+  padding: 20px; display: none
+}
+.install div.tab_content div.item.on {
+  display: block
+}
+.install div.tab_content div.license {
+  height: 288px; padding: 10px; border: #dcdcdc 1px solid
+}
+.install div.tab_content div.license textarea {
+  width: 100%; height: 100%; resize: none; border: 0px; font-size: 14px; line-height: 150%
+}
+.install div.tab_content div.database {
+  height: 288px; padding: 10px; border: #dcdcdc 1px solid
+}
+.install div.tab_content div.database div.mysql {
+  width: 100%; height: 100%; background: url(mysql.1.svg) top right no-repeat; background-size: 200px
+}
+.install div.tab_content div.database div.admin {
+  width: 100%; height: 100%; background: url(admin.1.svg) top right no-repeat; background-size: 200px
+}
+.install div.tab_content div.info {
+  width: 400px
+}
+.install div.tab_content div.info h3 {
+  margin: 0px 10px; border-bottom: #dcdcdc 1px solid
+}
+.install div.tab_content div.info h3 span {
+  display: inline-block; line-height: 200%; margin-bottom: -1px; border-bottom: #1687ff 2px solid
+}
+.install div.tab_content div.info ul {
+  padding: 10px
+}
+.install div.tab_content div.info ul li {
+  padding: 10px 0px
+}
+.install div.tab_content button.submit {
+  visibility: hidden
+}
+.install div.handle {
+  height: 60px; border: #979797 1px solid; border-top-color: #dcdcdc; background: linear-gradient(#f8f8f8, #e6e6e6); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; position: relative; z-index: 100
+}
+.install div.handle div.item {
+  display: none
+}
+.install div.handle div.item.on {
+  display: block
+}
+.install div.handle div.left {
+  float: left; padding-left: 20px; line-height: 60px
+}
+.install div.handle div.right {
+  float: right; padding-right: 20px; line-height: 60px
+}
+.install div.handle div.msg {
+  width: 380px; line-height: 60px; text-align: center; margin-left: -190px; color: #f1543f; position: absolute; top: 0px; left: 50%; z-index: 100
+}

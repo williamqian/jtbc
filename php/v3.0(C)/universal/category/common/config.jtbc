@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbcf" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,zh-cn</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[db_table]]></name>
+      <zh-cn><![CDATA[jtbc_universal_category]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[db_prefix]]></name>
+      <zh-cn><![CDATA[uc_]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[uninstall]]></name>
+      <zh-cn><![CDATA[lock]]></zh-cn>
+    </item>
+  </item_list>
+</xml>

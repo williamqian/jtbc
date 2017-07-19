@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml mode="jtbc" author="jetiben">
+  <configure>
+    <node>item</node>
+    <field>name,default</field>
+    <base>item_list</base>
+  </configure>
+  <item_list>
+    <item>
+      <name><![CDATA[link]]></name>
+      <default><![CDATA[<a class="link" link="{$link}">{$text}</a>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[link-nav]]></name>
+      <default><![CDATA[<em></em><a class="link" link="{$link}">{$text}</a>]]></default>
+    </item>
+  </item_list>
+</xml>
