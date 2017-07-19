@@ -120,7 +120,7 @@ class ui extends page {
     $error = array();
     $account = self::account();
     $topic = request::getHTTPPara('topic', 'post');
-    $photo = request::getHTTPPara('photo', 'post');
+    $url = request::getHTTPPara('url', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -128,7 +128,7 @@ class ui extends page {
     else
     {
       if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
-      if (base::isEmpty($photo)) array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
+      if (base::isEmpty($url)) array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
@@ -168,7 +168,7 @@ class ui extends page {
     $account = self::account();
     $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
     $topic = request::getHTTPPara('topic', 'post');
-    $photo = request::getHTTPPara('photo', 'post');
+    $url = request::getHTTPPara('url', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -176,7 +176,7 @@ class ui extends page {
     else
     {
       if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
-      if (base::isEmpty($photo)) array_push($error, tpl::take('manage.text-tips-edit-error-2', 'lng'));
+      if (base::isEmpty($url)) array_push($error, tpl::take('manage.text-tips-edit-error-2', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
