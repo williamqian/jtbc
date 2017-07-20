@@ -40,7 +40,7 @@
     </item>
     <item>
       <name><![CDATA[text-tips-add-error-1]]></name>
-      <zh-cn><![CDATA[用户名格式不正确]]></zh-cn>
+      <zh-cn><![CDATA[用户名不能为空]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-tips-add-error-2]]></name>
@@ -60,7 +60,7 @@
     </item>
     <item>
       <name><![CDATA[text-tips-edit-error-1]]></name>
-      <zh-cn><![CDATA[用户名格式不正确]]></zh-cn>
+      <zh-cn><![CDATA[用户名不能为空]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-tips-edit-error-2]]></name>

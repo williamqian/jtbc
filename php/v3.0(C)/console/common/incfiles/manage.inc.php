@@ -20,10 +20,10 @@ class ui extends page {
     {
       $tmpstr = tpl::take('manage.dashbord', 'tpl');
       $hello = tpl::take('manage.text-hello', 'lng');
-      $hello = str_replace('{$-username}', base::htmlEncode($account -> getMyInfo('username')), $hello);
-      $hello = str_replace('{$-lastip}', base::htmlEncode($account -> getMyInfo('lastip')), $hello);
-      $hello = str_replace('{$-lasttime}', base::htmlEncode($account -> getMyInfo('lasttime')), $hello);
-      $hello = str_replace('{$-role-topic}', base::htmlEncode($account -> getRoleTopicById($account -> getMyInfo('role'))), $hello);
+      $hello = str_replace('{$-username}', $account -> getMyInfo('username'), $hello);
+      $hello = str_replace('{$-lastip}', $account -> getMyInfo('lastip'), $hello);
+      $hello = str_replace('{$-lasttime}', $account -> getMyInfo('lasttime'), $hello);
+      $hello = str_replace('{$-role-topic}', $account -> getRoleTopicById($account -> getMyInfo('role')), $hello);
       $tmpstr = str_replace('{$-hello}', base::htmlEncode($hello), $tmpstr);
       $tmpstr = str_replace('{$-sys-para-0}', base::htmlEncode($_SERVER['SERVER_SOFTWARE']), $tmpstr);
       $tmpstr = str_replace('{$-sys-para-1}', base::htmlEncode(VERSION), $tmpstr);

@@ -163,7 +163,7 @@ class ui extends page {
     }
     else
     {
-      if (!verify::isNatural($username)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
+      if (base::isEmpty($username)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
       if (base::isEmpty($password)) array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
       if ($password != $cpassword) array_push($error, tpl::take('manage.text-tips-add-error-3', 'lng'));
       if (!verify::isEmail($email)) array_push($error, tpl::take('manage.text-tips-add-error-4', 'lng'));
@@ -220,7 +220,7 @@ class ui extends page {
     }
     else
     {
-      if (!verify::isNatural($username)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
+      if (base::isEmpty($username)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
       if (!base::isEmpty($password) && $password != $cpassword) array_push($error, tpl::take('manage.text-tips-edit-error-2', 'lng'));
       if (!verify::isEmail($email)) array_push($error, tpl::take('manage.text-tips-edit-error-3', 'lng'));
       if (count($error) == 0)
