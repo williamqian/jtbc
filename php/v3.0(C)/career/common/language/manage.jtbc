@@ -35,10 +35,6 @@
       <zh-cn><![CDATA[职位列表]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-tips-1]]></name>
-      <zh-cn><![CDATA[图片最佳尺寸：640*640 像素]]></zh-cn>
-    </item>
-    <item>
       <name><![CDATA[text-tips-list-null]]></name>
       <zh-cn><![CDATA[当前条件下没有找到任何职位]]></zh-cn>
     </item>

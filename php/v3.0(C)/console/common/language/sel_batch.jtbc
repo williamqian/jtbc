@@ -11,6 +11,10 @@
       <zh-cn><![CDATA[请选择]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[dispose]]></name>
+      <zh-cn><![CDATA[处理]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[publish]]></name>
       <zh-cn><![CDATA[发布]]></zh-cn>
     </item>

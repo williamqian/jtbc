@@ -86,8 +86,9 @@ button.b4:focus {
   border-color: #275727
 }
 button.lock,
-button.lock:hover {
-  background: #bbb !important
+button.lock:hover,
+button.lock:focus {
+  background-color: #bbb !important; border-color: #bbb !important
 }
 input.i1 {
   width: 358px; height: 28px; line-height: 28px; padding: 0px 10px; border: #d1d1d1 1px solid; box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.08); transition: all .3s ease
@@ -152,6 +153,12 @@ icons icon a.link {
 .center {
   text-align: center !important
 }
+.status {
+  display: inline-block; width: 16px; height: 16px; background: url(icon/status.0.svg)
+}
+.status-1 {
+  background-image: url(icon/status.1.svg)
+}
 .hide {
   display: none !important
 }
@@ -169,12 +176,6 @@ icons icon a.link {
 }
 .noselect {
   user-select: none; -ms-user-select: none; -moz-user-select: none; -webkit-user-select: none
-}
-.publish {
-  display: inline-block; width: 16px; height: 16px; border-radius: 8px; background: #ccc
-}
-.publish-1 {
-  background-color: #64bd63
 }
 .right {
   text-align: right !important
@@ -334,6 +335,9 @@ icons icon a.link {
 }
 .container div.leftmenu ul li span.tit em.e11 {
   background-image: url(icon/career.1.svg)
+}
+.container div.leftmenu ul li span.tit em.e12 {
+  background-image: url(icon/msg.1.svg)
 }
 .container div.leftmenu ul li span.tit.open d {
   transform: rotate(180deg)

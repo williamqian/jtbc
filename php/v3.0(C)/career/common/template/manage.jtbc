@@ -110,7 +110,7 @@
           <td class="id center">{$id}</td>
           <td><span class="mainlink">{$topic}</span></td>
           <td>{$time}</td>
-          <td class="center"><span class="publish publish-{$publish}"></span></td>
+          <td class="center"><span class="status status-{$publish}"></span></td>
           <td><icons><icon class="edit show-{$-account-popedom-edit}" title="{$=take('global.config.edit', 'lng')}"><a class="link" link="?type=edit&amp;id={$id}"></a></icon><icon rsid="{$id}" class="delete show-{$-account-popedom-delete}" title="{$=take('global.config.delete', 'lng')}" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-delete-id', 'lng')}[{$id}]{$=take('::console.q', 'lng')}"></icon></icons></td>
         </tr>{@}
         <tr class="tips alonetips hide">

@@ -83,6 +83,10 @@
       <zh-cn><![CDATA[编辑]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-popedom-dispose]]></name>
+      <zh-cn><![CDATA[处理]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-popedom-delete]]></name>
       <zh-cn><![CDATA[删除]]></zh-cn>
     </item>

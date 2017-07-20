@@ -65,7 +65,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
-    $publish = base::getNum(request::getHTTPPara('publish', 'get'), -1);
+    $dispose = base::getNum(request::getHTTPPara('dispose', 'get'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -78,7 +78,7 @@ class ui extends page {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
       $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
-      if ($publish != -1) $sqlstr .= " and " . $prefix . "publish=" . $publish;
+      if ($dispose != -1) $sqlstr .= " and " . $prefix . "dispose=" . $dispose;
       $sqlstr .=" order by " . $prefix . "time desc";
       $pagi = new pagi($db);
       $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
@@ -101,7 +101,7 @@ class ui extends page {
       $tmpstr = str_replace('{$-pagi-pagenum}', $pagi -> pagenum, $tmpstr);
       $tmpstr = str_replace('{$-pagi-pagetotal}', $pagi -> pagetotal, $tmpstr);
       $batchList = '';
-      if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $batchList .= ',publish';
+      if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $batchList .= ',dispose';
       if ($account -> checkPopedom(self::getPara('genre'), 'delete')) $batchList .= ',delete';
       $tmpstr = str_replace('{$-batch-list}', $batchList, $tmpstr);
       $tmpstr = str_replace('{$-batch-show}', empty($batchList) ? 0 : 1, $tmpstr);
@@ -119,18 +119,14 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $topic = request::getHTTPPara('topic', 'post');
-    $intro = request::getHTTPPara('intro', 'post');
-    $email = request::getHTTPPara('email', 'post');
+    $name = request::getHTTPPara('name', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
     }
     else
     {
-      if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
-      if (base::isEmpty($intro)) array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
-      if (base::isEmpty($email)) array_push($error, tpl::take('manage.text-tips-add-error-3', 'lng'));
+      if (base::isEmpty($name)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
@@ -140,10 +136,10 @@ class ui extends page {
           $prefix = tpl::take('config.db_prefix', 'cfg');
           $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
-          $preset[$prefix . 'publish'] = 0;
+          $preset[$prefix . 'dispose'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getHTTPPara('dispose', 'post'), 0);
           $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -169,18 +165,14 @@ class ui extends page {
     $error = array();
     $account = self::account();
     $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
-    $topic = request::getHTTPPara('topic', 'post');
-    $intro = request::getHTTPPara('intro', 'post');
-    $email = request::getHTTPPara('email', 'post');
+    $name = request::getHTTPPara('name', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
     }
     else
     {
-      if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
-      if (base::isEmpty($intro)) array_push($error, tpl::take('manage.text-tips-edit-error-2', 'lng'));
-      if (base::isEmpty($email)) array_push($error, tpl::take('manage.text-tips-edit-error-3', 'lng'));
+      if (base::isEmpty($name)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
@@ -190,9 +182,9 @@ class ui extends page {
           $prefix = tpl::take('config.db_prefix', 'cfg');
           $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
-          $preset[$prefix . 'publish'] = 0;
+          $preset[$prefix . 'dispose'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getHTTPPara('dispose', 'post'), 0);
           $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -227,9 +219,9 @@ class ui extends page {
       {
         if (smart::dbFieldSwitch($table, $prefix, 'delete', $ids)) $status = 1;
       }
-      else if ($batch == 'publish' && $account -> checkPopedom(self::getPara('genre'), 'publish'))
+      else if ($batch == 'dispose' && $account -> checkPopedom(self::getPara('genre'), 'dispose'))
       {
-        if (smart::dbFieldSwitch($table, $prefix, 'publish', $ids)) $status = 1;
+        if (smart::dbFieldSwitch($table, $prefix, 'dispose', $ids)) $status = 1;
       }
       if ($status == 1)
       {

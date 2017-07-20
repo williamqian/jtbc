@@ -148,6 +148,30 @@ CREATE TABLE `jtbc_console_role` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for jtbc_consult
+-- ----------------------------
+DROP TABLE IF EXISTS `jtbc_consult`;
+CREATE TABLE `jtbc_consult` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_name` varchar(200) DEFAULT NULL,
+  `c_mobile` varchar(200) DEFAULT NULL,
+  `c_email` varchar(200) DEFAULT NULL,
+  `c_content` varchar(1000) DEFAULT NULL,
+  `c_userip` varchar(200) DEFAULT NULL,
+  `c_dispose` int(11) DEFAULT '0',
+  `c_time` datetime DEFAULT NULL,
+  `c_lang` int(11) DEFAULT '0',
+  `c_delete` int(11) DEFAULT '0',
+  PRIMARY KEY (`c_id`),
+  KEY `c_delete` (`c_delete`,`c_lang`,`c_dispose`) USING BTREE,
+  KEY `c_time` (`c_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of jtbc_consult
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for jtbc_news
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_news`;

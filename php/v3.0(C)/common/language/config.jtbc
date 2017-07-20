@@ -31,8 +31,16 @@
       <zh-cn><![CDATA[删除]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[dispose]]></name>
+      <zh-cn><![CDATA[处理]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[edit]]></name>
       <zh-cn><![CDATA[编辑]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[email]]></name>
+      <zh-cn><![CDATA[电子邮件]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[group]]></name>
@@ -53,6 +61,14 @@
     <item>
       <name><![CDATA[insert]]></name>
       <zh-cn><![CDATA[插入]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[mobile]]></name>
+      <zh-cn><![CDATA[手机号]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[name]]></name>
+      <zh-cn><![CDATA[姓名]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[photo]]></name>

@@ -19,6 +19,44 @@ input,button,select,textarea {
 img {
   border: 0px
 }
+button {
+  display: inline-block; padding: 8px 16px; font-size: 1.4rem; border: 0px; line-height: 100%; color: #fff; border: #666 1px solid; cursor: pointer; transition: background-color .1s ease, border-color .1s ease
+}
+button.b1 {
+  background-color: #555; border-color: #555
+}
+button.b1:hover {
+  background-color: #333; border-color: #333
+}
+button.b1:focus {
+  border-color: #000
+}
+button.b2 {
+  background-color: #005f9b; border-color: #005f9b
+}
+button.b2:hover {
+  background-color: #004570; border-color: #004570
+}
+button.b2:focus {
+  border-color: #002842
+}
+button.lock,
+button.lock:hover,
+button.lock:focus {
+  background-color: #bbb !important; border-color: #bbb !important
+}
+input.i1 {
+  width: 358px; padding: 10px; border: #d1d1d1 1px solid; box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.08); transition: border-color .3s ease, box-shadow .3s ease
+}
+input.i1:focus {
+  border-color: #5b9dd9; box-shadow: 0px 0px 2px rgba(30, 140, 190, 0.8)
+}
+textarea.t1 {
+  width: 358px; height: 178px; line-height: 150%; padding: 10px; border: #d1d1d1 1px solid; box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.08); transition: border-color .3s ease, box-shadow .3s ease
+}
+textarea.t1:focus {
+  border-color: #5b9dd9; box-shadow: 0px 0px 2px rgba(30, 140, 190, 0.8)
+}
 a {
   color: #000; text-decoration: none
 }
@@ -240,6 +278,9 @@ a.link {
 }
 .cupboard .full.content div.text img {
   max-width: 100%
+}
+.cupboard .tinyform li {
+  padding: 10px 0px; text-align: center
 }
 .pagi {
   line-height: 100%; text-align: center

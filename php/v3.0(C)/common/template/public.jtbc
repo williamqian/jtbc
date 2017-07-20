@@ -37,6 +37,7 @@
         <li name="menucareer"><a href="{$=getActualRoute('career')}">{$=take('.public.menu-5', 'lng')}</a></li>
         <li name="menunews"><a href="{$=getActualRoute('news')}">{$=take('.public.menu-6', 'lng')}</a></li>
         <li name="menucontactus"><a href="{$=getActualRoute('contactus')}">{$=take('.public.menu-7', 'lng')}</a></li>
+        <li name="menuconsult"><a href="{$=getActualRoute('consult')}">{$=take('.public.menu-8', 'lng')}</a></li>
       </ul>
     </div>
     <span mode="submenu" selector="div.menu" class="menu"><em class="e1"></em><em class="e2"></em><em class="e3"></em></span>
