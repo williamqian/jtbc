@@ -224,14 +224,14 @@ CREATE TABLE `jtbc_universal_link` (
   `ul_image` varchar(200) DEFAULT NULL,
   `ul_url` varchar(200) DEFAULT NULL,
   `ul_target` varchar(50) DEFAULT NULL,
-  `ul_sort` int(11) DEFAULT '0',
+  `ul_group` int(11) DEFAULT '0',
   `ul_publish` int(11) DEFAULT '0',
   `ul_time` datetime DEFAULT NULL,
   `ul_lang` int(11) DEFAULT '0',
   `ul_delete` int(11) DEFAULT '0',
   PRIMARY KEY (`ul_id`),
   KEY `ul_publish` (`ul_publish`,`ul_lang`,`ul_delete`),
-  KEY `ul_sort` (`ul_sort`)
+  KEY `ul_group` (`ul_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

@@ -45,6 +45,16 @@
         </div>
       </div>
     </div>
+    <div class="home_item">
+      <h2>{$=take('global.universal/link:sel_group.1', 'lng')}</h2>
+      <div class="cupboard">
+        <div class="full links clear_float">
+          <jtbc $function="transfer" $parameter="genre=universal/link;type=new;limit=3;group=1">
+            <div class="item"><a href="{$url}" target="{$target}"><span><img src="{$-baseurl}{$image}" alt="" /></span></a></div>
+          </jtbc>
+        </div>
+      </div>
+    </div>
   </div>
 {$=take('.public.footer')}]]></default>
     </item>

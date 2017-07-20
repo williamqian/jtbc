@@ -16,9 +16,11 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $account = self::account();
+    $group = base::getNum(request::getHTTPPara('group', 'get'), 1);
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       $tmpstr = tpl::take('manage.add', 'tpl');
+      $tmpstr = str_replace('{$-group}', base::htmlEncode($group), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -64,6 +66,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
+    $group = base::getNum(request::getHTTPPara('group', 'get'), 1);
     $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
     $publish = base::getNum(request::getHTTPPara('publish', 'get'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
@@ -77,7 +80,7 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
+      $sqlstr = "select * from " . $table . " where " . $prefix . "group=" . $group . " and " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
       if ($publish != -1) $sqlstr .= " and " . $prefix . "publish=" . $publish;
       $sqlstr .=" order by " . $prefix . "time desc";
       $pagi = new pagi($db);
@@ -105,6 +108,7 @@ class ui extends page {
       if ($account -> checkPopedom(self::getPara('genre'), 'delete')) $batchList .= ',delete';
       $tmpstr = str_replace('{$-batch-list}', $batchList, $tmpstr);
       $tmpstr = str_replace('{$-batch-show}', empty($batchList) ? 0 : 1, $tmpstr);
+      $tmpstr = str_replace('{$-group}', base::htmlEncode($group), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }

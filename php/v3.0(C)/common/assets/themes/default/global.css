@@ -148,6 +148,21 @@ a.link {
 .cupboard .side dl.option dd {
   background: url(icon/circle.1.svg) left center no-repeat; background-size: 6px 6px; padding-left: 14px; font-size: 1.4rem; line-height: 200%
 }
+.cupboard .links {
+  width: 1230px; margin-left: -15px; font-size: 0px; text-align: center
+}
+.cupboard .links div.item {
+  width: 175px; margin: 0px 15px 30px 15px; display: inline-block
+}
+.cupboard .links div.item a {
+  display: table; text-align: center
+}
+.cupboard .links div.item a span {
+  display: table-cell; vertical-align: middle
+}
+.cupboard .links div.item a img {
+  max-width: 175px; max-height: 100px
+}
 .cupboard .pictures {
   width: 1230px; margin-left: -15px
 }
@@ -367,6 +382,15 @@ a.link {
   }
   .cupboard .side dl.option dd {
     background-size: 16px 16px; padding-left: 25px; width: 274px; float: left
+  }
+  .cupboard .links {
+    width: 600px; margin: auto
+  }
+  .cupboard .links div.item {
+    width: 50%; margin: 0px 0px 20px 0px
+  }
+  .cupboard .links div.item a img {
+    max-width: 280px; max-height: 160px
   }
   .cupboard .pictures {
     width: 600px; margin: auto

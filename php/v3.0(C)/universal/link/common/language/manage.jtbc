@@ -7,11 +7,27 @@
   </configure>
   <item_list>
     <item>
-      <name><![CDATA[text-add]]></name>
+      <name><![CDATA[text-menu-1]]></name>
+      <zh-cn><![CDATA[全部链接列表]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-menu-2]]></name>
+      <zh-cn><![CDATA[已发布的链接列表]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-menu-3]]></name>
+      <zh-cn><![CDATA[暂未发布的链接列表]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-menu-4]]></name>
       <zh-cn><![CDATA[添加新链接]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-edit]]></name>
+      <name><![CDATA[text-tit-add]]></name>
+      <zh-cn><![CDATA[添加新链接]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-tit-edit]]></name>
       <zh-cn><![CDATA[编辑链接]]></zh-cn>
     </item>
     <item>

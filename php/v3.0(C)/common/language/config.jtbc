@@ -35,6 +35,10 @@
       <zh-cn><![CDATA[编辑]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[group]]></name>
+      <zh-cn><![CDATA[分组]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[keyword]]></name>
       <zh-cn><![CDATA[关键词]]></zh-cn>
     </item>

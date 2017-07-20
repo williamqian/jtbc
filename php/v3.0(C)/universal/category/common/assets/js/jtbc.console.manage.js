@@ -23,8 +23,8 @@ jtbc.console.manage = {
           var dataObj = $(data);
           if (dataObj.find('result').attr('status') == '1')
           {
-            tthis.parent.lib.popupPage(dataObj.find('result').text());
-            var tinyformObj = $('.popup_page').find('.tinyform');
+            var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
+            var tinyformObj = pageObj.find('.tinyform');
             tinyformObj.find('button.b2').click(function(){
               var thisObj = $(this);
               if (!thisObj.hasClass('lock'))
@@ -61,8 +61,8 @@ jtbc.console.manage = {
           var dataObj = $(data);
           if (dataObj.find('result').attr('status') == '1')
           {
-            tthis.parent.lib.popupPage(dataObj.find('result').text());
-            var tinyformObj = $('.popup_page').find('.tinyform');
+            var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
+            var tinyformObj = pageObj.find('.tinyform');
             tinyformObj.find('button.b2').click(function(){
               var thisObj = $(this);
               if (!thisObj.hasClass('lock'))

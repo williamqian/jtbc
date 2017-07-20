@@ -497,6 +497,7 @@ namespace jtbc {
       $paraVars = base::getParameter($para, 'vars');
       $paraLimit = base::getNum(base::getParameter($para, 'limit'), 0);
       $paraCategory = base::getNum(base::getParameter($para, 'category'), 0);
+      $paraGroup = base::getNum(base::getParameter($para, 'group'), 0);
       $paraLang = base::getNum(base::getParameter($para, 'lang'), -100);
       $paraTransferID = base::getNum(base::getParameter($para, 'transferid'), 0);
       if ($paraLimit == 0) $paraLimit = 10;
@@ -586,6 +587,7 @@ namespace jtbc {
             $sqlstr .= " and " . $paraDBPrefix . "category in (" . base::mergeIdAry($paraCategory, universal\category::getCategoryChildID($paraGenre, $paraLang, $paraCategory)) . ")";
           }
         }
+        if ($paraGroup != 0) $sqlstr .= " and " . $paraDBPrefix . "group=" . $paraGroup;
         if (!base::isEmpty($paraOSQL)) $sqlstr .= $paraOSQL;
         if (!base::isEmpty($paraOSQLOrder)) $sqlorderstr = $paraOSQLOrder;
         if (is_array($osqlAry))

@@ -12,6 +12,10 @@ jtbc.console = {
       var thisObj = $(this);
       if (thisObj.parent().find(this.tagName).length == thisObj.parent().find(this.tagName + '.hide').length) thisObj.removeClass('hide');
     });
+    obj.find('.pitchon').each(function(){
+      var thisObj = $(this);
+      thisObj.find(thisObj.attr('pitchon')).addClass('on');
+    });
     obj.find('.switch').each(function(){
       var thisObj = $(this);
       if (thisObj.attr('bind') != '1')

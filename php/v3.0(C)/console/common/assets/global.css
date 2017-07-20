@@ -441,6 +441,9 @@ icons icon a.link {
 .container div.main div.manager div.table h3 {
   line-height: 100%; margin-bottom: 10px; padding-bottom: 15px; font-size: 16px; color: #000; border-bottom: #e1e1e1 1px solid
 }
+.container div.main div.manager div.table div.tab {
+  margin-top: -4px; margin-bottom: 10px
+}
 .container div.main div.manager div.table rightarea {
   position: absolute; top: 14px; right: 20px; z-index: 100; color: #666
 }
@@ -844,10 +847,10 @@ icons icon a.link {
   width: 100%
 }
 .tab div.option {
-  width: 100%; height: 43px; border-bottom: #ddd 1px solid; position: relative; z-index: 200
+  width: 100%; height: 35px; border-bottom: #ddd 1px solid; position: relative; z-index: 200
 }
 .tab div.option label {
-  display: inline-block; line-height: 42px; font-size: 14px; margin-bottom: -1px; padding: 0px 10px; border: transparent 1px solid; border-top-left-radius: 4px; border-top-right-radius: 4px; cursor: pointer
+  display: inline-block; line-height: 34px; font-size: 14px; margin-bottom: -1px; padding: 0px 10px; border: transparent 1px solid; border-top-left-radius: 4px; border-top-right-radius: 4px; cursor: pointer
 }
 .tab div.option label.on {
   background: #fff; border-color: #ddd; border-bottom-color: #fff; font-weight: bold; cursor: default
