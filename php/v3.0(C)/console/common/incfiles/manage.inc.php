@@ -74,7 +74,7 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       foreach ($allLangAry as $key => $val)
       {
-        if ($account -> checkIsSuper() || base::cInstr($myRoleLang, $key))
+        if ($account -> checkIsSuper() || base::checkInstr($myRoleLang, $key))
         {
           $loopLineString = $loopString;
           $loopLineString = str_replace('{$-lang-val}', base::htmlEncode($key), $loopLineString);

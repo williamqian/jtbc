@@ -114,7 +114,7 @@ namespace jtbc\universal {
           {
             $rsid = base::getNum($val[$prefix . 'id'], 0);
             $rsfid = base::getNum($val[$prefix . 'fid'], -1);
-            if ($rsfid == $fid && (base::isEmpty($myCategory) || base::cInstr($myCategory, $rsid)))
+            if ($rsfid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsid)))
             {
               $explain = base::getRepeatedString(tpl::take('global.config.spstr', 'lng'), $rank) . base::htmlEncode($val[$prefix . 'topic']);
               if ($rsid == $id) $tmpstr .= tpl::take('global.config.xmlselect_select', 'tpl', 0, array('explain' => $explain, 'value' => $rsid));

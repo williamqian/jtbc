@@ -89,7 +89,7 @@ class ui extends page {
       $prefix = tpl::take('config.db_prefix', 'cfg');
       $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
       if ($publish != -1) $sqlstr .= " and " . $prefix . "publish=" . $publish;
-      if (!base::isEmpty($myCategory) && base::cIdAry($myCategory)) $sqlstr .= " and " . $prefix . "category in (" . $myCategory . ")";
+      if (!base::isEmpty($myCategory) && base::checkIDAry($myCategory)) $sqlstr .= " and " . $prefix . "category in (" . $myCategory . ")";
       if ($category != 0) $sqlstr .= " and " . $prefix . "category in (" . base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), $account -> getLang(), $category)) . ")";
       if (!base::isEmpty($keyword)) $sqlstr .= smart::getCutKeywordSQL($prefix . 'topic', $keyword);
       $sqlstr .=" order by " . $prefix . "time desc";
@@ -152,7 +152,7 @@ class ui extends page {
         {
           $rsid = base::getNum($myVal[$prefix . 'id'], -1);
           $rsfid = base::getNum($myVal[$prefix . 'fid'], -1);
-          if ($rsfid == $fid && (base::isEmpty($myCategory) || base::cInstr($myCategory, $rsid)))
+          if ($rsfid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsid)))
           {
             $loopLineString = $loopString;
             foreach ($myVal as $key => $val)
@@ -276,7 +276,7 @@ class ui extends page {
     $account = self::account();
     $ids = base::getString(request::getHTTPPara('ids', 'get'));
     $batch = base::getString(request::getHTTPPara('batch', 'get'));
-    if (base::cIdAry($ids))
+    if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');

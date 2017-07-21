@@ -69,7 +69,7 @@ namespace jtbc {
       $ids = $argIds;
       $value = $argValue;
       $db = page::db();
-      if (!is_null($db) && base::cIdAry($ids))
+      if (!is_null($db) && base::checkIDAry($ids))
       {
         $sqlstr = "update " . $table . " set " . $prefix . $field . "=abs(" . $prefix . $field . "-1) where " . $prefix . "id in (" . $ids . ")";
         if (is_numeric($value)) $sqlstr = "update " . $table . " set " . $prefix . $field . "=" . base::getNum($value, 0) . " where " . $prefix . "id in (" . $ids . ")";
@@ -87,7 +87,7 @@ namespace jtbc {
       $ids = $argIds;
       $value = base::getNum($argValue, 0);
       $db = page::db();
-      if (!is_null($db) && base::cIdAry($ids))
+      if (!is_null($db) && base::checkIDAry($ids))
       {
         $sqlstr = "update " . $table . " set " . $prefix . $field . "=" . $prefix . $field . "+" . $value . " where " . $prefix . "id in (" . $ids . ")";
         $exec = $db -> exec($sqlstr);
@@ -192,7 +192,7 @@ namespace jtbc {
       {
         if (!(is_numeric(strpos($entry, '.'))))
         {
-          if (!(base::cInstr($order, $entry, ',')))
+          if (!(base::checkInstr($order, $entry, ',')))
           {
             $order .= ',' . $entry;
           }
@@ -280,7 +280,7 @@ namespace jtbc {
             if (is_array($vars)) $requestValue = base::getString(@$vars[$filedName]);
             if ($mode == 0)
             {
-              if (!base::cInstr($specialFiled, $filedName, ','))
+              if (!base::checkInstr($specialFiled, $filedName, ','))
               {
                 $filedValid = true;
                 if (base::isEmpty($requestValue))
@@ -392,7 +392,7 @@ namespace jtbc {
 
             if ($mode == 0)
             {
-              if (!base::cInstr($specialFiled, $filedName, ','))
+              if (!base::checkInstr($specialFiled, $filedName, ','))
               {
                 $filedValid = true;
                 if (base::isEmpty($requestValue))
@@ -644,7 +644,7 @@ namespace jtbc {
           $loopString = $tpl -> getLoopString('{@}');
           foreach ($myAry as $myKey => $myVal)
           {
-            if (base::isEmpty($paraRowFilter) || !base::cInstr($paraRowFilter, $rsindex))
+            if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
             {
               $loopLineString = $loopString;
               foreach ($myVal as $key => $val)

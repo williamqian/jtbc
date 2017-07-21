@@ -5,7 +5,7 @@
 namespace jtbc {
   class base
   {
-    public static function cIdAry($argStrers)
+    public static function checkIDAry($argStrers)
     {
       $bool = false;
       $strers = $argStrers;
@@ -21,7 +21,7 @@ namespace jtbc {
       return $bool;
     }
 
-    public static function cInstr($argStrers, $argStr, $argSpStr = ',')
+    public static function checkInstr($argStrers, $argStr, $argSpStr = ',')
     {
       $bool = false;
       $strers = strval($argStrers);
@@ -422,9 +422,9 @@ namespace jtbc {
       $tmpstr = '';
       $ary1 = $argIdAry1;
       $ary2 = $argIdAry2;
-      if (self::cIdAry($ary1) && self::cIdAry($ary2)) $tmpstr = $ary1 . ',' . $ary2;
-      else if (!self::cIdAry($ary1) && self::cIdAry($ary2)) $tmpstr = $ary2;
-      else if (self::cIdAry($ary1) && !self::cIdAry($ary2)) $tmpstr = $ary1;
+      if (self::checkIDAry($ary1) && self::checkIDAry($ary2)) $tmpstr = $ary1 . ',' . $ary2;
+      else if (!self::checkIDAry($ary1) && self::checkIDAry($ary2)) $tmpstr = $ary2;
+      else if (self::checkIDAry($ary1) && !self::checkIDAry($ary2)) $tmpstr = $ary1;
       return $tmpstr;
     }
 

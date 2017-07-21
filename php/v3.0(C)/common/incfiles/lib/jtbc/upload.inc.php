@@ -39,7 +39,7 @@ namespace jtbc {
         {
           $upResultArray['message'] = tpl::take('::console.text-upload-error-1', 'lng');
         }
-        else if (!base::cInstr($allowFiletype, $filetype, ','))
+        else if (!base::checkInstr($allowFiletype, $filetype, ','))
         {
           $upResultArray['message'] = str_replace('{$allowfiletype}', $allowFiletype, tpl::take('::console.text-upload-error-2', 'lng'));
         }
