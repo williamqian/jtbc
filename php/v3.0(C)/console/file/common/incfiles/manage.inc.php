@@ -143,7 +143,7 @@ class ui extends page {
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
-      if (base::cInstr(self::$allowFiletype, $filetype, ','))
+      if (base::checkInstr(self::$allowFiletype, $filetype, ','))
       {
         $tmpstr = tpl::take('manage.edit', 'tpl');
         $tmpstr = str_replace('{$-filemode}', base::htmlEncode($filemode), $tmpstr);

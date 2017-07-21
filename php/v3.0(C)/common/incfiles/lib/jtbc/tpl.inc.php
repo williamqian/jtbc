@@ -573,9 +573,9 @@ namespace jtbc {
         $optionselected = self::take('global.config.xmlselect_' . $template, 'tpl');
         foreach ($xmlAry as $key => $val)
         {
-          if (base::isEmpty($selstr) || base::cInstr($selstr, $key, ','))
+          if (base::isEmpty($selstr) || base::checkInstr($selstr, $key, ','))
           {
-            if ($value == '*' || base::cInstr($value, $key, ',')) $tmpstr .= $optionselected;
+            if ($value == '*' || base::checkInstr($value, $key, ',')) $tmpstr .= $optionselected;
             else $tmpstr .= $optionUnselected;
             $tmpstr = str_replace('{$explain}', base::htmlEncode($val), $tmpstr);
             $tmpstr = str_replace('{$value}', base::htmlEncode($key), $tmpstr);

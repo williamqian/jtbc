@@ -253,7 +253,7 @@ class ui extends page {
       $db = self::db();
       if (!is_null($db))
       {
-        if (base::cIdAry($ids))
+        if (base::checkIDAry($ids))
         {
           $status = 1;
           $table = tpl::take('config.db_table', 'cfg');
@@ -285,7 +285,7 @@ class ui extends page {
     $account = self::account();
     $ids = base::getString(request::getHTTPPara('ids', 'get'));
     $batch = base::getString(request::getHTTPPara('batch', 'get'));
-    if (base::cIdAry($ids))
+    if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');

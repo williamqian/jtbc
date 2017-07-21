@@ -160,7 +160,7 @@ namespace jtbc\console {
             else
             {
               $allSegment = $this -> getGenrePopedom($genre, 'segment');
-              if (base::cInstr($allSegment, $segment, ',')) $bool = true;
+              if (base::checkInstr($allSegment, $segment, ',')) $bool = true;
             }
           }
         }
@@ -185,7 +185,7 @@ namespace jtbc\console {
             if (base::isEmpty($allCategory) || $allCategory == ',') $bool = true;
             else
             {
-              if (base::cInstr($allCategory, $category, ',')) $bool = true;
+              if (base::checkInstr($allCategory, $category, ',')) $bool = true;
             }
           }
         }
@@ -327,7 +327,7 @@ namespace jtbc\console {
       if (!$this -> checkIsSuper())
       {
         $myRoleLang = base::getString($this -> getMyInfo('lang', 'role'), 0);
-        if (!base::cInstr($myRoleLang, $lang))
+        if (!base::checkInstr($myRoleLang, $lang))
         {
           $lang = base::getNum(base::getLRStr($myRoleLang, ',', 'left'), 0);
           $this -> setLang($lang);

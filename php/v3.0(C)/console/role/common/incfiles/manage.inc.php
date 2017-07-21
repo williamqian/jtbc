@@ -91,7 +91,7 @@ class ui extends page {
               $checkedp = '';
               if (array_key_exists($val, $popedomArray) && is_array($popedomArray[$val]))
               {
-                if (base::cInstr(@$popedomArray[$val]['segment'], $pval, ',')) $checkedp = ' checked="checked"';
+                if (base::checkInstr(@$popedomArray[$val]['segment'], $pval, ',')) $checkedp = ' checked="checked"';
               }
               $popedomSelect .= tpl::take('manage.part-select-popedom-option', 'tpl');
               $popedomSelect = str_replace('{$genre}', base::htmlEncode($val), $popedomSelect);
@@ -412,7 +412,7 @@ class ui extends page {
     $account = self::account();
     $ids = base::getString(request::getHTTPPara('ids', 'get'));
     $batch = base::getString(request::getHTTPPara('batch', 'get'));
-    if (base::cIdAry($ids))
+    if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
