@@ -8,13 +8,13 @@
   <item_list>
     <item>
       <name><![CDATA[part-toplink]]></name>
-      <default><![CDATA[<a class="link" link="?type=list&amp;symbol=.tpl.index&amp;mid=list-1" mid="list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link" link="?type=list&amp;symbol=.tpl.public&amp;mid=list-2" mid="list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link" link="?type=list&amp;symbol=.tpl.transfer&amp;mid=list-3" mid="list-3">{$=take('manage.text-menu-3', 'lng')}</a>]]></default>
+      <default><![CDATA[<a class="link mid-list-1" link="?type=list&amp;symbol=.tpl.index&amp;mid=.mid-list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link mid-list-2" link="?type=list&amp;symbol=.tpl.public&amp;mid=.mid-list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link mid-list-3" link="?type=list&amp;symbol=.tpl.transfer&amp;mid=.mid-list-3">{$=take('manage.text-menu-3', 'lng')}</a>]]></default>
     </item>
     <item>
       <name><![CDATA[list]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}">
-  <toplink umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-node', 'lng')} [ {$-current-key} ]</h3>
     <rightarea><span class="text">{$=take('manage.text-select-node', 'lng')}</span>&nbsp;&nbsp;<select name="node" class="s1 select" val="{$-current-key}" action="{$=htmlEncode($replaceQuerystring('node', null))}">{@}<option value="{$key}">{$key}</option>{@}</select>&nbsp;&nbsp;&nbsp;<div class="searchbox"><form action="?type=list" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('manage.text-symbol', 'lng')}" value="{$-symbol}" /><input type="submit" class="search" value="" /></form></div></rightarea>

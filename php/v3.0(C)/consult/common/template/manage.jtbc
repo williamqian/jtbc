@@ -8,13 +8,13 @@
   <item_list>
     <item>
       <name><![CDATA[part-toplink]]></name>
-      <default><![CDATA[<a class="link" link="?type=list&amp;mid=list-1" mid="list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link" link="?type=list&amp;dispose=1&amp;mid=list-2" mid="list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link" link="?type=list&amp;dispose=0&amp;mid=list-3" mid="list-3">{$=take('manage.text-menu-3', 'lng')}</a><a class="link show-{$-account-popedom-add}" link="?type=add&amp;mid=add" mid="add">{$=take('manage.text-menu-4', 'lng')}</a>]]></default>
+      <default><![CDATA[<a class="link mid-list-1" link="?type=list&amp;mid=.mid-list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link mid-list-2" link="?type=list&amp;dispose=1&amp;mid=.mid-list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link mid-list-3" link="?type=list&amp;dispose=0&amp;mid=.mid-list-3">{$=take('manage.text-menu-3', 'lng')}</a><a class="link mid-add show-{$-account-popedom-add}" link="?type=add&amp;mid=.mid-add">{$=take('manage.text-menu-4', 'lng')}</a>]]></default>
     </item>
     <item>
       <name><![CDATA[add]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="add" genre="{$=$genre}" folder="{$=$folder}" filename="{$=$filename}">
-  <toplink mid="add" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" pitchon=".mid-add" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
     <form action="?type=action&amp;action=add" onsubmit="return false;">
@@ -54,7 +54,7 @@
       <name><![CDATA[edit]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="edit" genre="{$=$genre}" folder="{$=$folder}" filename="{$=$filename}">
-  <toplink mid="null" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
     <form action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
@@ -98,7 +98,7 @@
       <name><![CDATA[list]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}">
-  <toplink mid="list-1" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-list', 'lng')}</h3>
     <table cellpadding="10" cellspacing="1" class="tableL">

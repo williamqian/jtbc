@@ -132,11 +132,6 @@ jtbc.console.manage = {
     var managerObj = tthis.obj.find('.manager');
     tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + managerObj.attr('genre') + '/';
     tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + managerObj.attr('filename');
-    managerObj.find('toplink').each(function(){
-      var thisObj = $(this);
-      var currentMid = thisObj.attr('umid') || thisObj.attr('mid');
-      thisObj.find('a[mid=\'' + currentMid + '\']').addClass('on');
-    });
   },
   ready: function()
   {

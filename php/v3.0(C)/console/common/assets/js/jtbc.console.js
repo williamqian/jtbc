@@ -14,7 +14,8 @@ jtbc.console = {
     });
     obj.find('.pitchon').each(function(){
       var thisObj = $(this);
-      thisObj.find(thisObj.attr('pitchon')).addClass('on');
+      var pitchon = thisObj.attr('upitchon') || thisObj.attr('pitchon');
+      if (pitchon) thisObj.find(pitchon).addClass('on');
     });
     obj.find('.switch').each(function(){
       var thisObj = $(this);

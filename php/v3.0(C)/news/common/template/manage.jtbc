@@ -8,13 +8,13 @@
   <item_list>
     <item>
       <name><![CDATA[part-toplink]]></name>
-      <default><![CDATA[<a class="link" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => 'list-1', 'publish' => null, 'id' => null))}" mid="list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => 'list-2', 'publish' => '1', 'id' => null))}" mid="list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => 'list-3', 'publish' => '0', 'id' => null))}" mid="list-3">{$=take('manage.text-menu-3', 'lng')}</a><a class="link show-{$-account-popedom-add}" link="{$=replaceQuerystring(array('type' => 'add', 'mid' => 'add', 'publish' => null, 'id' => null))}" mid="add">{$=take('manage.text-menu-4', 'lng')}</a>]]></default>
+      <default><![CDATA[<a class="link mid-list-1" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => '.mid-list-1', 'publish' => null, 'id' => null))}">{$=take('manage.text-menu-1', 'lng')}</a><a class="link mid-list-2" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => '.mid-list-2', 'publish' => '1', 'id' => null))}">{$=take('manage.text-menu-2', 'lng')}</a><a class="link mid-list-3" link="{$=replaceQuerystring(array('type' => 'list', 'mid' => '.mid-list-3', 'publish' => '0', 'id' => null))}">{$=take('manage.text-menu-3', 'lng')}</a><a class="link mid-add show-{$-account-popedom-add}" link="{$=replaceQuerystring(array('type' => 'add', 'mid' => '.mid-add', 'publish' => null, 'id' => null))}">{$=take('manage.text-menu-4', 'lng')}</a>]]></default>
     </item>
     <item>
       <name><![CDATA[add]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}{$-category-nav}</span></nav>
 <div class="manager" module="add" genre="{$=$genre}" folder="{$=$folder}" filename="{$=$filename}">
-  <toplink mid="add" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" pitchon="add" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
     <form action="?type=action&amp;action=add" onsubmit="return false;">
@@ -64,7 +64,7 @@
       <name><![CDATA[edit]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}{$-category-nav}</span></nav>
 <div class="manager" module="edit" genre="{$=$genre}" folder="{$=$folder}" filename="{$=$filename}">
-  <toplink mid="null" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
     <form action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
@@ -118,7 +118,7 @@
       <name><![CDATA[list]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}{$-category-nav}</span></nav>
 <div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}">
-  <toplink mid="list-1" umid="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink class="pitchon" pitchon=".mid-list-1" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-list', 'lng')}</h3>
     <rightarea><div class="searchbox"><form action="{$=htmlEncode($replaceQuerystring('keyword', null))}" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('global.config.keyword', 'lng')}" value="{$-keyword}" /><input type="submit" class="search" value="" /></form></div></rightarea>
