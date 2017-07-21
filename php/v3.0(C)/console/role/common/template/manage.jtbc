@@ -36,10 +36,10 @@
       <name><![CDATA[add]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="add" genre="{$=$genre}" filename="{$=$filename}" text-lang-1="{$=take('manage.text-tips-lang-null', 'lng')}" text-lang-ok="{$=take('::console.iknow', 'lng')}">
-  <toplink class="pitchon" pitchon=".mid-add" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink mode="pitchon" pitchon=".mid-add" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
-    <form action="?type=action&amp;action=add" onsubmit="return false;">
+    <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
       <input type="hidden" name="popedom" />
       <input type="hidden" name="lang" />
       <table cellpadding="10" cellspacing="0" class="tableF">
@@ -59,7 +59,7 @@
         </tbody>
       </table>
       <div class="form_tips"></div>
-      <div class="form_button"><button class="b2">{$=take('global.config.submit', 'lng')}</button></div>
+      <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>
     </form>
   </div>
 </div>
@@ -69,10 +69,10 @@
       <name><![CDATA[edit]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="edit" genre="{$=$genre}" filename="{$=$filename}" text-lang-1="{$=take('manage.text-tips-lang-null', 'lng')}" text-lang-ok="{$=take('::console.iknow', 'lng')}">
-  <toplink class="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink mode="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
-    <form action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
+    <form mode="ajaxpost" action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
       <input type="hidden" name="popedom" />
       <input type="hidden" name="lang" value="{$lang}" />
       <table cellpadding="10" cellspacing="0" class="tableF">
@@ -96,7 +96,7 @@
         </tbody>
       </table>
       <div class="form_tips"></div>
-      <div class="form_button"><button class="b2">{$=take('global.config.submit', 'lng')}</button></div>
+      <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>
     </form>
   </div>
 </div>
@@ -106,7 +106,7 @@
       <name><![CDATA[list]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}">
-  <toplink class="pitchon" pitchon=".mid-list-1" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
+  <toplink mode="pitchon" pitchon=".mid-list-1" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-list', 'lng')}</h3>
     <table cellpadding="10" cellspacing="1" class="tableL">
@@ -127,7 +127,7 @@
           <td>{$time}</td>
           <td><icons><icon class="edit show-{$-account-popedom-edit}" title="{$=take('global.config.edit', 'lng')}"><a class="link" link="?type=edit&amp;id={$id}"></a></icon><icon rsid="{$id}" class="delete show-{$-account-popedom-delete}" title="{$=take('global.config.delete', 'lng')}" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-delete-id', 'lng')}[{$id}]{$=take('::console.q', 'lng')}"></icon></icons></td>
         </tr>{@}
-        <tr class="tips alonetips hide">
+        <tr mode="alonetips" class="tips hide">
           <td colspan="6">{$=take('manage.text-tips-list-null', 'lng')}</td>
         </tr>
       </tbody>
@@ -145,7 +145,7 @@
       <default><![CDATA[<div class="title">{$=take('manage.text-category-tit', 'lng')}</div>
 <div class="substance">
   <div class="tab">
-    <div class="option singleselect" childtag="label">{$=xmlSelect('::sel_lang.*', '', 'label', 'tab-lang')}</div>
+    <div mode="singleselect" class="option" childtag="label">{$=xmlSelect('::sel_lang.*', '', 'label', 'tab-lang')}</div>
     <div class="item_list">{@}
       <div class="item">
         <input type="radio" class="tabradio" name="option" id="tab-lang{$key}" />

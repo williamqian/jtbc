@@ -179,26 +179,10 @@ jtbc.console.manage = {
     var managerObj = tthis.obj.find('.manager');
     tthis.bindSelectPopedomEvents();
     tthis.bindSelectLangEvents();
-    managerObj.find('.form_button').find('button.b2').click(function(){
-      var thisObj = $(this);
-      if (!thisObj.hasClass('lock'))
-      {
-        thisObj.addClass('lock');
-        var formObj = thisObj.parent().parent();
-        managerObj.find('input[name=\'lang\']').trigger('update');
-        var url = tthis.para['fileurl'] + formObj.attr('action');
-        $.post(url, formObj.serialize(), function(data){
-          var dataObj = $(data);
-          thisObj.removeClass('lock');
-          if (dataObj.find('result').attr('status') == '0')
-          {
-            var msgObj = managerObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
-            var message = dataObj.find('result').attr('message').split('|');
-            for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
-          }
-          else if (dataObj.find('result').attr('status') == '1') managerObj.find('toplink').find('a.link').first().click();
-        });
-      };
+    managerObj.find('.form_button').find('button.submit').on('before', function(){
+      managerObj.find('input[name=\'lang\']').trigger('update');
+    }).attr('done', 'custom').on('done', function(){
+      managerObj.find('toplink').find('a.link').first().click();
     });
   },
   initEdit: function()
@@ -207,26 +191,8 @@ jtbc.console.manage = {
     var managerObj = tthis.obj.find('.manager');
     tthis.bindSelectPopedomEvents();
     tthis.bindSelectLangEvents();
-    managerObj.find('.form_button').find('button.b2').click(function(){
-      var thisObj = $(this);
-      if (!thisObj.hasClass('lock'))
-      {
-        thisObj.addClass('lock');
-        var formObj = thisObj.parent().parent();
-        managerObj.find('input[name=\'lang\']').trigger('update');
-        var url = tthis.para['fileurl'] + formObj.attr('action');
-        $.post(url, formObj.serialize(), function(data){
-          var dataObj = $(data);
-          thisObj.removeClass('lock');
-          if (dataObj.find('result').attr('status') == '0')
-          {
-            var msgObj = managerObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
-            var message = dataObj.find('result').attr('message').split('|');
-            for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
-          }
-          else if (dataObj.find('result').attr('status') == '1') managerObj.find('.form_tips').html('<em>' + dataObj.find('result').attr('message') + '</em>');
-        });
-      };
+    managerObj.find('.form_button').find('button.submit').on('before', function(){
+      managerObj.find('input[name=\'lang\']').trigger('update');
     });
   },
   initCommon: function()

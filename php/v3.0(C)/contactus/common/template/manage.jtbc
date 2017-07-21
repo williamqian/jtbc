@@ -12,8 +12,7 @@
 <div class="manager" module="edit" genre="{$=$genre}" folder="{$=$folder}" filename="{$=$filename}">
   <div class="table">
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
-    <form action="?type=action&amp;action=edit" onsubmit="return false;">
-      <input type="hidden" name="popedom" />
+    <form mode="ajaxpost" action="?type=action&amp;action=edit" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
         <tbody>
           <tr>
@@ -40,7 +39,7 @@
         </tbody>
       </table>
       <div class="form_tips"></div>
-      <div class="form_button"><button class="b2">{$=take('global.config.submit', 'lng')}</button></div>
+      <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>
     </form>
   </div>
 </div>

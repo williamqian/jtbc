@@ -5,43 +5,87 @@ jtbc.console = {
   manageURL: 'manage.php',
   managerapiURL: 'managerapi.php',
   materialFolder: 'universal/material/',
-  bindCommonEvents: function(argObj)
+  bindEventsByMode: function(argObj)
   {
+    var tthis = this;
     var obj = argObj;
-    obj.find('.alonetips').each(function(){
+    obj.find('*[mode]').each(function(){
       var thisObj = $(this);
-      if (thisObj.parent().find(this.tagName).length == thisObj.parent().find(this.tagName + '.hide').length) thisObj.removeClass('hide');
-    });
-    obj.find('.pitchon').each(function(){
-      var thisObj = $(this);
-      var pitchon = thisObj.attr('upitchon') || thisObj.attr('pitchon');
-      if (pitchon) thisObj.find(pitchon).addClass('on');
-    });
-    obj.find('.switch').each(function(){
-      var thisObj = $(this);
-      if (thisObj.attr('bind') != '1')
+      if (thisObj.attr('modebinded') != 'true')
       {
-        thisObj.attr('bind', '1');
-        thisObj.find('b').on('mouseup', function(){
-          thisObj.addClass('switch-1');
-          thisObj.find('input.val').val('1');
-        });
-        thisObj.find('u').on('mouseup', function(){
-          thisObj.removeClass('switch-1');
-          thisObj.find('input.val').val('0');
-        });
+        thisObj.attr('modebinded', 'true');
+        if (thisObj.attr('mode') == 'alonetips')
+        {
+          if (thisObj.parent().find(this.tagName).length == thisObj.parent().find(this.tagName + '.hide').length) thisObj.removeClass('hide');
+        }
+        else if (thisObj.attr('mode') == 'ajaxpost')
+        {
+          thisObj.find('button.submit').on('click', function(){
+            var btnObj = $(this);
+            if (!btnObj.hasClass('lock'))
+            {
+              btnObj.addClass('lock');
+              btnObj.trigger('before');
+              var url = tthis.para['current-main-fileurl'] + thisObj.attr('action');
+              $.post(url, thisObj.serialize(), function(data){
+                var dataObj = $(data);
+                btnObj.removeClass('lock');
+                if (dataObj.find('result').attr('status') == '0')
+                {
+                  if (btnObj.attr('message') == 'custom')
+                  {
+                    btnObj.attr('msg', dataObj.find('result').attr('message')).trigger('message');
+                  }
+                  else
+                  {
+                    var msgObj = thisObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
+                    var message = dataObj.find('result').attr('message').split('|');
+                    for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
+                  };
+                }
+                else if (dataObj.find('result').attr('status') == '1')
+                {
+                  if (btnObj.attr('done') == 'custom') btnObj.trigger('done');
+                  else thisObj.find('.form_tips').html('<em>' + dataObj.find('result').attr('message') + '</em>');
+                };
+              });
+            };
+          });
+        }
+        else if (thisObj.attr('mode') == 'pitchon')
+        {
+          var pitchon = thisObj.attr('upitchon') || thisObj.attr('pitchon');
+          if (pitchon) thisObj.find(pitchon).addClass('on');
+        }
+        else if (thisObj.attr('mode') == 'input-switch')
+        {
+          if (thisObj.attr('bind') != '1')
+          {
+            thisObj.attr('bind', '1');
+            thisObj.find('b').on('mouseup', function(){
+              thisObj.addClass('switch-1');
+              thisObj.find('input.val').val('1');
+            });
+            thisObj.find('u').on('mouseup', function(){
+              thisObj.removeClass('switch-1');
+              thisObj.find('input.val').val('0');
+            });
+          };
+        }
+        else if (thisObj.attr('mode') == 'singleselect')
+        {
+          var thisObj = $(this);
+          thisObj.find(thisObj.attr('childtag')).click(function(){
+            var childObj = $(this);
+            childObj.parent().find(this.tagName).removeClass('on').eq(childObj.index()).addClass('on');
+          });
+        }
+        else if (thisObj.attr('mode') == 'selectoption')
+        {
+          var thisObj = $(this);
+          thisObj.val(thisObj.attr('val'));
+        };
       };
-    });
-    obj.find('.singleselect').each(function(){
-      var thisObj = $(this);
-      thisObj.find(thisObj.attr('childtag')).click(function(){
-        var childObj = $(this);
-        childObj.parent().find(this.tagName).removeClass('on').eq(childObj.index()).addClass('on');
-      });
-    });
-    obj.find('select.select').each(function(){
-      var thisObj = $(this);
-      thisObj.val(thisObj.attr('val'));
     });
   },
   insertHTML: function(argObj, argHTML)
@@ -55,7 +99,7 @@ jtbc.console = {
       else if (myObj.attr('cssurl')) obj.append('<link rel="stylesheet" href="' + tthis.para['root'] + myObj.attr('cssurl') + '" />');
       else if (myObj.attr('call')) eval(myObj.attr('call'));
     });
-    tthis.bindCommonEvents(obj);
+    tthis.bindEventsByMode(obj);
   },
   rsetWidthAndHeight: function()
   {
@@ -765,7 +809,7 @@ jtbc.console.lib = {
     var pageObj = consoleObj.find('.popup_page');
     var maskObj = consoleObj.find('.popup_mask');
     pageObj.find('div.content').html(html);
-    tthis.parent.bindCommonEvents(pageObj);
+    tthis.parent.bindEventsByMode(pageObj);
     pageObj.find('span.close').click(function(){
       maskObj.removeClass('on');
       pageObj.removeClass('on');

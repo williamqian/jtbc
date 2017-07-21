@@ -78,26 +78,6 @@ jtbc.console.manage = {
         });
       };
     });
-    managerObj.find('.form_button').find('button.b2').click(function(){
-      var thisObj = $(this);
-      if (!thisObj.hasClass('lock'))
-      {
-        thisObj.addClass('lock');
-        var formObj = thisObj.parent().parent();
-        var url = tthis.para['fileurl'] + formObj.attr('action');
-        $.post(url, formObj.serialize(), function(data){
-          var dataObj = $(data);
-          thisObj.removeClass('lock');
-          if (dataObj.find('result').attr('status') == '0')
-          {
-            var msgObj = managerObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
-            var message = dataObj.find('result').attr('message').split('|');
-            for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
-          }
-          else if (dataObj.find('result').attr('status') == '1') managerObj.find('.form_tips').html('<em>' + dataObj.find('result').attr('message') + '</em>');
-        });
-      };
-    });
   },
   initCommon: function()
   {
