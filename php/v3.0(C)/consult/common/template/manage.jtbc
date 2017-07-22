@@ -38,7 +38,7 @@
           </tr>
           <tr class="show-{$-account-popedom-dispose}">
             <th valign="top"><t>{$=take('global.config.dispose', 'lng')}</t></th>
-            <td><span class="switch"><b></b><u></u><em></em><input type="hidden" name="dispose" class="val" value="0" /></span></td>
+            <td><span mode="inputswitch" class="switch"><b></b><u></u><em></em><input type="hidden" name="dispose" class="val" value="0" /></span></td>
           </tr>
         </tbody>
       </table>
