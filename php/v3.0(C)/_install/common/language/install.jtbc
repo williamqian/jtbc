@@ -39,6 +39,10 @@
       <zh-cn><![CDATA[数据库信息不正确]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-tips-install-error-8c]]></name>
+      <zh-cn><![CDATA[数据库名不存在且自动创建失败]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-tips-install-error-9]]></name>
       <zh-cn><![CDATA[数据库执行脚本异常，请检查权限]]></zh-cn>
     </item>

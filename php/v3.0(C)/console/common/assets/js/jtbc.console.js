@@ -38,14 +38,14 @@ jtbc.console = {
                   else
                   {
                     var msgObj = thisObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
-                    var message = btnObj.attr('message').split('|');
+                    var message = btnObj.attr('msg').split('|');
                     for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
                   };
                 }
                 else if (dataObj.find('result').attr('status') == '1')
                 {
                   if (btnObj.attr('done') == 'custom') btnObj.trigger('done');
-                  else thisObj.find('.form_tips').html('<em>' + btnObj.attr('message') + '</em>');
+                  else thisObj.find('.form_tips').html('<em>' + btnObj.attr('msg') + '</em>');
                 };
               });
             };

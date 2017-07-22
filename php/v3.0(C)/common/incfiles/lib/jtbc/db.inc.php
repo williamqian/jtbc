@@ -19,7 +19,9 @@ namespace jtbc {
     public function init()
     {
       try {
-        $this -> conn = @new PDO("mysql:host=" . $this -> dbHost . ";dbname=" . $this -> dbDatabase, $this -> dbUsername, $this -> dbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'', PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION));
+        $dsn = 'mysql:host=' . $this -> dbHost;
+        if (!empty($this -> dbDatabase)) $dsn .= ';dbname=' . $this -> dbDatabase;
+        $this -> conn = @new PDO($dsn, $this -> dbUsername, $this -> dbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'', PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION));
       }
       catch (PDOException $e) {
         $this -> errStatus = 1;

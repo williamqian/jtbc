@@ -117,7 +117,6 @@ jtbc.console.manage = {
   bindSelectLangEvents: function()
   {
     var tthis = this;
-    var tthis.obj = tthis.obj.find('.manager');
     tthis.obj.find('input[name=\'lang-select\']').on('click', function(){
       var that = this;
       var thisObj = $(this);

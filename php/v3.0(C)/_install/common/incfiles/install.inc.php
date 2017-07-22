@@ -28,73 +28,89 @@ class ui extends page {
         else if (!verify::isEmail($email)) $message = tpl::take('install.text-tips-install-error-7', 'lng');
         else
         {
+          $para = '1';
           $db = new db();
           $db -> dbHost = $db_host;
           $db -> dbUsername = $db_username;
           $db -> dbPassword = $db_password;
-          $db -> dbDatabase = $db_database;
           $db -> init();
           if ($db -> errStatus != 0)
           {
-            $para = '1';
             $message = tpl::take('install.text-tips-install-error-8', 'lng');
           }
           else
           {
-            $para = '2';
-            $mysql = file_get_contents('mysql.sql');
-            $exec = $db -> exec($mysql);
-            if (is_numeric($exec))
+            $selectdb = false;
+            $re = $db -> exec('use ' . $db_database . ';select database();');
+            if (!is_numeric($re))
             {
-              self::$db = $db;
-              $table = tpl::take(':/account:config.db_table', 'cfg');
-              $prefix = tpl::take(':/account:config.db_prefix', 'cfg');
-              $preset = array();
-              $preset[$prefix . 'username'] = $username;
-              $preset[$prefix . 'password'] = md5($password);
-              $preset[$prefix . 'email'] = $email;
-              $preset[$prefix . 'role'] = -1;
-              $preset[$prefix . 'lastip'] = request::getRemortIP();
-              $preset[$prefix . 'lasttime'] = base::getDateTime();
-              $preset[$prefix . 'time'] = base::getDateTime();
-              $sqlstr = smart::getAutoInsertSQLByVars($table, $preset);
-              $re = $db -> exec($sqlstr);
-              if (is_numeric($re))
+              $re = $db -> exec('create database ' . $db_database);
+              if ($re == true)
               {
-                $constPath = smart::getActualRoute('common/incfiles/const.inc.php', 1);
-                $constContent = file_get_contents($constPath);
-                $constContent = str_replace('{$db_host}', $db_host, $constContent);
-                $constContent = str_replace('{$db_username}', $db_username, $constContent);
-                $constContent = str_replace('{$db_password}', $db_password, $constContent);
-                $constContent = str_replace('{$db_database}', $db_database, $constContent);
-                $constContent = str_replace('define(\'SITESTATUS\', 0)', 'define(\'SITESTATUS\', 100)', $constContent);
-                $constContentSave = file_put_contents($constPath, $constContent);
-                if ($constContentSave)
+                $re = $db -> exec('use ' . $db_database . ';select database();');
+                if (is_numeric($re)) $selectdb = true;
+              }
+            }
+            else $selectdb = true;
+            $db -> exec('drop table `pdo_test`');
+            if ($selectdb == true)
+            {
+              $para = '2';
+              $mysql = file_get_contents('mysql.sql');
+              $exec = $db -> exec($mysql);
+              if (is_numeric($exec))
+              {
+                self::$db = $db;
+                $table = tpl::take(':/account:config.db_table', 'cfg');
+                $prefix = tpl::take(':/account:config.db_prefix', 'cfg');
+                $preset = array();
+                $preset[$prefix . 'username'] = $username;
+                $preset[$prefix . 'password'] = md5($password);
+                $preset[$prefix . 'email'] = $email;
+                $preset[$prefix . 'role'] = -1;
+                $preset[$prefix . 'lastip'] = request::getRemortIP();
+                $preset[$prefix . 'lasttime'] = base::getDateTime();
+                $preset[$prefix . 'time'] = base::getDateTime();
+                $sqlstr = smart::getAutoInsertSQLByVars($table, $preset);
+                $re = $db -> exec($sqlstr);
+                if (is_numeric($re))
                 {
-                  $indexPath = smart::getActualRoute('index.php', 1);
-                  $indexContent = file_get_contents($indexPath);
-                  $indexContent = str_replace('<?php if (SITESTATUS == 0) header(\'location: _install\');?>', '', $indexContent);
-                  $fileBool1 = file_put_contents($indexPath, $indexContent);
-                  $completePath = smart::getActualRoute('complete.php', 1);
-                  $completeContent = '<?php' . chr(10);
-                  $completeContent .= 'require_once(\'common/incfiles/page.inc.php\');' . chr(10);
-                  $completeContent .= 'jtbc\\base::removeDir(\'_install\');' . chr(10);
-                  $completeContent .= 'unlink(\'complete.php\');' . chr(10);
-                  $completeContent .= 'header(\'location: ' . CONSOLEDIR . '\');' . chr(10);
-                  $completeContent .= '?>' . chr(10);
-                  $fileBool2 = file_put_contents($completePath, $completeContent);
-                  if ($fileBool1 && $fileBool2)
+                  $constPath = smart::getActualRoute('common/incfiles/const.inc.php', 1);
+                  $constContent = file_get_contents($constPath);
+                  $constContent = str_replace('{$db_host}', $db_host, $constContent);
+                  $constContent = str_replace('{$db_username}', $db_username, $constContent);
+                  $constContent = str_replace('{$db_password}', $db_password, $constContent);
+                  $constContent = str_replace('{$db_database}', $db_database, $constContent);
+                  $constContent = str_replace('define(\'SITESTATUS\', 0)', 'define(\'SITESTATUS\', 100)', $constContent);
+                  $constContentSave = file_put_contents($constPath, $constContent);
+                  if ($constContentSave)
                   {
-                    $status = 1;
-                    $para = smart::getActualRoute('complete.php', 1);
+                    $indexPath = smart::getActualRoute('index.php', 1);
+                    $indexContent = file_get_contents($indexPath);
+                    $indexContent = str_replace('<?php if (SITESTATUS == 0) header(\'location: _install\');?>', '', $indexContent);
+                    $fileBool1 = file_put_contents($indexPath, $indexContent);
+                    $completePath = smart::getActualRoute('complete.php', 1);
+                    $completeContent = '<?php' . chr(10);
+                    $completeContent .= 'require_once(\'common/incfiles/page.inc.php\');' . chr(10);
+                    $completeContent .= 'jtbc\\base::removeDir(\'_install\');' . chr(10);
+                    $completeContent .= 'unlink(\'complete.php\');' . chr(10);
+                    $completeContent .= 'header(\'location: ' . CONSOLEDIR . '\');' . chr(10);
+                    $completeContent .= '?>' . chr(10);
+                    $fileBool2 = file_put_contents($completePath, $completeContent);
+                    if ($fileBool1 && $fileBool2)
+                    {
+                      $status = 1;
+                      $para = smart::getActualRoute('complete.php', 1);
+                    }
+                    else $message = tpl::take('install.text-tips-install-error-10', 'lng');
                   }
                   else $message = tpl::take('install.text-tips-install-error-10', 'lng');
                 }
-                else $message = tpl::take('install.text-tips-install-error-10', 'lng');
+                else $message = tpl::take('install.text-tips-install-error-9', 'lng');
               }
               else $message = tpl::take('install.text-tips-install-error-9', 'lng');
             }
-            else $message = tpl::take('install.text-tips-install-error-9', 'lng');
+            else $message = tpl::take('install.text-tips-install-error-8c', 'lng');
           }
         }
       }
