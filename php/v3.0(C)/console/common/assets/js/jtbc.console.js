@@ -1,7 +1,9 @@
 var jtbc = window.jtbc || {};
 jtbc.console = {
+  obj: null,
   para: [],
   parent: jtbc,
+  root: null,
   manageURL: 'manage.php',
   managerapiURL: 'managerapi.php',
   materialFolder: 'universal/material/',
@@ -29,27 +31,67 @@ jtbc.console = {
               var url = tthis.para['current-main-fileurl'] + thisObj.attr('action');
               $.post(url, thisObj.serialize(), function(data){
                 var dataObj = $(data);
-                btnObj.removeClass('lock');
+                btnObj.attr('msg', dataObj.find('result').attr('message')).removeClass('lock');
                 if (dataObj.find('result').attr('status') == '0')
                 {
-                  if (btnObj.attr('message') == 'custom')
-                  {
-                    btnObj.attr('msg', dataObj.find('result').attr('message')).trigger('message');
-                  }
+                  if (btnObj.attr('message') == 'custom') btnObj.trigger('message');
                   else
                   {
                     var msgObj = thisObj.find('.form_tips').html('').append('<ul></ul>').find('ul');
-                    var message = dataObj.find('result').attr('message').split('|');
+                    var message = btnObj.attr('message').split('|');
                     for (var i in message) msgObj.append('<li>' + message[i] + '</li>');
                   };
                 }
                 else if (dataObj.find('result').attr('status') == '1')
                 {
                   if (btnObj.attr('done') == 'custom') btnObj.trigger('done');
-                  else thisObj.find('.form_tips').html('<em>' + dataObj.find('result').attr('message') + '</em>');
+                  else thisObj.find('.form_tips').html('<em>' + btnObj.attr('message') + '</em>');
                 };
               });
             };
+          });
+        }
+        else if (thisObj.attr('mode') == 'confirmurlexec')
+        {
+          thisObj.on('click', function(){
+            var myObj = $(this);
+            tthis.lib.popupConfirm(myObj.attr('confirm_text'), myObj.attr('confirm_b2'), myObj.attr('confirm_b3'), function(argObj){
+              var btnObj = argObj;
+              var url = tthis.para['current-main-fileurl'] + myObj.attr('urlexec');
+              $.get(url, function(data){ tthis.loadMainURLRefresh(); btnObj.parent().find('button.b3').click(); });
+            });
+          });
+        }
+        else if (thisObj.attr('mode') == 'highlightline')
+        {
+          thisObj.on('click', function(){
+            var myObj = $(this);
+            if (this.checked) myObj.parent().parent().parent().addClass('selected');
+            else myObj.parent().parent().parent().removeClass('selected');
+          });
+        }
+        else if (thisObj.attr('mode') == 'highlightlineall')
+        {
+          thisObj.on('click', function(){
+            var myObj = $(this);
+            var myForObj = $('input[name=\'' + myObj.attr('forname') + '\']');
+            if (this.checked)
+            {
+              myForObj.each(function(){ if (!this.checked) this.click(); });
+            }
+            else
+            {
+              myForObj.each(function(){ if (this.checked) this.click(); });
+            };
+          });
+        }
+        else if (thisObj.attr('mode') == 'pagigo')
+        {
+          thisObj.on('click', function(){
+            var myObj = $(this);
+            var baseLink = myObj.attr('baselink');
+            var myLink = baseLink.replace(/(\[\~page\])/g, myObj.parent().find('input.pagenum').val());
+            tthis.loadMainURL(tthis.para['current-main-fileurl'] + myLink);
           });
         }
         else if (thisObj.attr('mode') == 'pitchon')
@@ -57,7 +99,7 @@ jtbc.console = {
           var pitchon = thisObj.attr('upitchon') || thisObj.attr('pitchon');
           if (pitchon) thisObj.find(pitchon).addClass('on');
         }
-        else if (thisObj.attr('mode') == 'input-switch')
+        else if (thisObj.attr('mode') == 'inputswitch')
         {
           if (thisObj.attr('bind') != '1')
           {
@@ -72,9 +114,19 @@ jtbc.console = {
             });
           };
         }
+        else if (thisObj.attr('mode') == 'shortcut')
+        {
+          var pointObj = thisObj.parent();
+          if (thisObj.attr('parent') == '2') pointObj = pointObj.parent();
+          else if (thisObj.attr('parent') == '3') pointObj = pointObj.parent().parent();
+          pointObj = pointObj.find(thisObj.attr('shortcut'));
+          if (!pointObj.hasClass('show-0'))
+          {
+            thisObj.addClass('hand').on('click', function(){ pointObj.trigger('click'); });
+          };
+        }
         else if (thisObj.attr('mode') == 'singleselect')
         {
-          var thisObj = $(this);
           thisObj.find(thisObj.attr('childtag')).click(function(){
             var childObj = $(this);
             childObj.parent().find(this.tagName).removeClass('on').eq(childObj.index()).addClass('on');
@@ -82,7 +134,6 @@ jtbc.console = {
         }
         else if (thisObj.attr('mode') == 'selectoption')
         {
-          var thisObj = $(this);
           thisObj.val(thisObj.attr('val'));
         };
       };
@@ -103,26 +154,23 @@ jtbc.console = {
   },
   rsetWidthAndHeight: function()
   {
-    var myObj = $('.console');
+    var tthis = this;
     var windowHeight = $(window).height();
-    myObj.find('.container').css({'height': (windowHeight - myObj.find('.topbar').height()) + 'px'});
+    tthis.obj.find('.container').css({'height': (windowHeight - tthis.obj.find('.topbar').height()) + 'px'});
   },
   loadHTML: function()
   {
     var tthis = this;
-    var consoleObj = $('#console');
-    tthis.para['root'] = consoleObj.attr('root');
     $.get(tthis.manageURL, function(data){
       var dataObj = $(data);
-      if (dataObj.find('result').attr('status') == '1') tthis.insertHTML(consoleObj, dataObj.find('result').text());
+      if (dataObj.find('result').attr('status') == '1') tthis.insertHTML(tthis.root, dataObj.find('result').text());
     });
   },
   loadMainURL: function(argUrl)
   {
     var tthis = this;
     var myURL = argUrl;
-    var myObj = $('.console');
-    var mainObj = myObj.find('.container').find('.main');
+    var mainObj = tthis.obj.find('.container').find('.main');
     var loadedCallBack = function()
     {
       mainObj.find('nav').find('u').click(function(){
@@ -140,20 +188,20 @@ jtbc.console = {
         var managerObj = mainObj.find('.manager');
         if (thisObj.attr('link')) tthis.loadMainURL(tthis.para['current-main-fileurl'] + thisObj.attr('link'));
       });
-      myObj.find('nav').on('selectleftmenu', function(){
+      tthis.obj.find('nav').on('selectleftmenu', function(){
         var thisObj = $(this);
         var selGenre = thisObj.attr('genre');
-        myObj.find('.leftmenu').find('li').removeClass('on').find('span.tit').removeClass('on');
+        tthis.obj.find('.leftmenu').find('li').removeClass('on').find('span.tit').removeClass('on');
         if (selGenre)
         {
-          var selGenreObj = myObj.find('.leftmenu').find('span[genre=\'' + selGenre + '\']');
+          var selGenreObj = tthis.obj.find('.leftmenu').find('span[genre=\'' + selGenre + '\']');
           if (selGenreObj.length == 1)
           {
-            if (!myObj.find('.leftmenu').hasClass('min'))
+            if (!tthis.obj.find('.leftmenu').hasClass('min'))
             {
               selGenreObj.addClass('on');
-              myObj.find('.leftmenu').find('li').has(selGenreObj).addClass('on').find('span.tit').addClass('open');
-              myObj.find('.leftmenu').find('dl').has(selGenreObj).addClass('open').find('span.tit').addClass('open');
+              tthis.obj.find('.leftmenu').find('li').has(selGenreObj).addClass('on').find('span.tit').addClass('open');
+              tthis.obj.find('.leftmenu').find('dl').has(selGenreObj).addClass('open').find('span.tit').addClass('open');
             };
           };
         };
@@ -188,26 +236,26 @@ jtbc.console = {
   initConsole: function()
   {
     var tthis = this;
-    var myObj = $('.console');
-    myObj.find('.topbar').find('span.menu').click(function(){
+    tthis.obj = tthis.root.find('.console');
+    tthis.obj.find('.topbar').find('span.menu').click(function(){
       var thisObj = $(this);
       if (thisObj.parent().hasClass('min'))
       {
         thisObj.parent().removeClass('min');
-        myObj.find('.leftmenu').removeClass('min');
-        myObj.find('.leftmenu').find('span.tit.t1').removeAttr('title');
-        myObj.find('nav').trigger('selectleftmenu');
+        tthis.obj.find('.leftmenu').removeClass('min');
+        tthis.obj.find('.leftmenu').find('span.tit.t1').removeAttr('title');
+        tthis.obj.find('nav').trigger('selectleftmenu');
       }
       else
       {
         thisObj.parent().addClass('min');
-        myObj.find('.leftmenu').addClass('min').find('li').removeClass('on');
-        myObj.find('.leftmenu').find('span.tit').removeClass('open');
-        myObj.find('.leftmenu').find('dl.open').removeClass('open');
-        myObj.find('.leftmenu').find('span.tit.t1').each(function(){ $(this).attr('title', $(this).attr('mytitle')); });
+        tthis.obj.find('.leftmenu').addClass('min').find('li').removeClass('on');
+        tthis.obj.find('.leftmenu').find('span.tit').removeClass('open');
+        tthis.obj.find('.leftmenu').find('dl.open').removeClass('open');
+        tthis.obj.find('.leftmenu').find('span.tit.t1').each(function(){ $(this).attr('title', $(this).attr('mytitle')); });
       };
     });
-    myObj.find('.topbar').find('account').find('li.l1').click(function(){
+    tthis.obj.find('.topbar').find('account').find('li.l1').click(function(){
       var thisObj = $(this);
       if (thisObj.attr('loading') != 'true')
       {
@@ -238,8 +286,8 @@ jtbc.console = {
         });
       };
     });
-    myObj.find('.topbar').find('account').find('li.l2').click(function(){ myObj.find('.topbar').find('logout').trigger('click'); });
-    myObj.find('.topbar').find('lang').each(function(){
+    tthis.obj.find('.topbar').find('account').find('li.l2').click(function(){ tthis.obj.find('.topbar').find('logout').trigger('click'); });
+    tthis.obj.find('.topbar').find('lang').each(function(){
       var thisObj = $(this);
       $.get(tthis.manageURL + '?type=getlang', function(data){
         var dataObj = $(data);
@@ -256,7 +304,7 @@ jtbc.console = {
                 thisObj.attr('loading', 'false');
                 if (dataObj.find('result').attr('status') == '1')
                 {
-                  myObj.find('nav').find('u:last').trigger('click');
+                  tthis.obj.find('nav').find('u:last').trigger('click');
                   thisObj.parent().parent().find('b').find('flag').attr('class', 'f' + thisObj.attr('val')).nextAll('span').html(tthis.parent.htmlEncode(thisObj.attr('text')));
                 };
               });
@@ -265,13 +313,13 @@ jtbc.console = {
         };
       });
     });
-    myObj.find('.topbar').find('logout').click(function(){
+    tthis.obj.find('.topbar').find('logout').click(function(){
       var thisObj = $(this);
       tthis.lib.popupConfirm(thisObj.attr('confirm_text'), thisObj.attr('confirm_b2'), thisObj.attr('confirm_b3'), function(){ $.get(tthis.manageURL + '?type=action&action=logout', function(data){ location.href = '#'; tthis.loadHTML(); }); });
     });
-    myObj.find('.leftmenu').find('span.tit').click(function(){
+    tthis.obj.find('.leftmenu').find('span.tit').click(function(){
       var thisObj = $(this);
-      if (!myObj.find('.leftmenu').hasClass('min'))
+      if (!tthis.obj.find('.leftmenu').hasClass('min'))
       {
         if (thisObj.next().hasClass('open'))
         {
@@ -286,7 +334,7 @@ jtbc.console = {
       };
       if (thisObj.attr('link')) tthis.loadMainURL(tthis.para['root'] + thisObj.attr('genre') + '/' + thisObj.attr('link'));
     });
-    var defURL = myObj.find('.container').find('.main').attr('def');
+    var defURL = tthis.obj.find('.container').find('.main').attr('def');
     if (location.href.indexOf('#') != -1)
     {
       var locURL = location.href.substr(location.href.indexOf('#') + 1);
@@ -325,6 +373,8 @@ jtbc.console = {
   ready: function()
   {
     var tthis = this;
+    tthis.root = $('#console');
+    tthis.para['root'] = tthis.root.attr('root');
     tthis.loadHTML();
   }
 };
@@ -494,25 +544,6 @@ jtbc.console.lib = {
     if (value.length > 0) value = value.substring(0, value.length - 1);
     return value;
   },
-  highlightLine: function(argObj)
-  {
-    var myObj = argObj;
-    if (myObj.checked) $(myObj).parent().parent().parent().addClass('selected');
-    else $(myObj).parent().parent().parent().removeClass('selected');
-  },
-  highlightLineAll: function(argObj)
-  {
-    var myObj = argObj;
-    var myForObj = $('input[name=\'' + $(myObj).attr('forname') + '\']');
-    if (myObj.checked)
-    {
-      myForObj.each(function(){ if (!this.checked) this.click(); });
-    }
-    else
-    {
-      myForObj.each(function(){ if (this.checked) this.click(); });
-    };
-  },
   initAttEvents: function(argObj, argInsertFun)
   {
     var tthis = this;
@@ -629,6 +660,51 @@ jtbc.console.lib = {
       };
     });
   },
+  initBatchSwitchEvents: function(argObj)
+  {
+    var tthis = this;
+    var myObj = argObj;
+    myObj.find('div.batch').find('span.ok').click(function(){
+      var thisObj = $(this);
+      var batch = thisObj.parent().find('select.batch').val();
+      if (batch != 'null')
+      {
+        tthis.popupConfirm(thisObj.attr('confirm_text'), thisObj.attr('confirm_b2'), thisObj.attr('confirm_b3'), function(argObj){
+          var btnObj = argObj;
+          var ids = tthis.getCheckBoxValue(myObj.find('input.id:checked'));
+          var url = tthis.parent.para['current-main-fileurl'] + '?type=action&action=batch';
+          url += '&batch=' + encodeURIComponent(batch) + '&ids=' + encodeURIComponent(ids);
+          $.get(url, function(data){ tthis.parent.loadMainURLRefresh(); btnObj.parent().find('button.b3').click(); });
+        });
+      };
+    });
+  },
+  initCategoryFilterEvents: function(argObj)
+  {
+    var tthis = this;
+    var myObj = argObj;
+    myObj.find('icon.category').on('click', function(){
+      var thisObj = $(this);
+      if (thisObj.attr('loading') != 'true')
+      {
+        thisObj.attr('loading', 'true');
+        var url = tthis.parent.para['current-main-fileurl'] + thisObj.attr('url') + '&fid=' + encodeURIComponent(thisObj.attr('fid'));
+        $.get(url, function(data){
+          var dataObj = $(data);
+          if (dataObj.find('result').attr('status') == '1')
+          {
+            thisObj.attr('loading', 'false');
+            var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
+            pageObj.find('ul.list').find('li:not(.alonetips)').on('click', function(){
+              var thisObj = $(this);
+              pageObj.find('span.close').trigger('click');
+              tthis.parent.loadMainURL(tthis.parent.para['current-main-fileurl'] + thisObj.attr('link'));
+            });
+          };
+        });
+      };
+    });
+  },
   initUpFileEvents: function(argObj)
   {
     var tthis = this;
@@ -665,15 +741,17 @@ jtbc.console.lib = {
       };
     });
   },
-  loadPagiGoURL: function(argObj1, argObj2)
+  initSearchBoxEvents: function(argObj)
   {
     var tthis = this;
-    var myObj1 = argObj1;
-    var myObj2 = argObj2;
-    var myObj = $(myObj1);
-    var baseLink = myObj.attr('baselink');
-    var myLink = baseLink.replace(/(\[\~page\])/g, myObj.parent().find('input.pagenum').val());
-    tthis.parent.loadMainURL(tthis.parent.para['current-main-fileurl'] + myLink);
+    var myObj = argObj;
+    myObj.find('.searchbox').find('input.search').on('click', function(){
+      var thisObj = $(this);
+      var parmname = thisObj.attr('parmname') || 'keyword';
+      var keyword = thisObj.parent().find('input.keyword').val();
+      var url = tthis.parent.para['current-main-fileurl'] + thisObj.parent().attr('action') + '&' + parmname + '=' + encodeURIComponent(keyword);
+      tthis.parent.loadMainURL(url);
+    });
   },
   loadSelectMaterialPage: function(argMode, argCallBack)
   {
@@ -748,12 +826,12 @@ jtbc.console.lib = {
     var word = argWord;
     var b2 = argB2;
     var callback = argCallBack;
-    var consoleObj = $('#console');
-    if (consoleObj.find('.popup_mask').length == 0) consoleObj.append('<div class="popup_mask"></div>');
-    if (consoleObj.find('.popup_alert').length == 1) consoleObj.find('.popup_alert').remove();
-    consoleObj.append('<div class="popup_alert"><div class="title"></div><div class="word"></div><div class="button"><button class="b2">' + b2 + '</button></div></div>');
-    var alertObj = consoleObj.find('.popup_alert');
-    var maskObj = consoleObj.find('.popup_mask');
+    var rootObj = tthis.parent.root;
+    if (rootObj.find('.popup_mask').length == 0) rootObj.append('<div class="popup_mask"></div>');
+    if (rootObj.find('.popup_alert').length == 1) rootObj.find('.popup_alert').remove();
+    rootObj.append('<div class="popup_alert"><div class="title"></div><div class="word"></div><div class="button"><button class="b2">' + b2 + '</button></div></div>');
+    var alertObj = rootObj.find('.popup_alert');
+    var maskObj = rootObj.find('.popup_mask');
     alertObj.find('.word').html(word);
     alertObj.find('button.b2').click(function(){
       callback($(this));
@@ -773,12 +851,12 @@ jtbc.console.lib = {
     var b2 = argB2;
     var b3 = argB3;
     var callback = argCallBack;
-    var consoleObj = $('#console');
-    if (consoleObj.find('.popup_mask').length == 0) consoleObj.append('<div class="popup_mask"></div>');
-    if (consoleObj.find('.popup_confirm').length == 1) consoleObj.find('.popup_confirm').remove();
-    consoleObj.append('<div class="popup_confirm"><div class="title"></div><div class="word"></div><div class="button"><button class="b3">' + b3 + '</button><button class="b2">' + b2 + '</button></div></div>');
-    var confirmObj = consoleObj.find('.popup_confirm');
-    var maskObj = consoleObj.find('.popup_mask');
+    var rootObj = tthis.parent.root;
+    if (rootObj.find('.popup_mask').length == 0) rootObj.append('<div class="popup_mask"></div>');
+    if (rootObj.find('.popup_confirm').length == 1) rootObj.find('.popup_confirm').remove();
+    rootObj.append('<div class="popup_confirm"><div class="title"></div><div class="word"></div><div class="button"><button class="b3">' + b3 + '</button><button class="b2">' + b2 + '</button></div></div>');
+    var confirmObj = rootObj.find('.popup_confirm');
+    var maskObj = rootObj.find('.popup_mask');
     confirmObj.find('.word').html(word);
     confirmObj.find('button.b2').click(function(){
       var thisObj = $(this);
@@ -802,12 +880,12 @@ jtbc.console.lib = {
   {
     var tthis = this;
     var html = argHTML;
-    var consoleObj = $('#console');
-    if (consoleObj.find('.popup_mask').length == 0) consoleObj.append('<div class="popup_mask"></div>');
-    if (consoleObj.find('.popup_page').length == 1) consoleObj.find('.popup_page').remove();
-    consoleObj.append('<div class="popup_page"><span class="close"></span><div class="content"></div></div>');
-    var pageObj = consoleObj.find('.popup_page');
-    var maskObj = consoleObj.find('.popup_mask');
+    var rootObj = tthis.parent.root;
+    if (rootObj.find('.popup_mask').length == 0) rootObj.append('<div class="popup_mask"></div>');
+    if (rootObj.find('.popup_page').length == 1) rootObj.find('.popup_page').remove();
+    rootObj.append('<div class="popup_page"><span class="close"></span><div class="content"></div></div>');
+    var pageObj = rootObj.find('.popup_page');
+    var maskObj = rootObj.find('.popup_mask');
     pageObj.find('div.content').html(html);
     tthis.parent.bindEventsByMode(pageObj);
     pageObj.find('span.close').click(function(){

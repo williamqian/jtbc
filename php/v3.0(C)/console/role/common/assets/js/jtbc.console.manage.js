@@ -5,12 +5,11 @@ jtbc.console.manage = {
   bindSelectPopedomEvents: function()
   {
     var tthis = this;
-    var managerObj = tthis.obj.find('.manager');
-    var inputPopedomObj = managerObj.find('input[name=\'popedom\']');
+    var inputPopedomObj = tthis.obj.find('input[name=\'popedom\']');
     inputPopedomObj.on('update', function(){
       var popedomValue = '';
       var thisObj = $(this);
-      managerObj.find('.popedom').find('input.genre').each(function(){
+      tthis.obj.find('.popedom').find('input.genre').each(function(){
         var that = this;
         var thisObj = $(this);
         if (that.checked)
@@ -27,7 +26,7 @@ jtbc.console.manage = {
       });
       thisObj.val(popedomValue);
     });
-    managerObj.find('.popedom').find('input.genre').on('elder', function(){
+    tthis.obj.find('.popedom').find('input.genre').on('elder', function(){
       var that = this;
       var thisObj = $(this);
       if (that.checked)
@@ -42,12 +41,12 @@ jtbc.console.manage = {
             {
               for (var k = (i - 1); k >= 0; k --) genreText = genreArray[k] + '/' + genreText;
             };
-            if (genreText != thisObj.val()) managerObj.find('.popedom').find('input[value=\'' + genreText + '\']').each(function(){ this.checked = true; });
+            if (genreText != thisObj.val()) tthis.obj.find('.popedom').find('input[value=\'' + genreText + '\']').each(function(){ this.checked = true; });
           };
         };
       };
     });
-    managerObj.find('.popedom').find('input.genre').click(function(){
+    tthis.obj.find('.popedom').find('input.genre').click(function(){
       var that = this;
       var thisObj = $(this);
       if (that.checked)
@@ -63,7 +62,7 @@ jtbc.console.manage = {
       };
       inputPopedomObj.trigger('update');
     });
-    managerObj.find('.popedom').find('input.genre_popedom').click(function(){
+    tthis.obj.find('.popedom').find('input.genre_popedom').click(function(){
       var that = this;
       var thisObj = $(this);
       if (that.checked)
@@ -72,11 +71,11 @@ jtbc.console.manage = {
       };
       inputPopedomObj.trigger('update');
     });
-    managerObj.find('span.category').click(function(){
+    tthis.obj.find('span.category').click(function(){
       var thisObj = $(this);
       var genre = thisObj.parent().find('input.genre').val();
       var genreCategory = thisObj.find('input.genre_category').val();
-      var lang = tthis.parent.lib.getCheckBoxValue(managerObj.find('input[name=\'lang-select\']:checked'));
+      var lang = tthis.parent.lib.getCheckBoxValue(tthis.obj.find('input[name=\'lang-select\']:checked'));
       if (thisObj.attr('loading') != 'true')
       {
         thisObj.attr('loading', 'true');
@@ -106,7 +105,7 @@ jtbc.console.manage = {
             });
             pageObj.find('button.b2').on('click', function(){
               pageObj.find('span.close').trigger('click');
-              managerObj.find('.genre_category').val(tthis.parent.lib.getCheckBoxValue(pageObj.find('input[name=\'category\']:checked')));
+              tthis.obj.find('.genre_category').val(tthis.parent.lib.getCheckBoxValue(pageObj.find('input[name=\'category\']:checked')));
               inputPopedomObj.trigger('update');
             });
           };
@@ -118,96 +117,60 @@ jtbc.console.manage = {
   bindSelectLangEvents: function()
   {
     var tthis = this;
-    var managerObj = tthis.obj.find('.manager');
-    managerObj.find('input[name=\'lang-select\']').on('click', function(){
+    var tthis.obj = tthis.obj.find('.manager');
+    tthis.obj.find('input[name=\'lang-select\']').on('click', function(){
       var that = this;
       var thisObj = $(this);
       if (!that.checked)
       {
-        if (managerObj.find('input[name=\'lang-select\']:checked').length == 0)
+        if (tthis.obj.find('input[name=\'lang-select\']:checked').length == 0)
         {
           that.checked = true;
-          tthis.parent.lib.popupAlert(managerObj.attr('text-lang-1'), managerObj.attr('text-lang-ok'), function(){});
+          tthis.parent.lib.popupAlert(tthis.obj.attr('text-lang-1'), tthis.obj.attr('text-lang-ok'), function(){});
         };
       };
     });
-    managerObj.find('input[name=\'lang\']').on('update', function(){
-      managerObj.find('input[name=\'lang\']').val(tthis.parent.lib.getCheckBoxValue(managerObj.find('input[name=\'lang-select\']:checked')));
+    tthis.obj.find('input[name=\'lang\']').on('update', function(){
+      tthis.obj.find('input[name=\'lang\']').val(tthis.parent.lib.getCheckBoxValue(tthis.obj.find('input[name=\'lang-select\']:checked')));
     });
   },
   initList: function()
   {
     var tthis = this;
-    var managerObj = tthis.obj.find('.manager');
-    managerObj.find('input.id').click(function(){ tthis.parent.lib.highlightLine(this); });
-    managerObj.find('input.idall').click(function(){ tthis.parent.lib.highlightLineAll(this); });
-    managerObj.find('.pagi').find('a.go').click(function(){ tthis.parent.lib.loadPagiGoURL(this, managerObj); });
-    managerObj.find('icon.delete').click(function(){
-      var thisObj = $(this);
-      tthis.parent.lib.popupConfirm(thisObj.attr('confirm_text'), thisObj.attr('confirm_b2'), thisObj.attr('confirm_b3'), function(argObj){
-        var myObj = argObj;
-        var url = tthis.para['fileurl'] + '?type=action&action=delete&id=' + encodeURIComponent(thisObj.attr('rsid'));
-        $.get(url, function(data){ tthis.parent.loadMainURLRefresh(); myObj.parent().find('button.b3').click(); });
-      });
-    });
-    managerObj.find('span.mainlink').each(function(){
-      var thisObj = $(this);
-      var editObj = thisObj.parent().parent().find('icon.edit');
-      if (!editObj.hasClass('show-0'))
-      {
-        thisObj.addClass('hand').on('click', function(){ editObj.find('a.link').click(); });
-      };
-    });
-    managerObj.find('div.batch').find('span.ok').click(function(){
-      var thisObj = $(this);
-      var batch = thisObj.parent().find('select.batch').val();
-      if (batch != 'null')
-      {
-        tthis.parent.lib.popupConfirm(thisObj.attr('confirm_text'), thisObj.attr('confirm_b2'), thisObj.attr('confirm_b3'), function(argObj){
-          var myObj = argObj;
-          var ids = tthis.parent.lib.getCheckBoxValue(managerObj.find('input.id:checked'));
-          var url = tthis.para['fileurl'] + '?type=action&action=batch';
-          url += '&batch=' + encodeURIComponent(batch) + '&ids=' + encodeURIComponent(ids);
-          $.get(url, function(data){ tthis.parent.loadMainURLRefresh(); myObj.parent().find('button.b3').click(); });
-        });
-      };
-    });
+    tthis.parent.lib.initBatchSwitchEvents(tthis.obj);
   },
   initAdd: function()
   {
     var tthis = this;
-    var managerObj = tthis.obj.find('.manager');
     tthis.bindSelectPopedomEvents();
     tthis.bindSelectLangEvents();
-    managerObj.find('.form_button').find('button.submit').on('before', function(){
-      managerObj.find('input[name=\'lang\']').trigger('update');
+    tthis.obj.find('.form_button').find('button.submit').on('before', function(){
+      tthis.obj.find('input[name=\'lang\']').trigger('update');
     }).attr('done', 'custom').on('done', function(){
-      managerObj.find('toplink').find('a.link').first().click();
+      tthis.obj.find('toplink').find('a.link').first().click();
     });
   },
   initEdit: function()
   {
     var tthis = this;
-    var managerObj = tthis.obj.find('.manager');
     tthis.bindSelectPopedomEvents();
     tthis.bindSelectLangEvents();
-    managerObj.find('.form_button').find('button.submit').on('before', function(){
-      managerObj.find('input[name=\'lang\']').trigger('update');
+    tthis.obj.find('.form_button').find('button.submit').on('before', function(){
+      tthis.obj.find('input[name=\'lang\']').trigger('update');
     });
   },
   initCommon: function()
   {
     var tthis = this;
-    tthis.obj = $('.console');
-    var managerObj = tthis.obj.find('.manager');
-    tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + managerObj.attr('genre') + '/';
-    tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + managerObj.attr('filename');
+    tthis.obj = tthis.parent.obj.find('.manager');
+    tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + tthis.obj.attr('genre') + '/';
+    tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + tthis.obj.attr('filename');
   },
   ready: function()
   {
     var tthis = this;
     tthis.initCommon();
-    var myModule = tthis.obj.find('.manager').attr('module');
+    var myModule = tthis.obj.attr('module');
     if (myModule == 'list') tthis.initList();
     else if (myModule == 'add') tthis.initAdd();
     else if (myModule == 'edit') tthis.initEdit();

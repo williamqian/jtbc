@@ -33,6 +33,7 @@ class ui extends page {
           {
             $loopLineString = $loopString;
             $loopLineString = str_replace('{$topic}', base::htmlEncode(base::getLRStr($entry, '.inc.php', 'leftr')), $loopLineString);
+            $loopLineString = str_replace('{$-urlencode-topic}', urlencode(base::getLRStr($entry, '.inc.php', 'leftr')), $loopLineString);
             $loopLineString = str_replace('{$lasttime}', base::htmlEncode(date('Y-m-d H:i:s', filemtime($path . $entry))), $loopLineString);
             $loopLineString = str_replace('{$size}', base::htmlEncode(base::formatFileSize(filesize($path . $entry))), $loopLineString);
             $tpl -> insertLoopLine($loopLineString);
@@ -57,7 +58,7 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(request::getHTTPPara('ids', 'post'));
+    $ids = base::getString(request::getHTTPPara('ids', 'get'));
     $batch = base::getString(request::getHTTPPara('batch', 'get'));
     if ($batch == 'delete' && $account -> checkPopedom(self::getPara('genre'), 'delete'))
     {

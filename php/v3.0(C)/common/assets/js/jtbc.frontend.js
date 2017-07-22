@@ -34,7 +34,8 @@ jtbc.frontend = {
         }
         else if (thisObj.attr('mode') == 'pitchon')
         {
-          thisObj.find('*[name=\'' + thisObj.attr('onname') + '\']').addClass('on');
+          var pitchon = thisObj.attr('upitchon') || thisObj.attr('pitchon');
+          if (pitchon) thisObj.find(pitchon).addClass('on');
         }
         else if (thisObj.attr('mode') == 'submenu')
         {
