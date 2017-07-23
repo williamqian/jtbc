@@ -52,7 +52,6 @@ class ui extends page {
               }
             }
             else $selectdb = true;
-            $db -> exec('drop table `pdo_test`');
             if ($selectdb == true)
             {
               $para = '2';
