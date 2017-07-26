@@ -20,9 +20,8 @@ class ui extends page {
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       $tmpstr = tpl::take('manage.add', 'tpl');
-      $variable['-category-nav'] = universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category);
-      $variable['-category-select'] = universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $category);
-      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
+      $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
+      $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $category), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -52,9 +51,8 @@ class ui extends page {
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
           $tmpstr = tpl::take('manage.edit', 'tpl');
           $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
-          $variable['-category-nav'] = universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category);
-          $variable['-category-select'] = universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory);
-          $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
+          $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
+          $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory), $tmpstr);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -99,7 +97,8 @@ class ui extends page {
           $rstopic = base::getString($rs[$prefix . 'topic']);
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
           $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
-          $loopLineString = tpl::replaceTagByAry($loopLineString, array('-topic-keyword-highlight' => smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), '-category-topic' => base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory))));
+          $loopLineString = str_replace('{$-category-topic}', base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory)), $loopLineString);
+          $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), $loopLineString);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
