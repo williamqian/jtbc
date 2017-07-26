@@ -20,8 +20,9 @@ class ui extends page {
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       $tmpstr = tpl::take('manage.add', 'tpl');
-      $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
-      $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $category), $tmpstr);
+      $variable['-category-nav'] = universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category);
+      $variable['-category-select'] = universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $category);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -48,16 +49,12 @@ class ui extends page {
         $rs = $rq -> fetch();
         if (is_array($rs))
         {
-          $tmpstr = tpl::take('manage.edit', 'tpl');
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $tmpstr = str_replace('{$' . $key . '}', base::htmlEncode($val), $tmpstr);
-          }
-          $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
-          $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory), $tmpstr);
+          $tmpstr = tpl::take('manage.edit', 'tpl');
+          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+          $variable['-category-nav'] = universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category);
+          $variable['-category-select'] = universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory);
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -99,31 +96,26 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $loopLineString = $loopString;
+          $rstopic = base::getString($rs[$prefix . 'topic']);
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-            if (!is_numeric($key) && $key == 'topic') $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($val, $keyword))), $loopLineString);
-          }
-          $loopLineString = str_replace('{$-category-topic}', base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory)), $loopLineString);
-          $tpl -> insertLoopLine($loopLineString);
+          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $loopLineString = tpl::replaceTagByAry($loopLineString, array('-topic-keyword-highlight' => smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), '-category-topic' => base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory))));
+          $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
       $tmpstr = $tpl -> mergeTemplate();
-      $tmpstr = str_replace('{$-keyword}', base::htmlEncode($keyword), $tmpstr);
-      $tmpstr = str_replace('{$-category}', base::htmlEncode($category), $tmpstr);
-      $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
-      $tmpstr = str_replace('{$-pagi-rscount}', $pagi -> rscount, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagenum}', $pagi -> pagenum, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagetotal}', $pagi -> pagetotal, $tmpstr);
-      $batchList = '';
-      if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $batchList .= ',publish';
-      if ($account -> checkPopedom(self::getPara('genre'), 'delete')) $batchList .= ',delete';
-      $tmpstr = str_replace('{$-batch-list}', $batchList, $tmpstr);
-      $tmpstr = str_replace('{$-batch-show}', empty($batchList) ? 0 : 1, $tmpstr);
+      $batchAry = array();
+      if ($account -> checkPopedom(self::getPara('genre'), 'publish')) array_push($batchAry, 'publish');
+      if ($account -> checkPopedom(self::getPara('genre'), 'delete')) array_push($batchAry, 'delete');
+      $variable['-batch-list'] = implode(',', $batchAry);
+      $variable['-batch-show'] = empty($batchAry) ? 0 : 1;
+      $variable['-pagi-rscount'] = $pagi -> rscount;
+      $variable['-pagi-pagenum'] = $pagi -> pagenum;
+      $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
+      $variable['-keyword'] = $keyword;
+      $variable['-category'] = $category;
+      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, array('-category-nav' => universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category)));
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -154,13 +146,8 @@ class ui extends page {
           $rsfid = base::getNum($myVal[$prefix . 'fid'], -1);
           if ($rsfid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsid)))
           {
-            $loopLineString = $loopString;
-            foreach ($myVal as $key => $val)
-            {
-              $key = base::getLRStr($key, '_', 'rightr');
-              $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-            }
-            $tpl -> insertLoopLine($loopLineString);
+            $loopLineString = tpl::replaceHTMLTagByAry($loopString, $myVal, 10);
+            $tpl -> insertLoopLine(tpl::parse($loopLineString));
           }
         }
       }

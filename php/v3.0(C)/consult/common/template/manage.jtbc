@@ -125,7 +125,7 @@
       </tbody>
     </table>
     <div class="control">
-      <div class="batch show-{$-batch-show}"><span class="text">{$=take('::console.batch-tips', 'lng')}</span><select class="batch">{$=xmlSelect('::sel_batch.*|null{$-batch-list}', '', 'select')}</select><span class="ok" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-batch', 'lng')}">{$=take('::console.control-confirm', 'lng')}</span></div>
+      <div class="batch show-{$-batch-show}"><span class="text">{$=take('::console.batch-tips', 'lng')}</span><select class="batch">{$=xmlSelect('::sel_batch.*|null,{$-batch-list}', '', 'select')}</select><span class="ok" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-batch', 'lng')}">{$=take('::console.control-confirm', 'lng')}</span></div>
       <div class="pagi">{$=pagi('{$-pagi-pagenum}', '{$-pagi-pagetotal}', $replaceQuerystring('page', '[~page]'))}</div>
     </div>
   </div>

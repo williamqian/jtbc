@@ -76,12 +76,7 @@ class ui extends page {
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $tmpstr = str_replace('{$' . $key . '}', base::htmlEncode($val), $tmpstr);
-          }
+          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -124,24 +119,18 @@ class ui extends page {
         $rq = $db -> query($sqlstr);
         while($rs = $rq -> fetch())
         {
-          $loopLineString = $loopString;
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-          }
-          $tpl -> insertLoopLine($loopLineString);
+          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
         $tmpstr = $tpl -> mergeTemplate();
-        $batchList = '';
-        if ($account -> checkPopedom(self::getPara('genre'), 'delete')) $batchList .= ',delete';
-        $tmpstr = str_replace('{$-batch-list}', $batchList, $tmpstr);
-        $tmpstr = str_replace('{$-batch-show}', empty($batchList) ? 0 : 1, $tmpstr);
-        $tmpstr = str_replace('{$-allgenre-select}', universal\category::getAllGenreSelect($allGenre, $genre), $tmpstr);
-        $tmpstr = str_replace('{$-current-genre}', base::htmlEncode($genre), $tmpstr);
-        $tmpstr = str_replace('{$-current-fid}', base::htmlEncode($fid), $tmpstr);
-        $tmpstr = str_replace('{$-path-nav}', self::ppGetPathNav($genre, $fid), $tmpstr);
+        $batchAry = array();
+        if ($account -> checkPopedom(self::getPara('genre'), 'delete')) array_push($batchAry, 'delete');
+        $variable['-batch-list'] = implode(',', $batchAry);
+        $variable['-batch-show'] = empty($batchAry) ? 0 : 1;
+        $variable['-current-genre'] = $genre;
+        $variable['-current-fid'] = $fid;
+        $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+        $tmpstr = tpl::replaceTagByAry($tmpstr, array('-allgenre-select' => universal\category::getAllGenreSelect($allGenre, $genre), '-path-nav' => self::ppGetPathNav($genre, $fid)));
         $tmpstr = tpl::parse($tmpstr);
       }
       $tmpstr = $account -> replaceAccountTag($tmpstr);

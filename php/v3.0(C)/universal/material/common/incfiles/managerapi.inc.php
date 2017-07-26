@@ -59,22 +59,17 @@ class ui extends page {
       $rq = $db -> query($sqlstr);
       while($rs = $rq -> fetch())
       {
-        $loopLineString = $loopString;
-        foreach ($rs as $key => $val)
-        {
-          $key = base::getLRStr($key, '_', 'rightr');
-          $GLOBALS['RS_' . $key] = $val;
-          $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-          if (!is_numeric($key) && $key == 'topic') $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($val, $keyword))), $loopLineString);
-        }
-        $loopLineString = str_replace('{$-filejson}', base::htmlEncode(self::ppGetFileJSON($rs, $prefix)), $loopLineString);
-        $tpl -> insertLoopLine($loopLineString);
+        $rstopic = base::getString($rs[$prefix . 'topic']);
+        $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+        $loopLineString = tpl::replaceTagByAry($loopLineString, array('-topic-keyword-highlight' => smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), '-filejson' => base::htmlEncode(self::ppGetFileJSON($rs, $prefix))));
+        $tpl -> insertLoopLine(tpl::parse($loopLineString));
       }
       $tmpstr = $tpl -> mergeTemplate();
-      $tmpstr = str_replace('{$-selectmode}', base::htmlEncode($selectmode), $tmpstr);
-      $tmpstr = str_replace('{$-filegroup}', base::htmlEncode($filegroup), $tmpstr);
-      $tmpstr = str_replace('{$-sort}', base::htmlEncode($sort), $tmpstr);
-      $tmpstr = str_replace('{$-keyword}', base::htmlEncode($keyword), $tmpstr);
+      $variable['-selectmode'] = $selectmode;
+      $variable['-filegroup'] = $filegroup;
+      $variable['-sort'] = $sort;
+      $variable['-keyword'] = $keyword;
+      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
     }
     $tmpstr = self::formatResult($status, $tmpstr);

@@ -647,26 +647,15 @@ namespace jtbc {
             if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
             {
               $loopLineString = $loopString;
-              foreach ($myVal as $key => $val)
-              {
-                $key = base::getLRStr($key, '_', 'rightr');
-                if ($paraTransferID == 0) $GLOBALS['RST_' . $key] = $val;
-                else $GLOBALS['RST' . $paraTransferID . '_' . $key] = $val;
-                $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-              }
-              $loopLineString = str_replace('{$-i}', base::htmlEncode($rsindex), $loopLineString);
-              $loopLineString = str_replace('{$-genre}', base::htmlEncode($paraGenre), $loopLineString);
-              $loopLineString = str_replace('{$-lang}', base::htmlEncode($paraLang), $loopLineString);
-              $loopLineString = str_replace('{$-baseurl}', base::htmlEncode($paraBaseURL), $loopLineString);
+              $loopLineString = tpl::replaceHTMLTagByAry($loopLineString, $myVal, 11, $paraTransferID);
+              $loopLineString = tpl::replaceHTMLTagByAry($loopLineString, array('-i' => $rsindex, '-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
               $loopLineString = tpl::parse($loopLineString);
               $tpl -> insertLoopLine($loopLineString);
             }
             $rsindex += 1;
           }
           $tmpstr = $tpl -> mergeTemplate();
-          $tmpstr = str_replace('{$-genre}', base::htmlEncode($paraGenre), $tmpstr);
-          $tmpstr = str_replace('{$-lang}', base::htmlEncode($paraLang), $tmpstr);
-          $tmpstr = str_replace('{$-baseurl}', base::htmlEncode($paraBaseURL), $tmpstr);
+          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, array('-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
           $tmpstr = tpl::parse($tmpstr);
         }
         else $tmpstr = '';

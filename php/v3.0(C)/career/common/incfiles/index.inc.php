@@ -29,21 +29,15 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $loopLineString = $loopString;
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-          }
-          $loopLineString = tpl::parse($loopLineString);
-          $tpl -> insertLoopLine($loopLineString);
+          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
       $tmpstr = $tpl -> mergeTemplate();
-      $tmpstr = str_replace('{$-pagi-rscount}', $pagi -> rscount, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagenum}', $pagi -> pagenum, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagetotal}', $pagi -> pagetotal, $tmpstr);
+      $variable['-pagi-rscount'] = $pagi -> rscount;
+      $variable['-pagi-pagenum'] = $pagi -> pagenum;
+      $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
+      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
     }
     return $tmpstr;

@@ -19,23 +19,19 @@ class ui extends page {
     if ($account -> checkLogin())
     {
       $tmpstr = tpl::take('manage.dashbord', 'tpl');
-      $hello = tpl::take('manage.text-hello', 'lng');
-      $hello = str_replace('{$-username}', $account -> getMyInfo('username'), $hello);
-      $hello = str_replace('{$-lastip}', $account -> getMyInfo('lastip'), $hello);
-      $hello = str_replace('{$-lasttime}', $account -> getMyInfo('lasttime'), $hello);
-      $hello = str_replace('{$-role-topic}', $account -> getRoleTopicById($account -> getMyInfo('role')), $hello);
-      $tmpstr = str_replace('{$-hello}', base::htmlEncode($hello), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-0}', base::htmlEncode($_SERVER['SERVER_SOFTWARE']), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-1}', base::htmlEncode(VERSION), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-2}', base::htmlEncode(PHP_VERSION), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-3}', base::htmlEncode(DB), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-4}', base::htmlEncode(strtoupper(php_sapi_name())), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-5}', base::htmlEncode(gethostbyname($_SERVER['SERVER_NAME'])), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-6}', base::htmlEncode(base::formatDate(base::getDateTime(), '100')), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-7}', base::htmlEncode(get_cfg_var('max_execution_time')), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-8}', base::htmlEncode(get_cfg_var('post_max_size')), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-9}', base::htmlEncode(get_cfg_var('upload_max_filesize')), $tmpstr);
-      $tmpstr = str_replace('{$-sys-para-10}', base::htmlEncode(get_cfg_var('memory_limit')), $tmpstr);
+      $variable['-sys-para-0'] = $_SERVER['SERVER_SOFTWARE'];
+      $variable['-sys-para-1'] = VERSION;
+      $variable['-sys-para-2'] = PHP_VERSION;
+      $variable['-sys-para-3'] = DB;
+      $variable['-sys-para-4'] = strtoupper(php_sapi_name());
+      $variable['-sys-para-5'] = gethostbyname($_SERVER['SERVER_NAME']);
+      $variable['-sys-para-6'] = base::formatDate(base::getDateTime(), '100');
+      $variable['-sys-para-7'] = get_cfg_var('max_execution_time');
+      $variable['-sys-para-8'] = get_cfg_var('post_max_size');
+      $variable['-sys-para-9'] = get_cfg_var('upload_max_filesize');
+      $variable['-sys-para-10'] = get_cfg_var('memory_limit');
+      $variable['-hello'] = tpl::replaceTagByAry(tpl::take('manage.text-hello', 'lng'), array('-username' => $account -> getMyInfo('username'), '-lastip' => $account -> getMyInfo('lastip'), '-lasttime' => $account -> getMyInfo('lasttime'), '-role-topic' => $account -> getRoleTopicById($account -> getMyInfo('role'))));
+      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
       $tmpstr = tpl::parse($tmpstr);
     }

@@ -312,6 +312,44 @@ namespace jtbc {
       return $tmpstr;
     }
 
+    public static function replaceTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0, $argEncode = 0)
+    {
+      $string = $argString;
+      $ary = $argAry;
+      $mode = $argMode;
+      $modeid = $argModeID;
+      $encode = $argEncode;
+      if (!base::isEmpty($string) && is_array($ary))
+      {
+        foreach ($ary as $key => $val)
+        {
+          if ($mode >= 10 && $mode <= 20)
+          {
+            $key = base::getLRStr($key, '_', 'rightr');
+            if ($mode == 10) $GLOBALS['RS_' . $key] = $val;
+            else if ($mode == 11)
+            {
+              if ($modeid == 0) $GLOBALS['RST_' . $key] = $val;
+              else $GLOBALS['RST' . $modeid . '_' . $key] = $val;
+            }
+          }
+          if ($encode == 1) $val = base::htmlEncode($val);
+          $string = str_replace('{$' . $key . '}', $val, $string);
+        }
+      }
+      return $string;
+    }
+
+    public static function replaceHTMLTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0)
+    {
+      $string = $argString;
+      $ary = $argAry;
+      $mode = $argMode;
+      $modeid = $argModeID;
+      $tmpstr = self::replaceTagByAry($string, $ary, $mode, $modeid, 1);
+      return $tmpstr;
+    }
+
     public static function setXRootAtt($argSourcefile, $argAtt, $argValue)
     {
       $bool = false;

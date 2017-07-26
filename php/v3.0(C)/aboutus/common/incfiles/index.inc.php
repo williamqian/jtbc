@@ -22,15 +22,10 @@ class ui extends page {
       $rs = $rq -> fetch();
       if (is_array($rs))
       {
-        $tmpstr = tpl::take('index.detail', 'tpl');
         $rsTopic = base::getString($rs[$prefix . 'topic']);
         self::setPageTitle(base::htmlEncode($rsTopic));
-        foreach ($rs as $key => $val)
-        {
-          $key = base::getLRStr($key, '_', 'rightr');
-          $GLOBALS['RS_' . $key] = $val;
-          $tmpstr = str_replace('{$' . $key . '}', base::htmlEncode($val), $tmpstr);
-        }
+        $tmpstr = tpl::take('index.detail', 'tpl');
+        $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
         $tmpstr = tpl::parse($tmpstr);
       }
     }
