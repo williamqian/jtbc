@@ -497,6 +497,7 @@ namespace jtbc {
       $paraVars = base::getParameter($para, 'vars');
       $paraLimit = base::getNum(base::getParameter($para, 'limit'), 0);
       $paraTransferID = base::getNum(base::getParameter($para, 'transferid'), 0);
+      if ($paraLimit == 0) $paraLimit = 10;
       $cacheAry = null;
       if (!base::isEmpty($paraCache))
       {
@@ -551,12 +552,15 @@ namespace jtbc {
           $rowAry = json_decode($myVal, true);
           if (is_array($rowAry))
           {
-            if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
+            if ($paraLimit >= $rsindex)
             {
-              $loopLineString = $loopString;
-              $loopLineString = tpl::replaceTagByAry($loopLineString, $rowAry, 21, $paraTransferID);
-              $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex));
-              $tpl -> insertLoopLine(tpl::parse($loopLineString));
+              if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
+              {
+                $loopLineString = $loopString;
+                $loopLineString = tpl::replaceTagByAry($loopLineString, $rowAry, 21, $paraTransferID);
+                $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex));
+                $tpl -> insertLoopLine(tpl::parse($loopLineString));
+              }
             }
             $rsindex += 1;
           }
