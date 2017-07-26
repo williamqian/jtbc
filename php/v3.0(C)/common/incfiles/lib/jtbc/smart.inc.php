@@ -474,7 +474,101 @@ namespace jtbc {
       return $string;
     }
 
-    public static function transfer($argPara, $argOSQLAry = null)
+    public static function transfer($argPara, $argOthers = null)
+    {
+      $tmpstr = '';
+      $para = $argPara;
+      $others = $argOthers;
+      $paraMethod = base::getParameter($para, 'method');
+      if ($paraMethod == 'json') $tmpstr = self::transferJson($para, $others);
+      else $tmpstr = self::transferStandard($para, $others);
+      return $tmpstr;
+    }
+
+    public static function transferJson($argPara, $argJson)
+    {
+      $tmpstr = '';
+      $para = $argPara;
+      $json = $argJson;
+      $paraTpl = base::getParameter($para, 'tpl');
+      $paraRowFilter = base::getParameter($para, 'rowfilter');
+      $paraCache = base::getParameter($para, 'cache');
+      $paraCacheTimeout = base::getNum(base::getParameter($para, 'cachetimeout'), 300);
+      $paraVars = base::getParameter($para, 'vars');
+      $paraLimit = base::getNum(base::getParameter($para, 'limit'), 0);
+      $paraTransferID = base::getNum(base::getParameter($para, 'transferid'), 0);
+      $cacheAry = null;
+      if (!base::isEmpty($paraCache))
+      {
+        $cacheData = cache::get($paraCache);
+        if (is_array($cacheData))
+        {
+          if (count($cacheData) == 2)
+          {
+            $cacheAry = $cacheData[1];
+            $cacheTimeStamp = $cacheData[0];
+            if ((time() - $cacheTimeStamp) >= $paraCacheTimeout) cache::remove($paraCache);
+          }
+        }
+      }
+      if (!base::isEmpty($paraTpl))
+      {
+        if (strpos($paraTpl, '.')) $tmpstr = tpl::take($paraTpl, 'tpl');
+        else $tmpstr = tpl::take('global.transfer.' . $paraTpl, 'tpl');
+      }
+      if (!base::isEmpty($paraVars))
+      {
+        $paraVarsAry = explode('|', $paraVars);
+        foreach ($paraVarsAry as $key => $val)
+        {
+          if (!base::isEmpty($val))
+          {
+            $valAry = explode('=', $val);
+            if (count($valAry) == 2) $tmpstr = str_replace('{$' . $valAry[0] + '}', $valAry[1], $tmpstr);
+          }
+        }
+      }
+      $myAry = $cacheAry;
+      if (!is_array($myAry))
+      {
+        $myAry = json_decode($json, true);
+        if (!base::isEmpty($paraCache))
+        {
+          $cacheData = array();
+          $cacheData[0] = time();
+          $cacheData[1] = $myAry;
+          @cache::put($paraCache, $cacheData);
+        }
+      }
+      if (is_array($myAry) && !empty($myAry))
+      {
+        $rsindex = 1;
+        $tpl = new tpl();
+        $tpl -> tplString = $tmpstr;
+        $loopString = $tpl -> getLoopString('{@}');
+        foreach ($myAry as $myKey => $myVal)
+        {
+          $rowAry = json_decode($myVal, true);
+          if (is_array($rowAry))
+          {
+            if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
+            {
+              $loopLineString = $loopString;
+              $loopLineString = tpl::replaceTagByAry($loopLineString, $rowAry, 21, $paraTransferID);
+              $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex));
+              $tpl -> insertLoopLine(tpl::parse($loopLineString));
+            }
+            $rsindex += 1;
+          }
+        }
+        $tmpstr = $tpl -> mergeTemplate();
+        $tmpstr = tpl::parse($tmpstr);
+      }
+      else $tmpstr = '';
+      return $tmpstr;
+    }
+
+    public static function transferStandard($argPara, $argOSQLAry = null)
     {
       $tmpstr = '';
       $db = page::db();
@@ -649,8 +743,7 @@ namespace jtbc {
               $loopLineString = $loopString;
               $loopLineString = tpl::replaceTagByAry($loopLineString, $myVal, 11, $paraTransferID);
               $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex, '-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
-              $loopLineString = tpl::parse($loopLineString);
-              $tpl -> insertLoopLine($loopLineString);
+              $tpl -> insertLoopLine(tpl::parse($loopLineString));
             }
             $rsindex += 1;
           }

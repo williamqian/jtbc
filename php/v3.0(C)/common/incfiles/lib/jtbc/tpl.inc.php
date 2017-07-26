@@ -323,11 +323,19 @@ namespace jtbc {
       {
         foreach ($ary as $key => $val)
         {
-          if ($mode >= 10 && $mode <= 20)
+          if ($mode >= 10 && $mode < 20)
           {
             $key = base::getLRStr($key, '_', 'rightr');
             if ($mode == 10) $GLOBALS['RS_' . $key] = $val;
             else if ($mode == 11)
+            {
+              if ($modeid == 0) $GLOBALS['RST_' . $key] = $val;
+              else $GLOBALS['RST' . $modeid . '_' . $key] = $val;
+            }
+          }
+          else if ($mode >= 20 && $mode < 30)
+          {
+            if ($mode == 21)
             {
               if ($modeid == 0) $GLOBALS['RST_' . $key] = $val;
               else $GLOBALS['RST' . $modeid . '_' . $key] = $val;
