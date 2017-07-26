@@ -30,12 +30,7 @@ class ui extends page {
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $tmpstr = str_replace('{$' . $key . '}', base::htmlEncode($val), $tmpstr);
-          }
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -71,24 +66,19 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $loopLineString = $loopString;
-          foreach ($rs as $key => $val)
-          {
-            $key = base::getLRStr($key, '_', 'rightr');
-            $GLOBALS['RS_' . $key] = $val;
-            $loopLineString = str_replace('{$' . $key . '}', base::htmlEncode($val), $loopLineString);
-          }
-          $tpl -> insertLoopLine($loopLineString);
+          $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
+          $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
       $tmpstr = $tpl -> mergeTemplate();
-      $tmpstr = str_replace('{$-pagi-rscount}', $pagi -> rscount, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagenum}', $pagi -> pagenum, $tmpstr);
-      $tmpstr = str_replace('{$-pagi-pagetotal}', $pagi -> pagetotal, $tmpstr);
-      $batchList = '';
-      if ($account -> checkPopedom(self::getPara('genre'), 'delete')) $batchList .= ',delete';
-      $tmpstr = str_replace('{$-batch-list}', $batchList, $tmpstr);
-      $tmpstr = str_replace('{$-batch-show}', empty($batchList) ? 0 : 1, $tmpstr);
+      $batchAry = array();
+      if ($account -> checkPopedom(self::getPara('genre'), 'delete')) array_push($batchAry, 'delete');
+      $variable['-batch-list'] = implode(',', $batchAry);
+      $variable['-batch-show'] = empty($batchAry) ? 0 : 1;
+      $variable['-pagi-rscount'] = $pagi -> rscount;
+      $variable['-pagi-pagenum'] = $pagi -> pagenum;
+      $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }

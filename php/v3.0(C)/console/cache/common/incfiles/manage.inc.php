@@ -45,7 +45,7 @@ class ui extends page {
       if ($account -> checkPopedom(self::getPara('genre'), 'delete')) array_push($batchAry, 'delete');
       $variable['-batch-list'] = implode(',', $batchAry);
       $variable['-batch-show'] = empty($batchAry) ? 0 : 1;
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }

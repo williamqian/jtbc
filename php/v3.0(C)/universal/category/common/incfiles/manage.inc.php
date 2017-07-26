@@ -76,7 +76,7 @@ class ui extends page {
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -119,7 +119,7 @@ class ui extends page {
         $rq = $db -> query($sqlstr);
         while($rs = $rq -> fetch())
         {
-          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
         $tmpstr = $tpl -> mergeTemplate();
@@ -129,8 +129,9 @@ class ui extends page {
         $variable['-batch-show'] = empty($batchAry) ? 0 : 1;
         $variable['-current-genre'] = $genre;
         $variable['-current-fid'] = $fid;
-        $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
-        $tmpstr = tpl::replaceTagByAry($tmpstr, array('-allgenre-select' => universal\category::getAllGenreSelect($allGenre, $genre), '-path-nav' => self::ppGetPathNav($genre, $fid)));
+        $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
+        $tmpstr = str_replace('{$-allgenre-select}', universal\category::getAllGenreSelect($allGenre, $genre), $tmpstr);
+        $tmpstr = str_replace('{$-path-nav}', self::ppGetPathNav($genre, $fid), $tmpstr);
         $tmpstr = tpl::parse($tmpstr);
       }
       $tmpstr = $account -> replaceAccountTag($tmpstr);

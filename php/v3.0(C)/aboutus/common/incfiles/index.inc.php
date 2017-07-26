@@ -25,7 +25,7 @@ class ui extends page {
         $rsTopic = base::getString($rs[$prefix . 'topic']);
         self::setPageTitle(base::htmlEncode($rsTopic));
         $tmpstr = tpl::take('index.detail', 'tpl');
-        $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+        $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
         $tmpstr = tpl::parse($tmpstr);
       }
     }

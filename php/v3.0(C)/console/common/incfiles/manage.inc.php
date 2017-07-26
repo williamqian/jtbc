@@ -30,8 +30,8 @@ class ui extends page {
       $variable['-sys-para-8'] = get_cfg_var('post_max_size');
       $variable['-sys-para-9'] = get_cfg_var('upload_max_filesize');
       $variable['-sys-para-10'] = get_cfg_var('memory_limit');
-      $variable['-hello'] = tpl::replaceTagByAry(tpl::take('manage.text-hello', 'lng'), array('-username' => $account -> getMyInfo('username'), '-lastip' => $account -> getMyInfo('lastip'), '-lasttime' => $account -> getMyInfo('lasttime'), '-role-topic' => $account -> getRoleTopicById($account -> getMyInfo('role'))));
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $variable['-hello'] = tpl::replaceOriginalTagByAry(tpl::take('manage.text-hello', 'lng'), array('-username' => $account -> getMyInfo('username'), '-lastip' => $account -> getMyInfo('lastip'), '-lasttime' => $account -> getMyInfo('lasttime'), '-role-topic' => $account -> getRoleTopicById($account -> getMyInfo('role'))));
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
       $tmpstr = tpl::parse($tmpstr);
     }

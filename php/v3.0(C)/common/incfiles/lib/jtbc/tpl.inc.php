@@ -312,7 +312,7 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function replaceTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0, $argEncode = 0)
+    public static function replaceTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0, $argEncode = 1)
     {
       $string = $argString;
       $ary = $argAry;
@@ -340,13 +340,13 @@ namespace jtbc {
       return $string;
     }
 
-    public static function replaceHTMLTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0)
+    public static function replaceOriginalTagByAry($argString, $argAry, $argMode = 0, $argModeID = 0)
     {
       $string = $argString;
       $ary = $argAry;
       $mode = $argMode;
       $modeid = $argModeID;
-      $tmpstr = self::replaceTagByAry($string, $ary, $mode, $modeid, 1);
+      $tmpstr = self::replaceTagByAry($string, $ary, $mode, $modeid, 0);
       return $tmpstr;
     }
 

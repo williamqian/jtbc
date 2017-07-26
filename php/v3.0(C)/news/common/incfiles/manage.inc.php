@@ -50,7 +50,7 @@ class ui extends page {
         {
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
           $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory), $tmpstr);
           $tmpstr = tpl::parse($tmpstr);
@@ -96,7 +96,7 @@ class ui extends page {
         {
           $rstopic = base::getString($rs[$prefix . 'topic']);
           $rscategory = base::getNum($rs[$prefix . 'category'], 0);
-          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
           $loopLineString = str_replace('{$-category-topic}', base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory)), $loopLineString);
           $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), $loopLineString);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
@@ -113,8 +113,8 @@ class ui extends page {
       $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
       $variable['-keyword'] = $keyword;
       $variable['-category'] = $category;
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
-      $tmpstr = tpl::replaceTagByAry($tmpstr, array('-category-nav' => universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category)));
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
+      $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -145,7 +145,7 @@ class ui extends page {
           $rsfid = base::getNum($myVal[$prefix . 'fid'], -1);
           if ($rsfid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsid)))
           {
-            $loopLineString = tpl::replaceHTMLTagByAry($loopString, $myVal, 10);
+            $loopLineString = tpl::replaceTagByAry($loopString, $myVal, 10);
             $tpl -> insertLoopLine(tpl::parse($loopLineString));
           }
         }
