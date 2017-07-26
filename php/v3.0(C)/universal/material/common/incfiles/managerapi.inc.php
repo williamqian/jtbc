@@ -60,8 +60,9 @@ class ui extends page {
       while($rs = $rq -> fetch())
       {
         $rstopic = base::getString($rs[$prefix . 'topic']);
-        $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
-        $loopLineString = tpl::replaceTagByAry($loopLineString, array('-topic-keyword-highlight' => smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), '-filejson' => base::htmlEncode(self::ppGetFileJSON($rs, $prefix))));
+        $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
+        $loopLineString = str_replace('{$-filejson}', base::htmlEncode(self::ppGetFileJSON($rs, $prefix)), $loopLineString);
+        $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), $loopLineString);
         $tpl -> insertLoopLine(tpl::parse($loopLineString));
       }
       $tmpstr = $tpl -> mergeTemplate();
@@ -69,7 +70,7 @@ class ui extends page {
       $variable['-filegroup'] = $filegroup;
       $variable['-sort'] = $sort;
       $variable['-keyword'] = $keyword;
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
     }
     $tmpstr = self::formatResult($status, $tmpstr);

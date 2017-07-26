@@ -218,7 +218,7 @@ class ui extends page {
         {
           $rsPopedom = base::getString($rs[$prefix . 'popedom']);
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = str_replace('{$-select-popedom-html}', self::ppGetSelectPopedomHTML('', $rsPopedom), $tmpstr);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
@@ -255,7 +255,7 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
@@ -267,7 +267,7 @@ class ui extends page {
       $variable['-pagi-rscount'] = $pagi -> rscount;
       $variable['-pagi-pagenum'] = $pagi -> pagenum;
       $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }

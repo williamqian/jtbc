@@ -47,7 +47,7 @@ class ui extends page {
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');
-          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $rs, 10);
+          $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -84,7 +84,7 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $loopLineString = tpl::replaceHTMLTagByAry($loopString, $rs, 10);
+          $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }
@@ -98,7 +98,7 @@ class ui extends page {
       $variable['-pagi-pagenum'] = $pagi -> pagenum;
       $variable['-pagi-pagetotal'] = $pagi -> pagetotal;
       $variable['-group'] = $group;
-      $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, $variable);
+      $tmpstr = tpl::replaceTagByAry($tmpstr, $variable);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }

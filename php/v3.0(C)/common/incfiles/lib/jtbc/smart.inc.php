@@ -647,15 +647,15 @@ namespace jtbc {
             if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
             {
               $loopLineString = $loopString;
-              $loopLineString = tpl::replaceHTMLTagByAry($loopLineString, $myVal, 11, $paraTransferID);
-              $loopLineString = tpl::replaceHTMLTagByAry($loopLineString, array('-i' => $rsindex, '-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
+              $loopLineString = tpl::replaceTagByAry($loopLineString, $myVal, 11, $paraTransferID);
+              $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex, '-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
               $loopLineString = tpl::parse($loopLineString);
               $tpl -> insertLoopLine($loopLineString);
             }
             $rsindex += 1;
           }
           $tmpstr = $tpl -> mergeTemplate();
-          $tmpstr = tpl::replaceHTMLTagByAry($tmpstr, array('-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
+          $tmpstr = tpl::replaceTagByAry($tmpstr, array('-genre' => $paraGenre, '-lang' => $paraLang, '-baseurl' => $paraBaseURL));
           $tmpstr = tpl::parse($tmpstr);
         }
         else $tmpstr = '';
