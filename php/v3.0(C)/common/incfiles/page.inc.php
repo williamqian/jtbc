@@ -7,5 +7,10 @@ spl_autoload_register(function($argClass){
     $file = __DIR__ . '/lib/' . str_replace('\\', '/', $class) . '.inc.php';
     if (is_file($file)) require_once($file);
   }
+  else
+  {
+    $file = __DIR__ . '/vendor/' . str_replace('\\', '/', $class) . '.php';
+    if (is_file($file)) require_once($file);
+  }
 });
 ?>
