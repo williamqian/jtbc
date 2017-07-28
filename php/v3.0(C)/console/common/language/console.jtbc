@@ -135,6 +135,10 @@
       <zh-cn><![CDATA[排]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[urlerror]]></name>
+      <zh-cn><![CDATA[程序读取出错，请检查源码]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[uploading]]></name>
       <zh-cn><![CDATA[上传中..]]></zh-cn>
     </item>

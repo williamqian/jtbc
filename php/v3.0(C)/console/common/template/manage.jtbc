@@ -94,7 +94,7 @@
   <div class="container">
     <div class="leftmenu">{$-account-leftmenu}</div>
     <div class="maincontent">
-      <div class="main" def="{$=take('guide.def', 'cfg')}"></div>
+      <div class="main" def="{$=take('guide.def', 'cfg')}" urlerror="{$=take('::console.urlerror', 'lng')}" ikown="{$=take('::console.iknow', 'lng')}"></div>
       <div class="waiting"><bar></bar></div>
     </div>
   </div>

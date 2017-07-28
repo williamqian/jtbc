@@ -213,18 +213,32 @@ jtbc.console = {
       tthis.para['load-main-url-waiting'] = setTimeout(function(){
         mainObj.parent().find('.waiting').addClass('on');
       }, 500);
-      $.get(myURL, function(data){
-        var dataObj = $(data);
-        clearTimeout(tthis.para['load-main-url-waiting']);
-        mainObj.parent().find('.waiting').removeClass('on');
-        if (dataObj.find('result').attr('status') == '1')
+      $.ajax({
+        url: myURL,
+        type: 'get',
+        success: function(data)
         {
-          location.href = '#' + myURL;
-          tthis.para['load-main-url'] = myURL;
-          tthis.insertHTML(mainObj, dataObj.find('result').text());
-          loadedCallBack();
-        };
-        tthis.para['load-main-url-lock'] = false;
+          var dataObj = $(data);
+          clearTimeout(tthis.para['load-main-url-waiting']);
+          mainObj.parent().find('.waiting').removeClass('on');
+          if (dataObj.find('result').attr('status') == '1')
+          {
+            location.href = '#' + myURL;
+            tthis.para['load-main-url'] = myURL;
+            tthis.insertHTML(mainObj, dataObj.find('result').text());
+            loadedCallBack();
+          };
+          tthis.para['load-main-url-lock'] = false;
+        },
+        error: function()
+        {
+          var errorURL = this.url;
+          tthis.para['load-main-url-lock'] = false;
+          tthis.lib.popupAlert(mainObj.attr('urlerror') + '<em><a href="' + tthis.parent.htmlEncode(errorURL) + '" target="_blank">' + tthis.parent.htmlEncode(errorURL) + '</a></em>', mainObj.attr('ikown'), function(){
+            clearTimeout(tthis.para['load-main-url-waiting']);
+            mainObj.parent().find('.waiting').removeClass('on');
+          });
+        }
       });
     };
   },
