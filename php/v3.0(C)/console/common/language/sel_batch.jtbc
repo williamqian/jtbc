@@ -15,6 +15,10 @@
       <zh-cn><![CDATA[处理]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[verify]]></name>
+      <zh-cn><![CDATA[审核]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[publish]]></name>
       <zh-cn><![CDATA[发布]]></zh-cn>
     </item>
