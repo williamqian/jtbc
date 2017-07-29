@@ -91,20 +91,24 @@
       <zh-cn><![CDATA[删除]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-popedom-lock]]></name>
-      <zh-cn><![CDATA[锁定]]></zh-cn>
+      <name><![CDATA[text-popedom-empty]]></name>
+      <zh-cn><![CDATA[清空]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-popedom-sort]]></name>
-      <zh-cn><![CDATA[排序]]></zh-cn>
+      <name><![CDATA[text-popedom-lock]]></name>
+      <zh-cn><![CDATA[锁定]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-popedom-publish]]></name>
       <zh-cn><![CDATA[发布]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-popedom-empty]]></name>
-      <zh-cn><![CDATA[清空]]></zh-cn>
+      <name><![CDATA[text-popedom-sort]]></name>
+      <zh-cn><![CDATA[排序]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-popedom-verify]]></name>
+      <zh-cn><![CDATA[审核]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-upload-error-1]]></name>
