@@ -126,10 +126,7 @@ class ui extends page {
         {
           $status = 1;
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
-          $logString = tpl::take('manage.log-edit-1', 'lng');
-          $logString = str_replace('{$symbol}', $symbol, $logString);
-          $logString = str_replace('{$node}', $node, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-edit-1', array('symbol' => $symbol, 'node' => $node));
         }
       }
       else array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));

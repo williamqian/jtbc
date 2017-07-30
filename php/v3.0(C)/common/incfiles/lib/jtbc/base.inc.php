@@ -5,14 +5,14 @@
 namespace jtbc {
   class base
   {
-    public static function checkIDAry($argStrers)
+    public static function checkIDAry($argString)
     {
       $bool = false;
-      $strers = $argStrers;
-      if (!self::isEmpty($strers))
+      $string = $argString;
+      if (!self::isEmpty($string))
       {
         $bool = true;
-        $arys = explode(',', $strers);
+        $arys = explode(',', $string);
         foreach($arys as $key => $val)
         {
           if (!(is_numeric($val))) $bool = false;
@@ -21,44 +21,44 @@ namespace jtbc {
       return $bool;
     }
 
-    public static function checkInstr($argStrers, $argStr, $argSpStr = ',')
+    public static function checkInstr($argString, $argStr, $argSpStr = ',')
     {
       $bool = false;
-      $strers = strval($argStrers);
+      $string = strval($argString);
       $str = strval($argStr);
       $spStr = $argSpStr;
-      if ($strers == $str) $bool = true;
-      else if (is_numeric(strpos($strers, $spStr . $str . $spStr))) $bool = true;
-      else if (self::getLRStr($strers, $spStr, 'left') == $str) $bool = true;
-      else if (self::getLRStr($strers, $spStr, 'right') == $str) $bool = true;
+      if ($string == $str) $bool = true;
+      else if (is_numeric(strpos($string, $spStr . $str . $spStr))) $bool = true;
+      else if (self::getLRStr($string, $spStr, 'left') == $str) $bool = true;
+      else if (self::getLRStr($string, $spStr, 'right') == $str) $bool = true;
       return $bool;
     }
 
-    public static function encodeText($argStrers)
+    public static function encodeText($argString)
     {
-      $strers = $argStrers;
-      if (!self::isEmpty($strers))
+      $string = $argString;
+      if (!self::isEmpty($string))
       {
-        $strers = str_replace('$', '&#36;', $strers);
-        $strers = str_replace('\'', '&#39;', $strers);
-        $strers = str_replace('.', '&#46;', $strers);
-        $strers = str_replace('@', '&#64;', $strers);
+        $string = str_replace('$', '&#36;', $string);
+        $string = str_replace('\'', '&#39;', $string);
+        $string = str_replace('.', '&#46;', $string);
+        $string = str_replace('@', '&#64;', $string);
       }
-      return $strers;
+      return $string;
     }
 
-    public static function encodeTextArea($argStrers)
+    public static function encodeTextArea($argString)
     {
-      $strers = $argStrers;
-      if (!self::isEmpty($strers))
+      $string = $argString;
+      if (!self::isEmpty($string))
       {
-        $strers = self::htmlEncode($strers);
-        $strers = str_replace(chr(13) . chr(10), chr(10), $strers);
-        $strers = str_replace(chr(39), '&#39;', $strers);
-        $strers = str_replace(chr(32) . chr(32), '&nbsp; ', $strers);
-        $strers = str_replace(chr(10), '<br />', $strers);
+        $string = self::htmlEncode($string);
+        $string = str_replace(chr(13) . chr(10), chr(10), $string);
+        $string = str_replace(chr(39), '&#39;', $string);
+        $string = str_replace(chr(32) . chr(32), '&nbsp; ', $string);
+        $string = str_replace(chr(10), '<br />', $string);
       }
-      return $strers;
+      return $string;
     }
 
     public static function formatDate($argDate, $argType)
@@ -192,22 +192,22 @@ namespace jtbc {
       return $filegroup;
     }
 
-    public static function getLeft($argStrers, $argLen)
+    public static function getLeft($argString, $argLen)
     {
-      $strers = $argStrers;
+      $string = $argString;
       $len = $argLen;
-      $tmpstr = mb_substr($strers, 0, $len, CHARSET);
+      $tmpstr = mb_substr($string, 0, $len, CHARSET);
       return $tmpstr;
     }
 
-    public static function getLeftB($argStrers, $argLen, $argEllipsis)
+    public static function getLeftB($argString, $argLen, $argEllipsis)
     {
       $tmpstr = '';
       $len = $argLen;
-      $strers = $argStrers;
+      $string = $argString;
       $ellipsis = $argEllipsis;
-      $tmpstr = mb_strcut($strers, 0, $len * 3, CHARSET);
-      if ($tmpstr != $strers) $tmpstr = $tmpstr . $ellipsis;
+      $tmpstr = mb_strcut($string, 0, $len * 3, CHARSET);
+      if ($tmpstr != $string) $tmpstr = $tmpstr . $ellipsis;
       return $tmpstr;
     }
 
@@ -284,13 +284,13 @@ namespace jtbc {
       return $num;
     }
 
-    public static function getParameter($argStrers, $argStr, $argSpStr = ';')
+    public static function getParameter($argString, $argStr, $argSpStr = ';')
     {
       $tmpstr = '';
       $str = $argStr;
       $spStr = $argSpStr;
-      $strers = $argStrers;
-      $regMatch = preg_match('((?:^|' . $spStr . ')' . $str . '=(.[^' . $spStr . ']*))', $strers, $regArys);
+      $string = $argString;
+      $regMatch = preg_match('((?:^|' . $spStr . ')' . $str . '=(.[^' . $spStr . ']*))', $string, $regArys);
       if (count($regArys) == 2) $tmpstr = $regArys[1];
       return $tmpstr;
     }
@@ -317,20 +317,20 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function getRight($argStrers, $argLen)
+    public static function getRight($argString, $argLen)
     {
-      $strers = $argStrers;
+      $string = $argString;
       $len = $argLen;
-      $tmpstr = mb_substr($strers, (mb_strlen($strers, CHARSET) - $len), $len, CHARSET);
+      $tmpstr = mb_substr($string, (mb_strlen($string, CHARSET) - $len), $len, CHARSET);
       return $tmpstr;
     }
 
-    public static function getString($argStrers)
+    public static function getString($argString)
     {
-      $strers = $argStrers;
-      if (is_numeric($strers)) $strers = strval($strers);
-      if ($strers == null) $strers = '';
-      return $strers;
+      $string = $argString;
+      if (is_numeric($string)) $string = strval($string);
+      if ($string == null) $string = '';
+      return $string;
     }
 
     public static function getSwapString($argString1, $argString2)
@@ -343,18 +343,18 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function htmlEncode($argStrers)
+    public static function htmlEncode($argString)
     {
-      $strers = $argStrers;
-      if (!self::isEmpty($strers))
+      $string = $argString;
+      if (!self::isEmpty($string))
       {
-        $strers = str_replace('&', '&amp;', $strers);
-        $strers = str_replace('>', '&gt;', $strers);
-        $strers = str_replace('<', '&lt;', $strers);
-        $strers = str_replace('"', '&quot;', $strers);
-        $strers = self::encodeText($strers);
+        $string = str_replace('&', '&amp;', $string);
+        $string = str_replace('>', '&gt;', $string);
+        $string = str_replace('<', '&lt;', $string);
+        $string = str_replace('"', '&quot;', $string);
+        $string = self::encodeText($string);
       }
-      return $strers;
+      return $string;
     }
 
     public static function isEmpty($argString)

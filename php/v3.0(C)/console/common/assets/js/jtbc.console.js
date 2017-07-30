@@ -219,16 +219,17 @@ jtbc.console = {
         success: function(data)
         {
           var dataObj = $(data);
-          clearTimeout(tthis.para['load-main-url-waiting']);
-          mainObj.parent().find('.waiting').removeClass('on');
           if (dataObj.find('result').attr('status') == '1')
           {
             location.href = '#' + myURL;
             tthis.para['load-main-url'] = myURL;
             tthis.insertHTML(mainObj, dataObj.find('result').text());
             loadedCallBack();
-          };
-          tthis.para['load-main-url-lock'] = false;
+            tthis.para['load-main-url-lock'] = false;
+            clearTimeout(tthis.para['load-main-url-waiting']);
+            mainObj.parent().find('.waiting').removeClass('on');
+          }
+          else this.error();
         },
         error: function()
         {

@@ -53,8 +53,7 @@ class ui extends page {
         {
           $status = 1;
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
-          $logString = tpl::take('manage.log-edit-1', 'lng');
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-edit-1');
         }
       }
     }
@@ -87,9 +86,7 @@ class ui extends page {
           $paraArray = json_decode($para, 1);
           if (is_array($paraArray))
           {
-            $logString = tpl::take('manage.log-upload-1', 'lng');
-            $logString = str_replace('{$filepath}', $paraArray['filepath'], $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+            $account -> creatAutoLog('manage.log-upload-1', array('filepath' => $paraArray['filepath']));
           }
         }
       }

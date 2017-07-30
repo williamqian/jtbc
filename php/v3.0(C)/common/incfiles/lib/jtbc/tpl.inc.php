@@ -49,25 +49,25 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public function strReplace($argStrers1, $argStrers2)
+    public function strReplace($argString1, $argString2)
     {
-      $strers1 = $argStrers1;
-      $strers2 = $argStrers2;
+      $string1 = $argString1;
+      $string2 = $argString2;
       $tmpstr = $this -> tplString;
-      $tmpstr = str_replace($strers1, $strers2, $tmpstr);
+      $tmpstr = str_replace($string1, $string2, $tmpstr);
       $this -> tplString = $tmpstr;
     }
 
-    public static function bring($argStrers, $argType = 'tpl', $argValue = '', $argNodeName = null)
+    public static function bring($argCodeName, $argType = 'tpl', $argValue = '', $argNodeName = null)
     {
       $bool = false;
       $type = $argType;
-      $strers = $argStrers;
+      $codename = $argCodeName;
       $value = $argValue;
       $nodeName = $argNodeName;
-      $strers = self::getAbbrTransKey($strers);
-      $routeStr = self::getXMLRoute($strers, $type);
-      $key = base::getLRStr($strers, '.', 'right');
+      $codename = self::getAbbrTransKey($codename);
+      $routeStr = self::getXMLRoute($codename, $type);
+      $key = base::getLRStr($codename, '.', 'right');
       $activeValue = self::getActiveValue($type);
       if (!base::isEmpty($nodeName)) $activeValue = $nodeName;
       $bool = self::setXMLInfo($routeStr, $activeValue, $key, $value);
@@ -104,42 +104,42 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function getAbbrTransKey($argStrers)
+    public static function getAbbrTransKey($argCodeName)
     {
-      $strers = $argStrers;
-      if (!base::isEmpty($strers))
+      $codename = $argCodeName;
+      if (!base::isEmpty($codename))
       {
-        if (substr($strers, 0, 1) == '.') $strers = 'global.' . base::getLRStr($strers, '.', 'rightr');
-        else if (substr($strers, 0, 2) == '::') $strers = 'global.' . CONSOLEDIR . ':' . base::getLRStr($strers, '::', 'right');
-        else if (substr($strers, 0, 2) == ':/') $strers = 'global.' . CONSOLEDIR . '/' . base::getLRStr($strers, ':/', 'right');
+        if (substr($codename, 0, 1) == '.') $codename = 'global.' . base::getLRStr($codename, '.', 'rightr');
+        else if (substr($codename, 0, 2) == '::') $codename = 'global.' . CONSOLEDIR . ':' . base::getLRStr($codename, '::', 'right');
+        else if (substr($codename, 0, 2) == ':/') $codename = 'global.' . CONSOLEDIR . '/' . base::getLRStr($codename, ':/', 'right');
       }
-      return $strers;
+      return $codename;
     }
 
-    public static function getEvalValue($argStrers)
+    public static function getEvalValue($argString)
     {
       $tstr = '';
-      $strers = $argStrers;
+      $string = $argString;
       $ns = __NAMESPACE__;
-      if (!base::isEmpty($strers))
+      if (!base::isEmpty($string))
       {
-        if (substr($strers, 0 ,1) == '$')
+        if (substr($string, 0 ,1) == '$')
         {
-          $strers = substr($strers, 1, strlen($strers) - 1);
-          $tstr = page::getPara($strers);
+          $string = substr($string, 1, strlen($string) - 1);
+          $tstr = page::getPara($string);
         }
-        else if (substr($strers, 0 ,1) == '#')
+        else if (substr($string, 0 ,1) == '#')
         {
-          $strers = substr($strers, 1, strlen($strers) - 1);
-          @eval('$tstr = $GLOBALS[' . $strers . '];');
+          $string = substr($string, 1, strlen($string) - 1);
+          @eval('$tstr = $GLOBALS[' . $string . '];');
         }
         else
         {
-          if (is_numeric(strpos($strers, '(')))
+          if (is_numeric(strpos($string, '(')))
           {
-            if (is_numeric(strpos($strers, '$')))
+            if (is_numeric(strpos($string, '$')))
             {
-              $regm = preg_match_all('(\$(.[^\(]*)\()', $strers, $innerFun);
+              $regm = preg_match_all('(\$(.[^\(]*)\()', $string, $innerFun);
               if ($regm)
               {
                 for ($i = 0; $i <= count($innerFun[0]) - 1; $i ++)
@@ -147,27 +147,27 @@ namespace jtbc {
                   $funName = $innerFun[1][$i];
                   if (!function_exists($funName))
                   {
-                    if (method_exists($ns . '\\page', $funName)) $strers = str_replace('$' . $funName, $ns . '\\page::' . $funName, $strers);
-                    else if (method_exists($ns . '\\request', $funName)) $strers = str_replace('$' . $funName, $ns . '\\request::' . $funName, $strers);
-                    else if (method_exists($ns . '\\base', $funName)) $strers = str_replace('$' . $funName, $ns . '\\base::' . $funName, $strers);
-                    else if (method_exists($ns . '\\tpl', $funName)) $strers = str_replace('$' . $funName, $ns . '\\tpl::' . $funName, $strers);
-                    else if (method_exists($ns . '\\smart', $funName)) $strers = str_replace('$' . $funName, $ns . '\\smart::' . $funName, $strers);
+                    if (method_exists($ns . '\\page', $funName)) $string = str_replace('$' . $funName, $ns . '\\page::' . $funName, $string);
+                    else if (method_exists($ns . '\\request', $funName)) $string = str_replace('$' . $funName, $ns . '\\request::' . $funName, $string);
+                    else if (method_exists($ns . '\\base', $funName)) $string = str_replace('$' . $funName, $ns . '\\base::' . $funName, $string);
+                    else if (method_exists($ns . '\\tpl', $funName)) $string = str_replace('$' . $funName, $ns . '\\tpl::' . $funName, $string);
+                    else if (method_exists($ns . '\\smart', $funName)) $string = str_replace('$' . $funName, $ns . '\\smart::' . $funName, $string);
                   }
                 }
               }
             }
-            $fun = base::getLRStr($strers, '(', 'left');
-            if (function_exists($fun)) eval('$tstr = ' . $strers . ';');
+            $fun = base::getLRStr($string, '(', 'left');
+            if (function_exists($fun)) eval('$tstr = ' . $string . ';');
             else
             {
-              if (method_exists($ns . '\\page', $fun)) eval('$tstr = ' . $ns . '\\page::' . $strers . ';');
-              else if (method_exists($ns . '\\request', $fun)) eval('$tstr = ' . $ns . '\\request::' . $strers . ';');
-              else if (method_exists($ns . '\\base', $fun)) eval('$tstr = ' . $ns . '\\base::' . $strers . ';');
-              else if (method_exists($ns . '\\tpl', $fun)) eval('$tstr = ' . $ns . '\\tpl::' . $strers . ';');
-              else if (method_exists($ns . '\\smart', $fun)) eval('$tstr = ' . $ns . '\\smart::' . $strers . ';');
+              if (method_exists($ns . '\\page', $fun)) eval('$tstr = ' . $ns . '\\page::' . $string . ';');
+              else if (method_exists($ns . '\\request', $fun)) eval('$tstr = ' . $ns . '\\request::' . $string . ';');
+              else if (method_exists($ns . '\\base', $fun)) eval('$tstr = ' . $ns . '\\base::' . $string . ';');
+              else if (method_exists($ns . '\\tpl', $fun)) eval('$tstr = ' . $ns . '\\tpl::' . $string . ';');
+              else if (method_exists($ns . '\\smart', $fun)) eval('$tstr = ' . $ns . '\\smart::' . $string . ';');
             }
           }
-          else eval('$tstr = ' . $strers . ';');
+          else eval('$tstr = ' . $string . ';');
         }
       }
       return $tstr;
@@ -228,12 +228,12 @@ namespace jtbc {
       return $karys;
     }
 
-    public static function getXMLRoute($argStrers, $argType)
+    public static function getXMLRoute($argCodeName, $argType)
     {
       $type = $argType;
-      $strers = $argStrers;
+      $codename = $argCodeName;
       $dir = '';
-      $routeStr = base::getLRStr($strers, '.', 'leftr');
+      $routeStr = base::getLRStr($codename, '.', 'leftr');
       switch($type)
       {
         case 'cfg':
@@ -275,9 +275,9 @@ namespace jtbc {
       return $routeStr;
     }
 
-    public static function parse($argStrers)
+    public static function parse($argString)
     {
-      $tmpstr = $argStrers;
+      $tmpstr = $argString;
       if (!base::isEmpty($tmpstr))
       {
         $regtag = preg_match_all('/<jtbc[^>]*>(.*?)<\/jtbc>/is', $tmpstr, $regArys);
@@ -421,11 +421,11 @@ namespace jtbc {
       return $bool;
     }
 
-    public static function take($argStrers, $argType = null, $argParse = 0, $argVars = null, $argNodeName = null)
+    public static function take($argCodeName, $argType = null, $argParse = 0, $argVars = null, $argNodeName = null)
     {
       $result = '';
       $type = $argType;
-      $strers = $argStrers;
+      $codename = $argCodeName;
       $ns = __NAMESPACE__;
       $parse = base::getNum($argParse, 0);
       $vars = $argVars;
@@ -435,9 +435,9 @@ namespace jtbc {
         $type = 'tpl';
         $parse = 1;
       }
-      $strers = self::getAbbrTransKey($strers);
-      $routeStr = self::getXMLRoute($strers, $type);
-      $key = base::getLRStr($strers, '.', 'right');
+      $codename = self::getAbbrTransKey($codename);
+      $routeStr = self::getXMLRoute($codename, $type);
+      $key = base::getLRStr($codename, '.', 'right');
       $activeValue = self::getActiveValue($type);
       if (!base::isEmpty($nodeName)) $activeValue = $nodeName;
       $globalStr = $routeStr;
@@ -452,9 +452,9 @@ namespace jtbc {
         if ($type == 'tpl')
         {
           $genre = page::getPara('genre');
-          $tthis = base::getLRStr($strers, '.', 'leftr');
+          $tthis = base::getLRStr($codename, '.', 'leftr');
           $tthisGenre = $genre;
-          if (is_numeric(strpos($strers, ':'))) $tthisGenre = base::getLRStr(base::getLRStr($strers, ':', 'leftr'), 'global.', 'right');
+          if (is_numeric(strpos($codename, ':'))) $tthisGenre = base::getLRStr(base::getLRStr($codename, ':', 'leftr'), 'global.', 'right');
           $result = str_replace('{$>genre}', $genre, $result);
           $result = str_replace('{$>this}', $tthis, $result);
           $result = str_replace('{$>this.genre}', $tthisGenre, $result);
@@ -513,18 +513,18 @@ namespace jtbc {
       return $result;
     }
 
-    public static function takeByNode($argStrers, $argNodeName = null, $argType = null, $argParse = 0, $argVars = null)
+    public static function takeByNode($argCodeName, $argNodeName = null, $argType = null, $argParse = 0, $argVars = null)
     {
-      return self::take($argStrers, $argType, $argParse, $argVars, $argNodeName);
+      return self::take($argCodeName, $argType, $argParse, $argVars, $argNodeName);
     }
 
-    public static function takeAndFormat($argStrers, $argType, $argTpl)
+    public static function takeAndFormat($argCodeName, $argType, $argTpl)
     {
       $tmpstr = '';
       $type = $argType;
-      $strers = $argStrers;
+      $codename = $argCodeName;
       $tpl = $argTpl;
-      $xmlAry = self::take($strers, $type);
+      $xmlAry = self::take($codename, $type);
       if (is_array($xmlAry))
       {
         $tmpstr = self::take($tpl, 'tpl');
@@ -598,19 +598,19 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function xmlSelect($argStrers, $argValue, $argTemplate, $argName = '')
+    public static function xmlSelect($argString, $argValue, $argTemplate, $argName = '')
     {
       $tmpstr = '';
-      $strers = $argStrers;
+      $string = $argString;
       $value = $argValue;
       $template = $argTemplate;
       $name = $argName;
-      $xinfostr = $strers;
+      $xinfostr = $string;
       $selstr = '';
-      if (is_numeric(strpos($strers, '|')))
+      if (is_numeric(strpos($string, '|')))
       {
-        $xinfostr = base::getLRStr($strers, '|', 'left');
-        $selstr = base::getLRStr($strers, '|', 'right');
+        $xinfostr = base::getLRStr($string, '|', 'left');
+        $selstr = base::getLRStr($string, '|', 'right');
       }
       $xmlAry = self::take($xinfostr, 'sel');
       if (is_array($xmlAry))

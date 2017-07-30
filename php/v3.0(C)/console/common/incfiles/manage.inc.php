@@ -128,8 +128,7 @@ class ui extends page {
         if ($remember == '1') $cookiesExpireTime = time() + 31536000;
         setcookie(APPNAME . 'console[username]', $username, $cookiesExpireTime, COOKIESPATH);
         setcookie(APPNAME . 'console[authentication]', md5(WEBKEY . md5($password)), $cookiesExpireTime, COOKIESPATH);
-        $logString = tpl::take('manage.log-login-1', 'lng');
-        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+        $account -> creatAutoLog('manage.log-login-1');
       }
       else $message = tpl::take('manage.msg-login-1', 'lng');
     }
@@ -172,9 +171,8 @@ class ui extends page {
         if ($account -> modifyPassword($password, $newpassword))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-modifypassword-1', 'lng');
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           $message = tpl::take('manage.text-modifypassword-done', 'lng');
+          $account -> creatAutoLog('manage.log-modifypassword-1');
         }
         else $message = tpl::take('manage.text-modifypassword-error-4', 'lng');
       }

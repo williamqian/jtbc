@@ -135,9 +135,7 @@ class ui extends page {
           if (is_numeric($re))
           {
             $status = 1;
-            $logString = tpl::take('manage.log-add-1', 'lng');
-            $logString = str_replace('{$id}', $db -> lastInsertId, $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+            $account -> creatAutoLog('manage.log-add-1', array('id' => $db -> lastInsertId));
           }
         }
       }
@@ -181,9 +179,7 @@ class ui extends page {
           {
             $status = 1;
             $message = tpl::take('manage.text-tips-edit-done', 'lng');
-            $logString = tpl::take('manage.log-edit-1', 'lng');
-            $logString = str_replace('{$id}', $id, $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+            $account -> creatAutoLog('manage.log-edit-1', array('id' => $id));
           }
         }
       }
@@ -215,10 +211,7 @@ class ui extends page {
       }
       if ($status == 1)
       {
-        $logString = tpl::take('manage.log-batch-1', 'lng');
-        $logString = str_replace('{$id}', $ids, $logString);
-        $logString = str_replace('{$batch}', $batch, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+        $account -> creatAutoLog('manage.log-batch-1', array('id' => $ids, 'batch' => $batch));
       }
     }
     $tmpstr = self::formatMsgResult($status, $message);
@@ -243,9 +236,7 @@ class ui extends page {
       if (smart::dbFieldSwitch($table, $prefix, 'delete', $id, 1))
       {
         $status = 1;
-        $logString = tpl::take('manage.log-delete-1', 'lng');
-        $logString = str_replace('{$id}', $id, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+        $account -> creatAutoLog('manage.log-delete-1', array('id' => $id));
       }
     }
     $tmpstr = self::formatMsgResult($status, $message);
@@ -276,9 +267,7 @@ class ui extends page {
           $paraArray = json_decode($para, 1);
           if (is_array($paraArray))
           {
-            $logString = tpl::take('manage.log-upload-1', 'lng');
-            $logString = str_replace('{$filepath}', $paraArray['filepath'], $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+            $account -> creatAutoLog('manage.log-upload-1', array('filepath' => $paraArray['filepath']));
           }
         }
       }

@@ -128,10 +128,7 @@ class ui extends page {
               $re = $db -> exec($sqlstr);
               if (is_numeric($re))
               {
-                $logString = tpl::take('manage.log-add-1', 'lng');
-                $logString = str_replace('{$id}', $db -> lastInsertId, $logString);
-                $logString = str_replace('{$filepath}', $paraArray['filepath'], $logString);
-                $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+                $account -> creatAutoLog('manage.log-add-1', array('id' => $db -> lastInsertId, 'filepath' => $paraArray['filepath']));
               }
             }
           }
@@ -184,9 +181,7 @@ class ui extends page {
                 $re = $db -> exec($sqlstr);
                 if (is_numeric($re))
                 {
-                  $logString = tpl::take('manage.log-replace-1', 'lng');
-                  $logString = str_replace('{$id}', $id, $logString);
-                  $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+                  $account -> creatAutoLog('manage.log-replace-1', array('id' => $id));
                 }
               }
             }
@@ -230,9 +225,7 @@ class ui extends page {
           {
             $status = 1;
             $message = tpl::take('manage.text-tips-edit-done', 'lng');
-            $logString = tpl::take('manage.log-edit-1', 'lng');
-            $logString = str_replace('{$id}', $id, $logString);
-            $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+            $account -> creatAutoLog('manage.log-edit-1', array('id' => $id));
           }
         }
       }
@@ -260,10 +253,7 @@ class ui extends page {
       }
       if ($status == 1)
       {
-        $logString = tpl::take('manage.log-batch-1', 'lng');
-        $logString = str_replace('{$id}', $ids, $logString);
-        $logString = str_replace('{$batch}', $batch, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+        $account -> creatAutoLog('manage.log-batch-1', array('id' => $ids, 'batch' => $batch));
       }
     }
     $tmpstr = self::formatMsgResult($status, $message);
@@ -288,9 +278,7 @@ class ui extends page {
       if (smart::dbFieldSwitch($table, $prefix, 'delete', $id, 1))
       {
         $status = 1;
-        $logString = tpl::take('manage.log-delete-1', 'lng');
-        $logString = str_replace('{$id}', $id, $logString);
-        $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+        $account -> creatAutoLog('manage.log-delete-1', array('id' => $id));
       }
     }
     $tmpstr = self::formatMsgResult($status, $message);

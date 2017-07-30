@@ -201,9 +201,7 @@ class ui extends page {
         if (@mkdir($path . $name))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-addfolder-1', 'lng');
-          $logString = str_replace('{$path}', $myPath . $name, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-addfolder-1', array('path' => $myPath . $name));
         }
       }
     }
@@ -234,9 +232,7 @@ class ui extends page {
         if (move_uploaded_file($tmp_filename, $newfilepath))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-addfile-1', 'lng');
-          $logString = str_replace('{$path}', $myPath . $filename, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-addfile-1', array('path' => $myPath . $filename));
         }
       }
     }
@@ -265,10 +261,8 @@ class ui extends page {
         if (@file_put_contents($path, $content))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-editfile-1', 'lng');
-          $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
+          $account -> creatAutoLog('manage.log-editfile-1', array('path' => $myPath));
         }
         else $message = tpl::take('manage.text-tips-edit-error-2', 'lng');
       }
@@ -299,10 +293,7 @@ class ui extends page {
         if (@rename($path, base::getLRStr($path, '/', 'leftr') . '/' . $name))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-rename-1', 'lng');
-          $logString = str_replace('{$name}', $name, $logString);
-          $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-rename-1', array('name' => $name, 'path' => $myPath));
         }
       }
     }
@@ -331,9 +322,7 @@ class ui extends page {
         if (@unlink($path))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-delete-1', 'lng');
-          $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-delete-1', array('path' => $myPath));
         }
       }
       else if (is_dir($path))
@@ -341,9 +330,7 @@ class ui extends page {
         if (base::removeDir($path))
         {
           $status = 1;
-          $logString = tpl::take('manage.log-delete-2', 'lng');
-          $logString = str_replace('{$path}', $myPath, $logString);
-          $account -> creatLog(self::getPara('genre'), $logString, request::getRemortIP());
+          $account -> creatAutoLog('manage.log-delete-1', array('path' => $myPath));
         }
       }
     }

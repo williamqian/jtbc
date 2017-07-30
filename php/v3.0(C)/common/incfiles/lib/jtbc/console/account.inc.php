@@ -218,6 +218,16 @@ namespace jtbc\console {
       return $bool;
     }
 
+    public function creatAutoLog($argCodeName, $argAry = null)
+    {
+      $codeName = $argCodeName;
+      $ary = $argAry;
+      $logString = tpl::take($codeName, 'lng');
+      $logString = tpl::replaceOriginalTagByAry($logString, $ary);
+      $bool = $this -> creatLog(page::getPara('genre'), $logString, request::getRemortIP());
+      return $bool;
+    }
+
     public function getGenrePopedom($argGenre, $argItem)
     {
       $tmpstr = '';
