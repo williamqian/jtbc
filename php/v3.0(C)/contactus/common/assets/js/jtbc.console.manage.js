@@ -8,6 +8,9 @@ jtbc.console.manage = {
     tthis.parent.parent.editor.baseHref = tthis.obj.attr('folder');
     tthis.para['editor-content'] = tthis.parent.parent.editor.replace('content');
     tthis.parent.lib.initAttEvents(tthis.obj, function(argContent){ tthis.parent.parent.editor.insertHTML(tthis.para['editor-content'], 'content', argContent); });
+    tthis.obj.find('.form_button').find('button.submit').on('before', function(){
+      tthis.obj.find('textarea[name=\'content\']').val(tthis.parent.parent.editor.getHTML(tthis.para['editor-content'], 'content'));
+    });
   },
   initCommon: function()
   {
