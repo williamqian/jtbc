@@ -84,6 +84,9 @@ namespace jtbc {
         case '2':
           $tmpstr = date('Y.m.d', $date);
           break;
+        case '3':
+          $tmpstr = date('Y/m/d', $date);
+          break;
         case '10':
           $tmpstr = date('Ymd', $date);
           break;
@@ -116,16 +119,21 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function formatLine($argContent, $argTPL)
+    public static function formatLine($argContent, $argTPL, $argKey = '')
     {
       $tmpstr = '';
       $content = $argContent;
       $tpl = $argTPL;
+      $key = $argKey;
       if (!self::isEmpty($content))
       {
         $content = self::htmlEncode($content);
-        $content = str_replace(chr(13) . chr(10), chr(10), $content);
-        $contentAry = explode(chr(10), $content);
+        if (self::isEmpty($key))
+        {
+          $key = chr(10);
+          $content = str_replace(chr(13) . chr(10), chr(10), $content);
+        }
+        $contentAry = explode($key, $content);
         foreach ($contentAry as $key => $val)
         {
           if (!self::isEmpty($val))
