@@ -851,7 +851,7 @@ icons icon a.link {
   display: inline-block; position: relative; z-index: 100
 }
 .searchbox input.keyword {
-  width: 80px; height: 28px; line-height: 28px; background: none; padding: 0px 30px 0px 10px; border: #d1d1d1 1px solid
+  width: 120px; height: 28px; line-height: 28px; background: none; padding: 0px 30px 0px 10px; border: #d1d1d1 1px solid
 }
 .searchbox input.keyword:focus {
   border-color: #5b9dd9; box-shadow: 0px 0px 2px rgba(30, 140, 190, 0.8)

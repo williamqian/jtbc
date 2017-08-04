@@ -11,6 +11,10 @@
       <zh-cn><![CDATA[ID]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[author]]></name>
+      <zh-cn><![CDATA[作者]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[att]]></name>
       <zh-cn><![CDATA[附件]]></zh-cn>
     </item>
