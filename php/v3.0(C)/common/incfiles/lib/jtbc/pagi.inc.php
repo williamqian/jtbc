@@ -61,7 +61,7 @@ namespace jtbc {
       return $dataAry;
     }
 
-    public static function pagi($argNum1, $argNum2, $argBaseLink, $argTplId = '', $argPagiId = 'pagi', $argPagiLen = 5)
+    public static function pagi($argNum1, $argNum2, $argBaseLink, $argTplId = 'pagi-1', $argPagiId = 'pagi', $argPagiLen = 5)
     {
       $tmpstr = '';
       $vlNum = 0;
@@ -70,12 +70,12 @@ namespace jtbc {
       $pagilen = base::getNum($argPagiLen, 5);
       $baseLink = $argBaseLink;
       $tplId = $argTplId;
-      if (base::isEmpty($tplId)) $tplId = 'pagi-1';
       $pagiId = $argPagiId;
       if (is_numeric(strpos($pagiId, 'pagi-ct'))) $vlNum = 1;
       if ($num2 > $vlNum)
       {
-        $tmpstr = tpl::take('global.config.' . $tplId, 'tpl');
+        if (strpos($tplId, '.')) $tmpstr = tpl::take($tplId, 'tpl');
+        else $tmpstr = tpl::take('global.config.' . $tplId, 'tpl');
         $tpl = new tpl();
         $tpl -> tplString = $tmpstr;
         $loopString = $tpl -> getLoopString('{@}');

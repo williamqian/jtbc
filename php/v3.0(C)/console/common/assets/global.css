@@ -28,21 +28,31 @@ a:hover {
 a.link {
   cursor: pointer
 }
+label.radio,
 label.checkbox {
-  display: inline-block; min-width: 16px; position: relative; line-height: 16px; color: #666
+  display: inline-block; min-width: 16px; padding-right: 14px; position: relative; line-height: 16px; color: #666
 }
+label.radio input[type=radio],
 label.checkbox input[type=checkbox] {
   visibility: hidden
+}
+label.radio vicon {
+  display: inline-block; width: 14px; height: 14px; background-color: #fff; border: #ccc 1px solid; border-radius: 8px; position: absolute; top: 0px; left: 0px; z-index: 100
 }
 label.checkbox vicon {
   display: inline-block; width: 14px; height: 14px; background-color: #fff; border: #ccc 1px solid; position: absolute; top: 0px; left: 0px; z-index: 100
 }
+label.radio input[type=radio]:checked + vicon {
+  background: url(icon/check.2.svg) center center no-repeat
+}
 label.checkbox input[type=checkbox]:checked + vicon {
   background: url(icon/check.1.svg) #fff center center no-repeat
 }
+label.radio span,
 label.checkbox span {
   padding-left: 10px
 }
+label.radio span.text,
 label.checkbox span.text {
   padding-right: 15px
 }

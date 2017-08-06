@@ -208,7 +208,7 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function getLeftB($argString, $argLen, $argEllipsis)
+    public static function getLeftB($argString, $argLen, $argEllipsis = '')
     {
       $tmpstr = '';
       $len = $argLen;
@@ -303,10 +303,10 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function getRandomString($argLength)
+    public static function getRandomString($argLength = 16)
     {
       $tmpstr = '';
-      $length = $argLength;
+      $length = self::getNum($argLength, 0);
       $chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
       $max = strlen($chars) - 1;
       for($i = 0; $i < $length; $i++)
@@ -316,11 +316,11 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function getRepeatedString($argString, $argNum)
+    public static function getRepeatedString($argString, $argNum = 2)
     {
       $tmpstr = '';
       $string = $argString;
-      $num = self::getNum($argNum);
+      $num = self::getNum($argNum, 0);
       for ($ti = 0; $ti < $num; $ti ++) $tmpstr .= $string;
       return $tmpstr;
     }

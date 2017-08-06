@@ -28,19 +28,19 @@
     </item>
     <item>
       <name><![CDATA[xmlselect_unradio]]></name>
-      <default><![CDATA[<label><input type="radio" class="radio" name="{$name}" value="{$value}" />{$explain}</label>&nbsp;]]></default>
+      <default><![CDATA[<label class="radio"><input type="radio" class="radio" name="{$name}" value="{$value}" /><vicon></vicon><span>{$explain}</span></label>]]></default>
     </item>
     <item>
       <name><![CDATA[xmlselect_radio]]></name>
-      <default><![CDATA[<label><input type="radio" class="radio" name="{$name}" value="{$value}" checked="checked" />{$explain}</label>&nbsp;]]></default>
+      <default><![CDATA[<label class="radio"><input type="radio" class="radio" name="{$name}" value="{$value}" checked="checked" /><vicon></vicon><span>{$explain}</span></label>]]></default>
     </item>
     <item>
       <name><![CDATA[xmlselect_uncheckbox]]></name>
-      <default><![CDATA[<label><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" />{$explain}</label>&nbsp;]]></default>
+      <default><![CDATA[<label class="checkbox"><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" /><vicon></vicon><span>{$explain}</span></label>]]></default>
     </item>
     <item>
       <name><![CDATA[xmlselect_checkbox]]></name>
-      <default><![CDATA[<label><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" checked="checked" />{$explain}</label>&nbsp;]]></default>
+      <default><![CDATA[<label class="checkbox"><input type="checkbox" class="checkbox" name="{$name}" value="{$value}" checked="checked" /><vicon></vicon><span>{$explain}</span></label>]]></default>
     </item>
     <item>
       <name><![CDATA[xmlselect_unlabel]]></name>
