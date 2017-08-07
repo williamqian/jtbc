@@ -30,7 +30,7 @@ a.link {
 }
 label.radio,
 label.checkbox {
-  display: inline-block; min-width: 16px; padding-right: 14px; position: relative; line-height: 16px; color: #666
+  display: inline-block; min-width: 16px; position: relative; line-height: 16px; color: #666
 }
 label.radio input[type=radio],
 label.checkbox input[type=checkbox] {
@@ -50,7 +50,7 @@ label.checkbox input[type=checkbox]:checked + vicon {
 }
 label.radio span,
 label.checkbox span {
-  padding-left: 10px
+  padding-left: 10px; padding-right: 14px
 }
 label.radio span.text,
 label.checkbox span.text {
@@ -698,9 +698,6 @@ icons icon a.link {
 .popedom ul li label {
   font-size: 14px; color: #000
 }
-.popedom ul li label.genre {
-  margin-right: 10px
-}
 .popedom ul li label.option {
   margin-left: 10px; font-size: 12px; color: #666
 }
@@ -745,6 +742,15 @@ icons icon a.link {
 }
 .popup_alert div.button button {
   margin-left: 10px; margin-right: 10px
+}
+.popup_minialert {
+  background: rgba(0, 0, 0, 0.7); position: fixed; top: 50%; left: 50%; border-radius: 6px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); z-index: 50; transition: all .3s ease
+}
+.popup_minialert.on {
+  opacity: 1; transform: translate(-50%, -50%) scale(1); z-index: 1100000000
+}
+.popup_minialert div.word {
+  padding: 10px 20px; line-height: 24px; font-size: 14px; color: #fff
 }
 .popup_confirm {
   width: 500px; height: 300px; background: #fff; position: fixed; top: 50%; left: 50%; opacity: 0; transform: translate(-50%, -50%) scale(0.2); box-shadow: 0 5px 15px rgba(0, 0, 0, .5); z-index: 50; transition: all .3s ease

@@ -224,6 +224,8 @@ DROP TABLE IF EXISTS `jtbc_universal_category`;
 CREATE TABLE `jtbc_universal_category` (
   `uc_id` int(11) NOT NULL AUTO_INCREMENT,
   `uc_topic` varchar(50) DEFAULT NULL,
+  `uc_image` varchar(200) DEFAULT NULL,
+  `uc_intro` varchar(1000) DEFAULT NULL,
   `uc_fid` int(11) DEFAULT '0',
   `uc_order` int(11) DEFAULT '0',
   `uc_time` datetime DEFAULT NULL,

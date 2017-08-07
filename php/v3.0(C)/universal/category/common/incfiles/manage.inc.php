@@ -47,10 +47,24 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
+    $genre = request::getHTTPPara('genre', 'get');
+    $fid = base::getNum(request::getHTTPPara('fid', 'get'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
+      $hasImage = 0;
+      $hasIntro = 0;
+      $allGenre = universal\category::getAllGenre();
+      if (in_array($genre, $allGenre))
+      {
+        $hasImage = base::getNum(tpl::take('global.' . $genre . ':category.has_image', 'cfg'), 0);
+        $hasIntro = base::getNum(tpl::take('global.' . $genre . ':category.has_intro', 'cfg'), 0);
+      }
       $tmpstr = tpl::take('manage.add', 'tpl');
+      $tmpstr = str_replace('{$-genre}', base::htmlEncode($genre), $tmpstr);
+      $tmpstr = str_replace('{$-fid}', base::htmlEncode($fid), $tmpstr);
+      $tmpstr = str_replace('{$-has_image}', base::htmlEncode($hasImage), $tmpstr);
+      $tmpstr = str_replace('{$-has_intro}', base::htmlEncode($hasIntro), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
     }
     $tmpstr = self::formatResult($status, $tmpstr);
@@ -68,6 +82,9 @@ class ui extends page {
       $db = self::db();
       if (!is_null($db))
       {
+        $hasImage = 0;
+        $hasIntro = 0;
+        $allGenre = universal\category::getAllGenre();
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
         $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
@@ -75,8 +92,16 @@ class ui extends page {
         $rs = $rq -> fetch();
         if (is_array($rs))
         {
+          $rsGenre = base::getString($rs[$prefix . 'genre']);
+          if (in_array($rsGenre, $allGenre))
+          {
+            $hasImage = base::getNum(tpl::take('global.' . $rsGenre . ':category.has_image', 'cfg'), 0);
+            $hasIntro = base::getNum(tpl::take('global.' . $rsGenre . ':category.has_intro', 'cfg'), 0);
+          }
           $tmpstr = tpl::take('manage.edit', 'tpl');
           $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
+          $tmpstr = str_replace('{$-has_image}', base::htmlEncode($hasImage), $tmpstr);
+          $tmpstr = str_replace('{$-has_intro}', base::htmlEncode($hasIntro), $tmpstr);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -308,6 +333,40 @@ class ui extends page {
       }
     }
     $tmpstr = self::formatMsgResult($status, $message);
+    return $tmpstr;
+  }
+
+  public static function moduleActionUpload()
+  {
+    $status = 0;
+    $message = '';
+    $para = '';
+    $limit = base::getString(request::getHTTPPara('limit', 'get'));
+    $account = self::account();
+    if (!($account -> checkPopedom(self::getPara('genre'), 'add') || $account -> checkPopedom(self::getPara('genre'), 'edit')))
+    {
+      $message = tpl::take('::console.text-tips-error-403', 'lng');
+    }
+    else
+    {
+      $upResult = upload::up2self(@$_FILES['file'], $limit);
+      $upResultArray = json_decode($upResult, 1);
+      if (is_array($upResultArray))
+      {
+        $status = $upResultArray['status'];
+        $message = $upResultArray['message'];
+        $para = $upResultArray['para'];
+        if ($status == 1)
+        {
+          $paraArray = json_decode($para, 1);
+          if (is_array($paraArray))
+          {
+            $account -> creatAutoLog('manage.log-upload-1', array('filepath' => $paraArray['filepath']));
+          }
+        }
+      }
+    }
+    $tmpstr = self::formatMsgResult($status, $message, $para);
     return $tmpstr;
   }
 

@@ -15,6 +15,14 @@
       <zh-cn><![CDATA[uc_]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[upload_path]]></name>
+      <zh-cn><![CDATA[common/assets/upload/]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[upload_filetype]]></name>
+      <zh-cn><![CDATA[jpg,gif,png]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[uninstall]]></name>
       <zh-cn><![CDATA[lock]]></zh-cn>
     </item>

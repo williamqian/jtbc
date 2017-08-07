@@ -730,7 +730,10 @@ jtbc.console.lib = {
     });
     myObj.find('input.fileurl').on('dblclick', function(){
       var thisObj = $(this);
-      if (thisObj.val()) tthis.previewAtt(null, thisObj.attr('text-preview-title'), tthis.parent.para['current-main-path'] + thisObj.val(), thisObj.attr('text-preview-link'), '0');
+      if (thisObj.val() && thisObj.attr('text-preview-title'))
+      {
+        tthis.previewAtt(null, thisObj.attr('text-preview-title'), tthis.parent.para['current-main-path'] + thisObj.val(), thisObj.attr('text-preview-link'), '0');
+      };
     });
     myObj.find('input.upfiles').on('change', function(){
       var thisObj = $(this);
@@ -741,7 +744,7 @@ jtbc.console.lib = {
         thisObj.attr('uploading', 'true');
         btnObj.addClass('lock').html(btnObj.attr('uploading'));
         tthis.fileUpSingle(this, url, function(result){
-          thisObj.attr('uploading', 'false');
+          thisObj.val('').attr('uploading', 'false');
           btnObj.removeClass('lock').html(btnObj.attr('text'));
           if (result.find('result').attr('status') == '1')
           {
@@ -750,7 +753,8 @@ jtbc.console.lib = {
           }
           else
           {
-            tthis.popupAlert(result.find('result').attr('message'), thisObj.attr('text-ok'), function(){});
+            if (thisObj.attr('alert') == 'mini') tthis.popupMiniAlert(result.find('result').attr('message'));
+            else tthis.popupAlert(result.find('result').attr('message'), thisObj.attr('text-ok'), function(){});
           };
         });
       };
@@ -853,11 +857,30 @@ jtbc.console.lib = {
       maskObj.removeClass('on');
       alertObj.removeClass('on');
     });
-    tthis.para['popup-confirm-timeout'] = setTimeout(function(){
+    tthis.para['popup-alert-timeout'] = setTimeout(function(){
       maskObj.addClass('on');
       alertObj.addClass('on');
     }, 100);
     return alertObj;
+  },
+  popupMiniAlert: function(argWord)
+  {
+    var tthis = this;
+    var word = argWord;
+    var rootObj = tthis.parent.root;
+    rootObj.find('.popup_minialert').remove();
+    rootObj.append('<div class="popup_minialert"><div class="word"></div></div>');
+    var minialertObj = rootObj.find('.popup_minialert');
+    minialertObj.find('.word').html(word);
+    clearTimeout(tthis.para['popup-minialert-timeout']);
+    clearTimeout(tthis.para['popup-minialert-disappear-timeout']);
+    tthis.para['popup-minialert-timeout'] = setTimeout(function(){
+      minialertObj.addClass('on');
+    }, 100);
+    tthis.para['popup-minialert-disappear-timeout'] = setTimeout(function(){
+      minialertObj.removeClass('on');
+    }, 2000);
+    return minialertObj;
   },
   popupConfirm: function(argWord, argB2, argB3, argCallBack)
   {

@@ -15,16 +15,14 @@ jtbc.console.manage = {
       if (thisObj.attr('loading') != 'true')
       {
         thisObj.attr('loading', 'true');
-        var url = tthis.para['fileurl'] + '?type=add';
+        var url = tthis.para['fileurl'] + '?type=add&genre=' + encodeURIComponent(tthis.obj.attr('current-genre')) + '&fid=' + encodeURIComponent(tthis.obj.attr('current-fid'));
         $.get(url, function(data){
           var dataObj = $(data);
           if (dataObj.find('result').attr('status') == '1')
           {
             var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
-            pageObj.find('.tinyform').find('button.submit').on('before', function(){
-              pageObj.find('input[name=\'genre\']').val(tthis.obj.attr('current-genre'));
-              pageObj.find('input[name=\'fid\']').val(tthis.obj.attr('current-fid'));
-            }).attr('message', 'custom').on('message', function(){
+            tthis.parent.lib.initUpFileEvents(pageObj);
+            pageObj.find('.tinyform').find('button.submit').attr('message', 'custom').on('message', function(){
               pageObj.find('span.tips').addClass('h').html($(this).attr('msg').split('|')[0]);
             }).attr('done', 'custom').on('done', function(){
               pageObj.find('span.tips').addClass('h').html($(this).attr('msg').split('|')[0]);
@@ -47,6 +45,7 @@ jtbc.console.manage = {
           if (dataObj.find('result').attr('status') == '1')
           {
             var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
+            tthis.parent.lib.initUpFileEvents(pageObj);
             pageObj.find('.tinyform').find('button.submit').attr('message', 'custom').on('message', function(){
               pageObj.find('span.tips').addClass('h').html($(this).attr('msg').split('|')[0]);
             }).attr('done', 'custom').on('done', function(){

@@ -62,5 +62,9 @@
       <name><![CDATA[log-batch-1]]></name>
       <zh-cn><![CDATA[批量操作({$batch})分类[{$id}]成功]]></zh-cn>
     </item>
+    <item>
+      <name><![CDATA[log-upload-1]]></name>
+      <zh-cn><![CDATA[上传文件[{$filepath}]成功]]></zh-cn>
+    </item>
   </item_list>
 </xml>
