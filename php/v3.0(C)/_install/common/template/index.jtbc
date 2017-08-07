@@ -89,18 +89,5 @@
 </body>
 </html>]]></default>
     </item>
-    <item>
-      <name><![CDATA[file-const]]></name>
-      <default><![CDATA[]]></default>
-    </item>
-    <item>
-      <name><![CDATA[file-index]]></name>
-      <default><![CDATA[<?php
-require_once('common/incfiles/page.inc.php');
-require_once('common/incfiles/index.inc.php');
-header('content-type: text/html; charset=' . CHARSET);
-echo jtbc\ui::getResult();
-?>]]></default>
-    </item>
   </item_list>
 </xml>
