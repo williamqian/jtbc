@@ -147,6 +147,12 @@ a.link {
 .container {
   width: 100%; background: linear-gradient(#ececec, #f8f8f8) #f8f8f8 top center no-repeat; background-size: 100% 3px; position: relative; z-index: 100
 }
+.breadcrumb {
+  font-size: 1.4rem
+}
+.breadcrumb em {
+  display: inline-block; vertical-align: middle; margin: 0px 5px; width: 1.2rem; height: 1.2rem; background: url(icon/arrow.2.svg) center center no-repeat
+}
 .cupboard {
   width: 1200px; margin: auto; padding: 20px 0px; position: relative; z-index: 100
 }
@@ -301,13 +307,16 @@ a.link {
   display: inline-block; font-size: 0px
 }
 .selector ul li {
-  display: inline-block; font-size: 1.4rem; padding: 10px 20px; background: #fff; border: #ddd 1px solid; border-right: 0px
+  display: inline-block; background: #fff; border: #ddd 1px solid; border-right: 0px
 }
 .selector ul li:first-child {
   border-top-left-radius: 10px; border-bottom-left-radius: 10px
 }
 .selector ul li:last-child {
   border-right: #ddd 1px solid; border-top-right-radius: 10px; border-bottom-right-radius: 10px
+}
+.selector ul li a {
+  display: inline-block; font-size: 1.4rem; padding: 10px 20px
 }
 .selector ul li.on {
   background: #005f9b; border-color: #005f9b

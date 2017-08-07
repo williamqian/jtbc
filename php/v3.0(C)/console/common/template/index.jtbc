@@ -21,7 +21,7 @@
 <link type="text/css" rel="stylesheet" href="{$=$assetspath}/global.css" />
 </head>
 <body>
-<div id="console" root="{$=getActualRoute('', 1)}"></div>
+<div id="console" root="{$=getActualRoute('')}"></div>
 <script type="text/javascript">$(document).ready(function() { jtbc.console.ready(); });</script>
 </body>
 </html>]]></default>

@@ -13,7 +13,7 @@ namespace jtbc\universal {
     public static function getAllGenre()
     {
       $allGenre = array();
-      $base = smart::getActualRoute('./', 1);
+      $base = smart::getActualRoute('./');
       $folder = smart::getFolderByGuide('category');
       $folderAry = explode('|+|', $folder);
       foreach($folderAry as $key => $val)
@@ -120,6 +120,38 @@ namespace jtbc\universal {
               if ($rsid == $id) $tmpstr .= tpl::take('global.config.xmlselect_select', 'tpl', 0, array('explain' => $explain, 'value' => $rsid));
               else $tmpstr .= tpl::take('global.config.xmlselect_unselect', 'tpl', 0, array('explain' => $explain, 'value' => $rsid));
               $tmpstr .= self::getCategorySelectByGenre($genre, $lang, $myCategory, 'id=' . $id . ';fid=' . $rsid . ';rank=' . $rank);
+            }
+          }
+        }
+      }
+      return $tmpstr;
+    }
+
+    public static function getCategoryBreadcrumbByID($argGenre, $argLang, $argID)
+    {
+      $tmpstr = '';
+      $genre = $argGenre;
+      $lang = base::getNum($argLang, 0);
+      $id = base::getNum($argID, 0);
+      $categoryAry = self::getCategoryAryByGenre($genre, $lang);
+      if (is_array($categoryAry))
+      {
+        $prefix = self::getPrefix();
+        $baseHTML = tpl::take('global.config.breadcrumb', 'tpl');
+        $baseArrowHTML = tpl::take('global.config.breadcrumb-arrow', 'tpl');
+        foreach ($categoryAry as $key => $val)
+        {
+          if (is_array($val))
+          {
+            $rsid = base::getNum($val[$prefix . 'id'], 0);
+            $rsfid = base::getNum($val[$prefix . 'fid'], 0);
+            $rsTopic = base::getString($val[$prefix . 'topic']);
+            if ($rsid == $id)
+            {
+              $tmpstr = $baseArrowHTML . $baseHTML;
+              $tmpstr = str_replace('{$text}', base::htmlEncode($rsTopic), $tmpstr);
+              $tmpstr = str_replace('{$link}', base::htmlEncode(smart::createURL('list', $rsid, null, $genre)), $tmpstr);
+              if ($rsfid != 0) $tmpstr = self::getCategoryBreadcrumbByID($genre, $lang, $rsfid) . $tmpstr;
             }
           }
         }

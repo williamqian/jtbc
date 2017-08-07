@@ -25,7 +25,7 @@ class ui extends page {
         $specialFiled = $prefix . 'id,' . $prefix . 'dispose,' . $prefix . 'delete';
         $preset = array();
         $preset[$prefix . 'userip'] = request::getRemortIP();
-        $preset[$prefix . 'lang'] = smart::getForeLang();
+        $preset[$prefix . 'lang'] = self::getPara('lang');
         $preset[$prefix . 'time'] = base::getDateTime();
         $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
         $re = $db -> exec($sqlstr);

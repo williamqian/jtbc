@@ -46,11 +46,11 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "publish=1 and " . $prefix . "lang=" . smart::getForeLang();
+      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "publish=1 and " . $prefix . "lang=" . self::getPara('lang');
       if ($category != 0)
       {
-        self::setPageTitle(base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), smart::getForeLang(), $category)));
-        $sqlstr .= " and " . $prefix . "category in (" . base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), smart::getForeLang(), $category)) . ")";
+        self::setPageTitle(base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), self::getPara('lang'), $category)));
+        $sqlstr .= " and " . $prefix . "category in (" . base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), self::getPara('lang'), $category)) . ")";
       }
       $sqlstr .=" order by " . $prefix . "time desc";
       $pagi = new pagi($db);

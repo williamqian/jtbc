@@ -273,7 +273,7 @@ namespace jtbc {
         $routeStr = $dir . '/' . $routeStr . XMLSFX;
         if (!base::isEmpty($genre)) $routeStr = $genre . '/' . $routeStr;
       }
-      $routeStr = smart::getActualRoute($routeStr, 1);
+      $routeStr = smart::getActualRoute($routeStr);
       return $routeStr;
     }
 

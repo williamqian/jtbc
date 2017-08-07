@@ -251,7 +251,7 @@ namespace jtbc\console {
       $tpl1 = $argTPL1;
       $tpl2 = $argTPL2;
       $pre = $argPre;
-      $base = smart::getActualRoute('./', 1);
+      $base = smart::getActualRoute('./');
       $folder = smart::getFolderByGuide();
       $folderAry = explode('|+|', $folder);
       $tmpstr = $tpl1;

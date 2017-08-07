@@ -29,6 +29,48 @@ namespace jtbc {
       return $db;
     }
 
+    public static function breadcrumb($argAry = null)
+    {
+      $ary = $argAry;
+      $genre = self::getPara('genre');
+      $lang = self::getPara('lang');
+      $baseHTML = tpl::take('global.config.breadcrumb', 'tpl');
+      $baseArrowHTML = tpl::take('global.config.breadcrumb-arrow', 'tpl');
+      $breadcrumb = $baseHTML;
+      $breadcrumb = str_replace('{$text}', base::htmlEncode(tpl::take('global.public.homepage', 'lng')), $breadcrumb);
+      $breadcrumb = str_replace('{$link}', base::htmlEncode(smart::getActualRoute('./')), $breadcrumb);
+      if (!base::isEmpty($genre))
+      {
+        $baseGenre = '';
+        $genreAry = explode('/', $genre);
+        foreach ($genreAry as $key => $val)
+        {
+          if (!base::isEmpty($val))
+          {
+            $myClass = '';
+            $currentGenre = $baseGenre . $val;
+            $breadcrumb .= $baseArrowHTML . $baseHTML;
+            $breadcrumb = str_replace('{$text}', base::htmlEncode(tpl::take('global.' . $currentGenre . ':index.title', 'lng')), $breadcrumb);
+            $breadcrumb = str_replace('{$link}', base::htmlEncode(smart::getActualRoute($currentGenre)), $breadcrumb);
+            $baseGenre = $currentGenre . '/';
+          }
+        }
+      }
+      if (is_array($ary))
+      {
+        $ns = __NAMESPACE__;
+        if (array_key_exists('category', $ary))
+        {
+          $category = base::getNum($ary['category'], 0);
+          if (method_exists($ns . '\\universal\\category', 'getCategoryBreadcrumbByID'))
+          {
+            $breadcrumb .= universal\category::getCategoryBreadcrumbByID($genre, $lang, $category);
+          }
+        }
+      }
+      return $breadcrumb;
+    }
+
     public static function formatResult($argStatus, $argHTML)
     {
       $status = $argStatus;
@@ -119,6 +161,7 @@ namespace jtbc {
       self::$para['global.assetspath'] = smart::getActualRoute(ASSETSPATH);
       self::$para['folder'] = base::getLRStr($_SERVER['SCRIPT_NAME'], '/', 'leftr') . '/';
       self::$para['filename'] = base::getLRStr($_SERVER['SCRIPT_NAME'], '/', 'right');
+      self::$para['lang'] = smart::getForeLang();
       self::$para['uri'] = $_SERVER['SCRIPT_NAME'];
       self::$para['urs'] = $_SERVER['QUERY_STRING'];
       self::$para['url'] = self::$para['uri'];

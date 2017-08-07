@@ -48,7 +48,7 @@ class ui extends page {
     $pre = $argPre;
     $popedom = $argPopedom;
     $popedomArray = array();
-    $base = smart::getActualRoute('./', 1);
+    $base = smart::getActualRoute('./');
     $folder = smart::getFolderByGuide();
     $folderAry = explode('|+|', $folder);
     $categoryAry = universal\category::getAllGenre();

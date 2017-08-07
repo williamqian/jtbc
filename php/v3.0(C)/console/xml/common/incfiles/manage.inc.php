@@ -20,7 +20,7 @@ class ui extends page {
       $symbolAry = explode('.', $symbol);
       if (count($symbolAry) == 3)
       {
-        $filepath = smart::getActualRoute($symbolAry[0], 1);
+        $filepath = smart::getActualRoute($symbolAry[0]);
         if (base::getRight($filepath, 1) != '/') $filepath .= '/';
         switch($symbolAry[1])
         {

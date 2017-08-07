@@ -7,6 +7,10 @@
   </configure>
   <item_list>
     <item>
+      <name><![CDATA[homepage]]></name>
+      <zh-cn><![CDATA[首页]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[menu-1]]></name>
       <zh-cn><![CDATA[首页]]></zh-cn>
     </item>

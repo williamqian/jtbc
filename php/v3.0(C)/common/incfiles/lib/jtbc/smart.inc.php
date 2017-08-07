@@ -124,7 +124,7 @@ namespace jtbc {
       $route = '';
       $type = $argType;
       $routeStr = $argRoutestr;
-      if ($type == 0 && !base::isEmpty(BASEDIR)) $route = BASEDIR . $routeStr;
+      if ($type == 8 && !base::isEmpty(BASEDIR)) $route = BASEDIR . $routeStr;
       else
       {
         switch (page::getPara('route'))
@@ -184,7 +184,7 @@ namespace jtbc {
       $order = '';
       $path = $argPath;
       $fileprefix = $argFilePrefix;
-      if (base::isEmpty($path)) $path = self::getActualRoute('./', 1);
+      if (base::isEmpty($path)) $path = self::getActualRoute('./');
       $webdir = dir($path);
       $myguide = $path . '/common/guide' . XMLSFX;
       if (file_exists($myguide)) $order = tpl::getXRootAtt($myguide, 'order');
@@ -662,7 +662,7 @@ namespace jtbc {
       $tmpstr = '';
       $db = page::db();
       $genre = page::getPara('genre');
-      $lang = self::getForeLang();
+      $lang = page::getPara('lang');
       $para = $argPara;
       $osqlAry = $argOSQLAry;
       $paraTpl = base::getParameter($para, 'tpl');
@@ -704,7 +704,7 @@ namespace jtbc {
       {
         if (!base::isEmpty($paraGenre) && $paraGenre != $genre)
         {
-          $paraBaseURL = smart::getActualRoute($paraGenre);
+          $paraBaseURL = self::getActualRoute($paraGenre);
           if (base::getRight($paraBaseURL, 1) != '/') $paraBaseURL .= '/';
         }
       }

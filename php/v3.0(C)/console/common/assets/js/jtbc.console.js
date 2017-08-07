@@ -726,7 +726,7 @@ jtbc.console.lib = {
     var myObj = argObj;
     myObj.find('button.upbtn').click(function(){
       var thisObj = $(this);
-      if (!thisObj.hasClass('lock')) thisObj.parent().find('input.upfiles').trigger('click');
+      if (!thisObj.hasClass('lock') && !thisObj.hasClass('show-0')) thisObj.parent().find('input.upfiles').trigger('click');
     });
     myObj.find('input.fileurl').on('dblclick', function(){
       var thisObj = $(this);

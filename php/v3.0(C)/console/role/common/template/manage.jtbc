@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('config.lang', 'lng')}<r>*</r></t></th>
-            <td>{$=xmlSelect('::sel_lang.*', '*', 'labelcheckbox', 'lang-select')}</td>
+            <td>{$=xmlSelect('::sel_lang.*', '*', 'checkbox', 'lang-select')}</td>
           </tr>
         </tbody>
       </table>
@@ -87,7 +87,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('config.lang', 'lng')}<r>*</r></t></th>
-            <td>{$=xmlSelect('::sel_lang.*', '{$lang}', 'labelcheckbox', 'lang-select')}</td>
+            <td>{$=xmlSelect('::sel_lang.*', '{$lang}', 'checkbox', 'lang-select')}</td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('config.time', 'lng')}<r>*</r></t></th>

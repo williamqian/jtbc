@@ -7,6 +7,14 @@
   </configure>
   <item_list>
     <item>
+      <name><![CDATA[breadcrumb]]></name>
+      <default><![CDATA[<a href="{$link}">{$text}</a>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[breadcrumb-arrow]]></name>
+      <default><![CDATA[<em></em>]]></default>
+    </item>
+    <item>
       <name><![CDATA[editor-src]]></name>
       <default><![CDATA[<dfn url="{$=$assetspath}/editor/ckeditor/ckeditor.js"></dfn><dfn url="{$=$assetspath}/editor/jtbc.editor.js"></dfn>]]></default>
     </item>
@@ -49,14 +57,6 @@
     <item>
       <name><![CDATA[xmlselect_label]]></name>
       <default><![CDATA[<label for="{$name}{$value}" val="{$value}" class="on">{$explain}</label>]]></default>
-    </item>
-    <item>
-      <name><![CDATA[xmlselect_unlabelcheckbox]]></name>
-      <default><![CDATA[<label class="checkbox"><input type="checkbox" name="{$name}" value="{$value}" /><vicon></vicon><span class="text">{$explain}</span></label>]]></default>
-    </item>
-    <item>
-      <name><![CDATA[xmlselect_labelcheckbox]]></name>
-      <default><![CDATA[<label class="checkbox"><input type="checkbox" name="{$name}" value="{$value}" checked="checked" /><vicon></vicon><span class="text">{$explain}</span></label>]]></default>
     </item>
   </item_list>
 </xml>
