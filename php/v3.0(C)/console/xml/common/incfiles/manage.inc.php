@@ -1,5 +1,7 @@
 <?php
 namespace jtbc;
+use DOMXPath;
+use DOMDocument;
 class ui extends page {
   public static $account = null;
 
@@ -45,6 +47,23 @@ class ui extends page {
     return $pathAry;
   }
 
+  public static function moduleAdd()
+  {
+    $status = 1;
+    $tmpstr = '';
+    $account = self::account();
+    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
+    if ($account -> checkPopedom(self::getPara('genre'), 'add'))
+    {
+      $tmpstr = tpl::take('manage.add', 'tpl');
+      $tmpstr = str_replace('{$-symbol}', base::htmlEncode($symbol), $tmpstr);
+      $tmpstr = tpl::parse($tmpstr);
+      $tmpstr = $account -> replaceAccountTag($tmpstr);
+    }
+    $tmpstr = self::formatResult($status, $tmpstr);
+    return $tmpstr;
+  }
+
   public static function moduleList()
   {
     $status = 1;
@@ -87,15 +106,92 @@ class ui extends page {
           $nodeIndex += 1;
         }
         $tmpstr = $tpl -> mergeTemplate();
-        $tmpstr = str_replace('{$-symbol}', base::htmlEncode($symbol), $tmpstr);
-        $tmpstr = str_replace('{$-filepath}', base::htmlEncode($filepath), $tmpstr);
         $tmpstr = str_replace('{$-current-key}', base::htmlEncode($currentNode), $tmpstr);
         $tmpstr = str_replace('{$-current-val}', base::htmlEncode($currentValue), $tmpstr);
       }
+      $tmpstr = str_replace('{$-symbol}', base::htmlEncode($symbol), $tmpstr);
+      $tmpstr = str_replace('{$-filepath}', base::htmlEncode($filepath), $tmpstr);
     }
     $tmpstr = tpl::parse($tmpstr);
     $tmpstr = $account -> replaceAccountTag($tmpstr);
     $tmpstr = self::formatResult($status, $tmpstr);
+    return $tmpstr;
+  }
+
+  public static function moduleActionAdd()
+  {
+    $tmpstr = '';
+    $status = 0;
+    $message = '';
+    $error = array();
+    $account = self::account();
+    $nodename = base::getString(request::getHTTPPara('nodename', 'post'));
+    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
+    if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
+    {
+      array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
+    }
+    else
+    {
+      if (base::isEmpty($nodename)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
+      else if (!verify::isNatural($nodename)) array_push($error, tpl::take('manage.text-tips-add-error-1s', 'lng'));
+      if (count($error) == 0)
+      {
+        $pathAry = self::ppGetPathAryBySymbol($symbol);
+        if (!empty($pathAry))
+        {
+          $nodeIndex = 0;
+          $filepath = $pathAry['filepath'];
+          if (is_file($filepath))
+          {
+            $doc = new DOMDocument();
+            $doc -> formatOutput = true;
+            $doc -> preserveWhiteSpace = false;
+            $doc -> load($filepath);
+            $xpath = new DOMXPath($doc);
+            $query = '//xml/configure/node';
+            $node = $xpath -> query($query) -> item(0) -> nodeValue;
+            $query = '//xml/configure/field';
+            $field = $xpath -> query($query) -> item(0) -> nodeValue;
+            $query = '//xml/configure/base';
+            $base = $xpath -> query($query) -> item(0) -> nodeValue;
+            $fieldArys = explode(',', $field);
+            $query = '//xml/' . $base . '/' . $node . '/' . current($fieldArys) . '[text()=\'' . $nodename . '\']';
+            $rests = $xpath -> query($query);
+            $matchLength = base::getNum($rests -> length, 0);
+            if ($matchLength >= 1) array_push($error, tpl::take('manage.text-tips-add-error-3', 'lng'));
+            else
+            {
+              $baseQuery = '//xml/' . $base;
+              $baseDom = $xpath -> query($baseQuery) -> item(0);
+              $newNode = $doc -> createElement($node);
+              $newNodeName = $doc -> createElement(current($fieldArys));
+              $newNodeName -> appendChild($doc -> createCDATASection($nodename));
+              $newNode -> appendChild($newNodeName);
+              for ($ti = 1; $ti < count($fieldArys); $ti ++)
+              {
+                $newNodeField = $doc -> createElement($fieldArys[$ti]);
+                $newNodeField -> appendChild($doc -> createCDATASection(''));
+                $newNode -> appendChild($newNodeField);
+              }
+              $baseDom -> appendChild($newNode);
+              $bool = $doc -> save($filepath);
+              if ($bool == false) array_push($error, tpl::take('manage.text-tips-add-error-4', 'lng'));
+              else
+              {
+                $status = 1;
+                $message = tpl::take('manage.text-tips-add-done', 'lng');
+                $account -> creatAutoLog('manage.log-add-1', array('symbol' => $symbol, 'node' => $nodename));
+              }
+            }
+          }
+          else array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
+        }
+        else array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
+      }
+    }
+    if (count($error) != 0) $message = implode('|', $error);
+    $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
   }
 
@@ -130,6 +226,72 @@ class ui extends page {
         }
       }
       else array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
+    }
+    if (count($error) != 0) $message = implode('|', $error);
+    $tmpstr = self::formatMsgResult($status, $message);
+    return $tmpstr;
+  }
+
+  public static function moduleActionDelete()
+  {
+    $tmpstr = '';
+    $status = 0;
+    $message = '';
+    $error = array();
+    $account = self::account();
+    $nodename = base::getString(request::getHTTPPara('nodename', 'post'));
+    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
+    if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
+    {
+      array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
+    }
+    else
+    {
+      if (base::isEmpty($nodename)) array_push($error, tpl::take('manage.text-tips-delete-error-1', 'lng'));
+      else if (!verify::isNatural($nodename)) array_push($error, tpl::take('manage.text-tips-delete-error-1s', 'lng'));
+      if (count($error) == 0)
+      {
+        $pathAry = self::ppGetPathAryBySymbol($symbol);
+        if (!empty($pathAry))
+        {
+          $nodeIndex = 0;
+          $filepath = $pathAry['filepath'];
+          if (is_file($filepath))
+          {
+            $doc = new DOMDocument();
+            $doc -> load($filepath);
+            $xpath = new DOMXPath($doc);
+            $query = '//xml/configure/node';
+            $node = $xpath -> query($query) -> item(0) -> nodeValue;
+            $query = '//xml/configure/field';
+            $field = $xpath -> query($query) -> item(0) -> nodeValue;
+            $query = '//xml/configure/base';
+            $base = $xpath -> query($query) -> item(0) -> nodeValue;
+            $fieldArys = explode(',', $field);
+            $query = '//xml/' . $base . '/' . $node . '/' . current($fieldArys) . '[text()=\'' . $nodename . '\']';
+            $rests = $xpath -> query($query);
+            $matchLength = base::getNum($rests -> length, 0);
+            if ($matchLength >= 1)
+            {
+              foreach ($rests as $rest)
+              {
+                $rest -> parentNode -> parentNode -> removeChild($rest -> parentNode);
+              }
+              $bool = $doc -> save($filepath);
+              if ($bool == false) array_push($error, tpl::take('manage.text-tips-delete-error-4', 'lng'));
+              else
+              {
+                $status = 1;
+                $message = tpl::take('manage.text-tips-delete-done', 'lng');
+                $account -> creatAutoLog('manage.log-delete-1', array('symbol' => $symbol, 'node' => $nodename));
+              }
+            }
+            else array_push($error, tpl::take('manage.text-tips-delete-error-3', 'lng'));
+          }
+          else array_push($error, tpl::take('manage.text-tips-delete-error-2', 'lng'));
+        }
+        else array_push($error, tpl::take('manage.text-tips-delete-error-2', 'lng'));
+      }
     }
     if (count($error) != 0) $message = implode('|', $error);
     $tmpstr = self::formatMsgResult($status, $message);

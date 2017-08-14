@@ -195,7 +195,7 @@ namespace jtbc {
     {
       $keyword = $argKeyword;
       $sourceFile = $argSourcefile;
-      $karys = array();
+      $info = array();
       if (is_file($sourceFile))
       {
         $doc = new DOMDocument();
@@ -208,26 +208,21 @@ namespace jtbc {
         $query = '//xml/configure/base';
         $base = $xpath -> query($query) -> item(0) -> nodeValue;
         $fieldArys = explode(',', $field);
-        $tki = 0;
-        for ($i = 0; $i <= (count($fieldArys) - 1); $i ++)
+        $fieldLength = count($fieldArys);
+        if ($fieldLength >= 2)
         {
-          if ($fieldArys[$i] == $keyword)
+          if (!in_array($keyword, $fieldArys)) $keyword = $fieldArys[1];
+          $query = '//xml/' . $base . '/' . $node;
+          $rests = $xpath -> query($query);
+          foreach ($rests as $rest)
           {
-            $tki = $i;
-            continue;
+            $nodeDom = $rest -> getElementsByTagName($keyword);
+            if ($nodeDom -> length == 0) $nodeDom = $rest -> getElementsByTagName($fieldArys[1]);
+            $info[$rest -> getElementsByTagName(current($fieldArys)) -> item(0) -> nodeValue] = $nodeDom -> item(0) -> nodeValue;
           }
         }
-        if (base::getNum($tki, 0) == 0) $tki = 1;
-        $tki = $tki * 2 + 1;
-        $query = '//xml/' . $base . '/' . $node;
-        $rests = $xpath -> query($query);
-        foreach ($rests as $rest)
-        {
-          $nodeValue = $rest -> childNodes -> item($tki) -> nodeValue;
-          $karys[$rest -> childNodes -> item(1) -> nodeValue] = $nodeValue;
-        }
       }
-      return $karys;
+      return $info;
     }
 
     public static function getXMLRoute($argCodeName, $argType)
@@ -397,25 +392,21 @@ namespace jtbc {
         $query = '//xml/configure/base';
         $base = $xpath -> query($query) -> item(0) -> nodeValue;
         $fieldArys = explode(',', $field);
-        $tki = 0;
-        for ($i = 0; $i <= (count($fieldArys) - 1); $i ++)
+        $fieldLength = count($fieldArys);
+        if ($fieldLength >= 2)
         {
-          if ($fieldArys[$i] == $keyword)
+          if (!in_array($keyword, $fieldArys)) $keyword = $fieldArys[1];
+          $query = '//xml/' . $base . '/' . $node;
+          $rests = $xpath -> query($query);
+          foreach ($rests as $rest)
           {
-            $tki = $i;
-            continue;
-          }
-        }
-        if (base::getNum($tki, 0) == 0) $tki = 1;
-        $tki = $tki * 2 + 1;
-        $query = '//xml/' . $base . '/' . $node;
-        $rests = $xpath -> query($query);
-        foreach ($rests as $rest)
-        {
-          if ($rest -> childNodes -> item(1) -> nodeValue == $name)
-          {
-            $rest -> childNodes -> item($tki) -> nodeValue = '';
-            $rest -> childNodes -> item($tki) -> appendChild($doc -> createCDATASection($value));
+            $nodeDom = $rest -> getElementsByTagName($keyword);
+            if ($nodeDom -> length == 0) $nodeDom = $rest -> getElementsByTagName($fieldArys[1]);
+            if ($rest -> getElementsByTagName(current($fieldArys)) -> item(0) -> nodeValue == $name)
+            {
+              $nodeDom -> item(0) -> nodeValue = '';
+              $nodeDom -> item(0) -> appendChild($doc -> createCDATASection($value));
+            }
           }
         }
         $bool = $doc -> save($sourceFile);

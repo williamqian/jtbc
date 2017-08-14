@@ -11,24 +11,37 @@
       <default><![CDATA[<a class="link mid-list-1" link="?type=list&amp;symbol=.tpl.index&amp;mid=.mid-list-1">{$=take('manage.text-menu-1', 'lng')}</a><a class="link mid-list-2" link="?type=list&amp;symbol=.tpl.public&amp;mid=.mid-list-2">{$=take('manage.text-menu-2', 'lng')}</a><a class="link mid-list-3" link="?type=list&amp;symbol=.tpl.transfer&amp;mid=.mid-list-3">{$=take('manage.text-menu-3', 'lng')}</a>]]></default>
     </item>
     <item>
+      <name><![CDATA[add]]></name>
+      <default><![CDATA[<div class="title">{$=take('manage.text-tit-add', 'lng')}</div>
+<div class="tinyform">
+  <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
+    <ol>
+      <li><input type="hidden" name="symbol" value="{$-symbol}" /><input name="nodename" type="text" class="i1" placeholder="{$=take('manage.text-nodename', 'lng')}" /></li>
+    </ol>
+    <div class="submit"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button><span class="tips"></span></div>
+  </form>
+</div>]]></default>
+    </item>
+    <item>
       <name><![CDATA[list]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
 <div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}">
   <toplink mode="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
-    <h3>{$=take('manage.text-tit-node', 'lng')} [ {$-current-key} ]</h3>
+    <h3><span class="hand nodeadd show-{$-account-popedom-add}" symbol="{$-symbol}">+ </span>{$=take('manage.text-tit-node', 'lng')} [ {$-current-key} ]</h3>
     <rightarea><span class="text">{$=take('manage.text-select-node', 'lng')}</span>&nbsp;&nbsp;<select mode="selectoption" name="node" class="s1" val="{$-current-key}" action="{$=htmlEncode($replaceQuerystring('node', null))}">{@}<option value="{$key}">{$key}</option>{@}</select>&nbsp;&nbsp;&nbsp;<div class="searchbox"><form action="?type=list" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('manage.text-symbol', 'lng')}" value="{$-symbol}" /><input type="submit" class="search" value="" parmname="symbol" /></form></div></rightarea>
     <form class="nodeedit" action="?type=action&amp;action=edit" text-ok="{$=take('::console.iknow', 'lng')}" onsubmit="return false;">
       <table cellpadding="0" cellspacing="0" class="tableF">
         <tbody>
           <tr>
-            <td><div class="CodeMirrorContent"><textarea id="codemirror" name="content" class="hide">{$-current-val}</textarea></div></td>
+            <td colspan="2"><div class="CodeMirrorContent"><textarea id="codemirror" name="content" class="hide">{$-current-val}</textarea></div></td>
           </tr>
           <tr>
-            <td height="20"><input type="hidden" name="symbol" value="{$-symbol}" /><input type="hidden" name="node" value="{$-current-key}" /></td>
+            <td colspan="2" height="20"><input type="hidden" name="symbol" value="{$-symbol}" /><input type="hidden" name="node" value="{$-current-key}" /></td>
           </tr>
           <tr>
             <td><button class="b2 nodeedit show-{$-account-popedom-edit}">{$=take('manage.text-node-edit', 'lng')}</button></td>
+            <td class="right"><button class="b3 nodedelete show-{$-account-popedom-delete}" symbol="{$-symbol}" nodename="{$-current-key}" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-delete', 'lng')}[{$-current-key}]{$=take('::console.q', 'lng')}">{$=take('manage.text-node-delete', 'lng')}</button></td>
           </tr>
         </tbody>
       </table>
@@ -52,10 +65,10 @@
     <item>
       <name><![CDATA[list-disabled]]></name>
       <default><![CDATA[<nav genre="{$=$genre}"><span>{$-account-nav}</span></nav>
-<div class="manager" module="edit" genre="{$=$genre}" filename="{$=$filename}" filemode="{$-filemode}">
+<div class="manager" module="list" genre="{$=$genre}" filename="{$=$filename}" filemode="{$-filemode}">
   <toplink>{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
-    <h3>{$=take('manage.text-tit-node', 'lng')}</h3>
+    <h3><span class="hand nodeadd show-{$-account-popedom-add}" symbol="{$-symbol}">+ </span>{$=take('manage.text-tit-node', 'lng')}</h3>
     <table cellpadding="0" cellspacing="0" class="tableF">
       <tbody>
         <tr>
@@ -64,7 +77,8 @@
       </tbody>
     </table>
   </div>
-</div>]]></default>
+</div>
+<dfn url="{$=$genre}/{$=$assetspath}/js/jtbc.console.manage.js"></dfn>]]></default>
     </item>
   </item_list>
 </xml>

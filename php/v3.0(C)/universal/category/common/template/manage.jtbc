@@ -8,7 +8,7 @@
   <item_list>
     <item>
       <name><![CDATA[add]]></name>
-      <default><![CDATA[<div class="title">{$=take('manage.text-add', 'lng')}</div>
+      <default><![CDATA[<div class="title">{$=take('manage.text-tit-add', 'lng')}</div>
 <div class="tinyform">
   <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
     <ol>
@@ -22,7 +22,7 @@
     </item>
     <item>
       <name><![CDATA[edit]]></name>
-      <default><![CDATA[<div class="title">{$=take('manage.text-edit', 'lng')}</div>
+      <default><![CDATA[<div class="title">{$=take('manage.text-tit-edit', 'lng')}</div>
 <div class="tinyform">
   <form mode="ajaxpost" action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
     <ol>
@@ -41,7 +41,7 @@
   <toplink class="path">{$-path-nav}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-list', 'lng')}</h3>
-    <rightarea><span class="text">{$=take('manage.text-current-genre', 'lng')}</span>&nbsp;&nbsp;<select name="genre" class="s1">{$-allgenre-select}</select><span class="show-{$-account-popedom-add}">&nbsp;&nbsp;&nbsp;<button class="b2 add">{$=take('manage.text-add', 'lng')}</button></span></rightarea>
+    <rightarea><span class="text">{$=take('manage.text-current-genre', 'lng')}</span>&nbsp;&nbsp;<select name="genre" class="s1">{$-allgenre-select}</select><span class="show-{$-account-popedom-add}">&nbsp;&nbsp;&nbsp;<button class="b2 add">{$=take('manage.text-tit-add', 'lng')}</button></span></rightarea>
     <table cellpadding="10" cellspacing="1" class="tableL">
       <thead>
         <tr>

@@ -7,6 +7,14 @@
   </configure>
   <item_list>
     <item>
+      <name><![CDATA[text-tit-add]]></name>
+      <zh-cn><![CDATA[添加新分类]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-tit-edit]]></name>
+      <zh-cn><![CDATA[编辑分类]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-tit-list]]></name>
       <zh-cn><![CDATA[分类列表]]></zh-cn>
     </item>
@@ -17,14 +25,6 @@
     <item>
       <name><![CDATA[text-tips-list-null]]></name>
       <zh-cn><![CDATA[当前条件下没有找到任何分类]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-add]]></name>
-      <zh-cn><![CDATA[添加新分类]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-edit]]></name>
-      <zh-cn><![CDATA[编辑分类]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-current-genre]]></name>
