@@ -59,7 +59,7 @@ jtbc.frontend = {
   ready: function()
   {
     var tthis = this;
-    var obj = $('.wrap');
+    var obj = $(document.body);
     obj.find('dfn').each(function(){
       var myObj = $(this);
       if (myObj.attr('call')) eval(myObj.attr('call'));

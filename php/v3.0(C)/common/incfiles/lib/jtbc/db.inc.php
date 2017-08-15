@@ -51,6 +51,14 @@ namespace jtbc {
       $desc = $query -> fetchAll(PDO::FETCH_ASSOC);
       return $desc;
     }
+
+    public function showFullColumns($argTable)
+    {
+      $table = $argTable;
+      $query = $this -> query('show full columns from ' . $table);
+      $desc = $query -> fetchAll(PDO::FETCH_ASSOC);
+      return $desc;
+    }
   }
 }
 //******************************//
