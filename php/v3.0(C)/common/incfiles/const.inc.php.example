@@ -2,8 +2,8 @@
 ob_start();
 session_start();
 set_time_limit(1800);
-date_default_timezone_set('RPC');
 error_reporting(E_ALL ^ E_NOTICE);
+date_default_timezone_set('PRC');
 define('APPNAME', 'jtbc_');
 define('ASSETSPATH', 'common/assets');
 define('BASEDIR', '');
