@@ -550,21 +550,19 @@ namespace jtbc {
         $loopString = $tpl -> getLoopString('{@}');
         foreach ($myAry as $myKey => $myVal)
         {
-          $rowAry = json_decode($myVal, true);
-          if (is_array($rowAry))
+          $rowAry = $myVal;
+          if (!is_array($rowAry)) $rowAry = json_decode($myVal, true);
+          if ($paraLimit >= $rsindex)
           {
-            if ($paraLimit >= $rsindex)
+            if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
             {
-              if (base::isEmpty($paraRowFilter) || !base::checkInstr($paraRowFilter, $rsindex))
-              {
-                $loopLineString = $loopString;
-                $loopLineString = tpl::replaceTagByAry($loopLineString, $rowAry, 21, $paraTransferID);
-                $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex));
-                $tpl -> insertLoopLine(tpl::parse($loopLineString));
-              }
+              $loopLineString = $loopString;
+              $loopLineString = tpl::replaceTagByAry($loopLineString, $rowAry, 21, $paraTransferID);
+              $loopLineString = tpl::replaceTagByAry($loopLineString, array('-i' => $rsindex));
+              $tpl -> insertLoopLine(tpl::parse($loopLineString));
             }
-            $rsindex += 1;
           }
+          $rsindex += 1;
         }
         $tmpstr = $tpl -> mergeTemplate();
         $tmpstr = tpl::parse($tmpstr);
