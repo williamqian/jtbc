@@ -127,6 +127,10 @@
       <zh-cn><![CDATA[上传文件的类型必须为({$allowfilesize})]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-upload-error-others]]></name>
+      <zh-cn><![CDATA[上传文件异常，请检查服务器设置]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-filter-category]]></name>
       <zh-cn><![CDATA[筛选子分类]]></zh-cn>
     </item>

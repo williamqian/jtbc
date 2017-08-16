@@ -13,7 +13,7 @@ namespace jtbc {
       $limitFileResizeAry = null;
       $upResultArray = array();
       $upResultArray['status'] = 0;
-      $upResultArray['message'] = '';
+      $upResultArray['message'] = tpl::take('::console.text-upload-error-others', 'lng');
       $upResultArray['para'] = '';
       $uploadPath = tpl::take('config.upload_path', 'cfg');
       $allowFiletype = tpl::take('config.upload_filetype', 'cfg');
@@ -86,6 +86,7 @@ namespace jtbc {
               $paraArray['fileurl'] = $uploadFullPath;
               $paraArray['filesizetext'] = base::formatFileSize($filesize);
               $upResultArray['status'] = 1;
+              $upResultArray['message'] = 'done';
               $upResultArray['para'] = json_encode($paraArray);
             }
           }
