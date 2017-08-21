@@ -7,14 +7,6 @@
   </configure>
   <item_list>
     <item>
-      <name><![CDATA[db_table]]></name>
-      <zh-cn><![CDATA[jtbc_console_log]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[db_prefix]]></name>
-      <zh-cn><![CDATA[cl_]]></zh-cn>
-    </item>
-    <item>
       <name><![CDATA[pagesize]]></name>
       <zh-cn><![CDATA[20]]></zh-cn>
     </item>

@@ -24,21 +24,7 @@ class ui extends page {
       {
         $filepath = smart::getActualRoute($symbolAry[0]);
         if (base::getRight($filepath, 1) != '/') $filepath .= '/';
-        switch($symbolAry[1])
-        {
-          case 'cfg':
-            $filepath .= 'common/';
-            break;
-          case 'lng':
-            $filepath .= 'common/language/';
-            break;
-          case 'tpl':
-            $filepath .= 'common/template/';
-            break;
-          default:
-            $filepath .= 'common/';
-            break;
-        }
+        $filepath .= tpl::getXMLDirByType($symbolAry[1]) . '/';
         $filepath .= $symbolAry[2] . XMLSFX;
         $pathAry['filepath'] = $filepath;
         $pathAry['activevalue'] = tpl::getActiveValue($symbolAry[1]);
@@ -114,6 +100,96 @@ class ui extends page {
     }
     $tmpstr = tpl::parse($tmpstr);
     $tmpstr = $account -> replaceAccountTag($tmpstr);
+    $tmpstr = self::formatResult($status, $tmpstr);
+    return $tmpstr;
+  }
+
+  public static function moduleFileSelect()
+  {
+    $status = 1;
+    $tmpstr = '';
+    $account = self::account();
+    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
+    if ($account -> checkPopedom(self::getPara('genre')))
+    {
+      if (!base::isEmpty($symbol))
+      {
+        $symbolAry = explode('.', $symbol);
+        if (count($symbolAry) == 3)
+        {
+          $tmpstr = tpl::take('manage.fileselect', 'tpl');
+          $tmpstr = str_replace('{$-symbol}', base::htmlEncode($symbol), $tmpstr);
+          $tmpstr = str_replace('{$-symbol-p1}', base::htmlEncode($symbolAry[0]), $tmpstr);
+          $tmpstr = str_replace('{$-symbol-p2}', base::htmlEncode($symbolAry[1]), $tmpstr);
+          $tmpstr = str_replace('{$-symbol-p3}', base::htmlEncode($symbolAry[2]), $tmpstr);
+          $tmpstr = tpl::parse($tmpstr);
+          $tmpstr = $account -> replaceAccountTag($tmpstr);
+        }
+      }
+    }
+    $tmpstr = self::formatResult($status, $tmpstr);
+    return $tmpstr;
+  }
+
+  public static function moduleFileSelectGenre()
+  {
+    $status = 1;
+    $tmpstr = '';
+    $account = self::account();
+    if ($account -> checkPopedom(self::getPara('genre')))
+    {
+      $ary = array();
+      $base = smart::getActualRoute('./');
+      $folder = smart::getFolderByGuide();
+      $folderAry = explode('|+|', $folder);
+      foreach($folderAry as $key => $val)
+      {
+        if (!base::isEmpty($val))
+        {
+          $val = base::getLRStr($val, $base, 'rightr');
+          if (!base::isEmpty($val))
+          {
+            $guide = json_decode(tpl::take('global.' . $val . ':guide.guide', 'cfg'), true);
+            $ary[$val] = $guide['text'];
+          }
+        }
+      }
+      $tmpstr = json_encode($ary);
+    }
+    $tmpstr = self::formatResult($status, $tmpstr);
+    return $tmpstr;
+  }
+
+  public static function moduleFileSelectFile()
+  {
+    $status = 1;
+    $tmpstr = '';
+    $account = self::account();
+    $genre = base::getString(request::getHTTPPara('genre', 'get'));
+    $mold = base::getString(request::getHTTPPara('mold', 'get'));
+    if ($account -> checkPopedom(self::getPara('genre')))
+    {
+      $ary = array();
+      if (base::isEmpty($genre)) $genre = './';
+      else if (base::getRight($genre, 1) != '/') $genre .= '/';
+      $path = smart::getActualRoute($genre);
+      $path .= tpl::getXMLDirByType($mold) . '/';
+      if (is_dir($path))
+      {
+        $dir = @dir($path);
+        while($entry = $dir -> read())
+        {
+          if ($entry != '.' && $entry != '..')
+          {
+            if (is_file($path . $entry))
+            {
+              $ary[base::getLRStr($entry, '.', 'leftr')] = $entry;
+            }
+          }
+        }
+      }
+      $tmpstr = json_encode($ary);
+    }
     $tmpstr = self::formatResult($status, $tmpstr);
     return $tmpstr;
   }

@@ -29,7 +29,7 @@
   <toplink mode="pitchon" upitchon="{$=htmlEncode($getHTTPPara('mid', 'get'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3><span class="hand nodeadd show-{$-account-popedom-add}" symbol="{$-symbol}">+ </span>{$=take('manage.text-tit-node', 'lng')} [ {$-current-key} ]</h3>
-    <rightarea><span class="text">{$=take('manage.text-select-node', 'lng')}</span>&nbsp;&nbsp;<select mode="selectoption" name="node" class="s1" val="{$-current-key}" action="{$=htmlEncode($replaceQuerystring('node', null))}">{@}<option value="{$key}">{$key}</option>{@}</select>&nbsp;&nbsp;&nbsp;<div class="searchbox"><form action="?type=list" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('manage.text-symbol', 'lng')}" value="{$-symbol}" /><input type="submit" class="search" value="" parmname="symbol" /></form></div></rightarea>
+    <rightarea><span class="text">{$=take('manage.text-select-node', 'lng')}</span>&nbsp;&nbsp;<select mode="selectoption" name="node" class="s1" val="{$-current-key}" action="{$=htmlEncode($replaceQuerystring('node', null))}">{@}<option value="{$key}">{$key}</option>{@}</select>&nbsp;&nbsp;&nbsp;<icons><btn symbol="{$-symbol}" class="b1 fileselect" title="{$=take('manage.text-tips-fileselect', 'lng')}"></btn></icons>&nbsp;&nbsp;&nbsp;<div class="searchbox"><form action="?type=list" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('manage.text-symbol', 'lng')}" value="{$-symbol}" /><input type="submit" class="search" value="" parmname="symbol" /></form></div></rightarea>
     <form class="nodeedit" action="?type=action&amp;action=edit" text-ok="{$=take('::console.iknow', 'lng')}" onsubmit="return false;">
       <table cellpadding="0" cellspacing="0" class="tableF">
         <tbody>
@@ -79,6 +79,18 @@
   </div>
 </div>
 <dfn url="{$=$genre}/{$=$assetspath}/js/jtbc.console.manage.js"></dfn>]]></default>
+    </item>
+    <item>
+      <name><![CDATA[fileselect]]></name>
+      <default><![CDATA[<div class="title">{$=take('manage.text-tit-fileselect', 'lng')}</div>
+<div class="tinyform">
+  <ol class="small" text-file-null="{$=take('manage.text-tips-fileselect-null', 'lng')}" symbol-p1="{$-symbol-p1}" symbol-p2="{$-symbol-p2}" symbol-p3="{$-symbol-p3}">
+    <li text-child="{$=take('manage.text-genre-child', 'lng')}"><h6>{$=take('manage.text-genre', 'lng')}</h6><span class="select-genre"></span></li>
+    <li><h6>{$=take('manage.text-mold', 'lng')}</h6><span class="select-mold"><select class="s1 full" name="mold"><option value="tpl">{$=take('manage.text-mold-tpl', 'lng')}</option><option value="lng">{$=take('manage.text-mold-lng', 'lng')}</option><option value="cfg">{$=take('manage.text-mold-cfg', 'lng')}</option></select></span></li>
+    <li><h6>{$=take('manage.text-file', 'lng')}</h6><span class="select-file"></span></li>
+  </ol>
+</div>
+<div class="button"><button class="b2 iselected" text-error-1="{$=take('manage.text-tips-fileselect-error-1', 'lng')}">{$=take('::console.iselected', 'lng')}</button></div>]]></default>
     </item>
   </item_list>
 </xml>

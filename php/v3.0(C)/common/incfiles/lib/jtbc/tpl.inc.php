@@ -225,12 +225,10 @@ namespace jtbc {
       return $info;
     }
 
-    public static function getXMLRoute($argCodeName, $argType)
+    public static function getXMLDirByType($argType)
     {
-      $type = $argType;
-      $codename = $argCodeName;
       $dir = '';
-      $routeStr = base::getLRStr($codename, '.', 'leftr');
+      $type = $argType;
       switch($type)
       {
         case 'cfg':
@@ -249,6 +247,15 @@ namespace jtbc {
           $dir = 'common';
           break;
       }
+      return $dir;
+    }
+
+    public static function getXMLRoute($argCodeName, $argType)
+    {
+      $type = $argType;
+      $codename = $argCodeName;
+      $dir = self::getXMLDirByType($type);
+      $routeStr = base::getLRStr($codename, '.', 'leftr');
       if (substr($routeStr, 0, 7) == 'global.')
       {
         $routeStr = substr($routeStr, 7, strlen($routeStr) - 7);

@@ -23,6 +23,34 @@
       <zh-cn><![CDATA[代号]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-genre]]></name>
+      <zh-cn><![CDATA[模块]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-genre-child]]></name>
+      <zh-cn><![CDATA[子模块]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-mold]]></name>
+      <zh-cn><![CDATA[类型]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-mold-tpl]]></name>
+      <zh-cn><![CDATA[模板]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-mold-lng]]></name>
+      <zh-cn><![CDATA[语言]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-mold-cfg]]></name>
+      <zh-cn><![CDATA[配置]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-file]]></name>
+      <zh-cn><![CDATA[文件]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-nodename]]></name>
       <zh-cn><![CDATA[节点名]]></zh-cn>
     </item>
@@ -43,8 +71,24 @@
       <zh-cn><![CDATA[编辑节点]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-tit-fileselect]]></name>
+      <zh-cn><![CDATA[文件选择]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-tips-null]]></name>
       <zh-cn><![CDATA[当前输入的代号没有任何节点]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-tips-fileselect]]></name>
+      <zh-cn><![CDATA[文件选择]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-tips-fileselect-null]]></name>
+      <zh-cn><![CDATA[当前没有任何文件]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-tips-fileselect-error-1]]></name>
+      <zh-cn><![CDATA[您还没有选择文件]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-tips-add-error-1]]></name>

@@ -39,6 +39,172 @@ jtbc.console.manage = {
         });
       };
     });
+    tthis.obj.find('btn.fileselect').click(function(){
+      var thisObj = $(this);
+      var loadFileList = function(argObj)
+      {
+        var obj = argObj;
+        var olObj = obj.parent().parent().parent();
+        olObj.find('select').attr('disabled', 'disabled');
+        var currentGenre = olObj.find('select[name=\'genre\']').val();
+        var currentChildGenreObj = olObj.find('select[name=\'child-genre\']');
+        if (currentChildGenreObj.length >= 1) currentGenre = currentChildGenreObj.last().attr('parent') + currentChildGenreObj.last().val();
+        var loadFileURL = tthis.para['fileurl'] + '?type=fileSelectFile&genre=' + encodeURIComponent(currentGenre) + '&mold=' + encodeURIComponent(olObj.find('select[name=\'mold\']').val());
+        $.get(loadFileURL, function(data){
+          var dataObj = $(data);
+          var hasFile = false;
+          var fileSelectHTML = '<select class="s1 full" name="file">';
+          olObj.find('select').removeAttr('disabled');
+          if (dataObj.find('result').attr('status') == '1')
+          {
+            var fileAry = JSON.parse(dataObj.find('result').text());
+            for (var i in fileAry)
+            {
+              hasFile = true;
+              var currentFile = fileAry[i];
+              fileSelectHTML += '<option value="' + tthis.parent.parent.htmlEncode(i) + '">' + tthis.parent.parent.htmlEncode(currentFile) + '</option>';
+            };
+            if (hasFile == false) fileSelectHTML += '<option value="">' + tthis.parent.parent.htmlEncode(olObj.attr('text-file-null')) + '</option>';
+          };
+          fileSelectHTML += '</select>';
+          olObj.find('span.select-file').html(fileSelectHTML);
+          if (hasFile == false) olObj.find('span.select-file').find('select').attr('disabled', 'disabled');
+          olObj.find('span.select-file').find('select').find('option').each(function(){
+            var optionObj = $(this);
+            if (optionObj.val() == olObj.attr('symbol-p3')) optionObj.parent().val(olObj.attr('symbol-p3'));
+          });
+        });
+      };
+      var appendChildGenre = function(argGenre, argObj)
+      {
+        var hasChild = false;
+        var genre = argGenre;
+        var obj = argObj;
+        var genreAry = tthis.para['genreAry'];
+        var symbolP1Ary = tthis.para['symbolP1Ary'];
+        var childAry = [];
+        for (var i in genreAry)
+        {
+          var currentGenre = genreAry[i];
+          if (i.indexOf(genre + '/') == 0)
+          {
+            var childGenre = i.substr(genre.length + 1);
+            childAry[childGenre] = currentGenre;
+            hasChild = true;
+          };
+        };
+        if (hasChild == true)
+        {
+          var childGenreSelectHTML = '<select class="s1 full" name="child-genre" parent="' + tthis.parent.parent.htmlEncode(genre + '/') + '"><option value="">/</option>';
+          for (var i in childAry)
+          {
+            var currentGenre = childAry[i];
+            if (i.indexOf('/') == -1)
+            {
+              childGenreSelectHTML += '<option value="' + tthis.parent.parent.htmlEncode(i) + '">' + tthis.parent.parent.htmlEncode(currentGenre) + '</option>';
+            };
+          };
+          childGenreSelectHTML += '</select>';
+          var currentLiObj = obj.parent().parent();
+          var childGenreIndex = 0;
+          var childGenreHTML = '<li class="li-genre-child" text-child="' + tthis.parent.parent.htmlEncode(currentLiObj.attr('text-child')) + '"><h6>' + tthis.parent.parent.htmlEncode(currentLiObj.attr('text-child')) + '</h6><span class="select-genre-child">' + childGenreSelectHTML + '</span></li>';
+          currentLiObj.after(childGenreHTML);
+          currentLiObj.parent().find('.li-genre-child').each(function(){
+            var thisObj = $(this);
+            childGenreIndex += 1;
+            if (thisObj.attr('bind') != 'true')
+            {
+              thisObj.attr('bind', 'true');
+              thisObj.find('select').on('change', function(){
+                var thisObj = $(this);
+                thisObj.nextAll('li.li-genre-child').remove();
+                appendChildGenre(thisObj.attr('parent') + thisObj.val(), thisObj);
+              });
+              if (typeof(symbolP1Ary) == 'object')
+              {
+                if (childGenreIndex <= symbolP1Ary.length)
+                {
+                  var currentOptionValue = symbolP1Ary[childGenreIndex];
+                  thisObj.find('select').find('option').each(function(){
+                    var optionObj = $(this);
+                    if (optionObj.val() == currentOptionValue) optionObj.parent().val(currentOptionValue).trigger('change');
+                  });
+                };
+              };
+            };
+          });
+        };
+        loadFileList(obj);
+      };
+      if (thisObj.attr('loading') != 'true')
+      {
+        thisObj.attr('loading', 'true');
+        var url = tthis.para['fileurl'] + '?type=fileSelect&symbol=' + encodeURIComponent(thisObj.attr('symbol'));
+        $.get(url, function(data){
+          var dataObj = $(data);
+          if (dataObj.find('result').attr('status') == '1')
+          {
+            var genreSelectHTML = '';
+            var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
+            pageObj.find('select[name=\'mold\']').val(pageObj.find('ol').attr('symbol-p2')).on('change', function(){ loadFileList($(this)); });
+            pageObj.find('button.iselected').on('click', function(){
+              var thisObj = $(this);
+              var symbolP1 = '';
+              var symbolP2 = '';
+              var symbolP3 = '';
+              var currentGenre = pageObj.find('select[name=\'genre\']').val();
+              var currentChildGenreObj = pageObj.find('select[name=\'child-genre\']');
+              if (currentChildGenreObj.length >= 1) currentGenre = currentChildGenreObj.last().attr('parent') + currentChildGenreObj.last().val();
+              symbolP1 = currentGenre;
+              if (currentGenre.charAt(currentGenre.length - 1) == '/') symbolP1 = currentGenre.substr(currentGenre.length - 1);
+              symbolP2 = pageObj.find('select[name=\'mold\']').val();
+              symbolP3 = pageObj.find('select[name=\'file\']').val();
+              if (!symbolP3) tthis.parent.lib.popupMiniAlert(thisObj.attr('text-error-1'));
+              else
+              {
+                pageObj.find('span.close').trigger('click');
+                tthis.obj.find('.searchbox').find('input.keyword').val(symbolP1 + '.' + symbolP2 + '.' + symbolP3);
+                tthis.obj.find('.searchbox').find('input.search').trigger('click');
+              };
+            });
+            var fileSelectGenreURL = tthis.para['fileurl'] + '?type=fileSelectGenre';
+            genreSelectHTML += '<select class="s1 full" name="genre"><option value="">/</option>';
+            $.get(fileSelectGenreURL, function(data){
+              var dataObj = $(data);
+              if (dataObj.find('result').attr('status') == '1')
+              {
+                var genreAry = JSON.parse(dataObj.find('result').text());
+                tthis.para['genreAry'] = genreAry;
+                for (var i in genreAry)
+                {
+                  var currentGenre = genreAry[i];
+                  if (i.indexOf('/') == -1)
+                  {
+                    genreSelectHTML += '<option value="' + tthis.parent.parent.htmlEncode(i) + '">' + tthis.parent.parent.htmlEncode(currentGenre) + '</option>';
+                  };
+                };
+                genreSelectHTML += '</select>';
+                pageObj.find('span.select-genre').html(genreSelectHTML);
+                pageObj.find('span.select-genre').find('select').on('change', function(){
+                  var thisObj = $(this);
+                  pageObj.find('li.li-genre-child').remove();
+                  appendChildGenre(thisObj.val(), thisObj);
+                });
+                var symbolP1 = pageObj.find('ol').attr('symbol-p1');
+                if (symbolP1 != '')
+                {
+                  tthis.para['symbolP1Ary'] = symbolP1.split('/');
+                  var symbolP1Ary = tthis.para['symbolP1Ary'];
+                  if (symbolP1Ary.length >= 1) pageObj.find('span.select-genre').find('select').val(symbolP1Ary[0]).trigger('change');
+                };
+                loadFileList(pageObj.find('span.select-genre').find('select'));
+              };
+            });
+          };
+          thisObj.attr('loading', 'false');
+        });
+      };
+    });
     tthis.obj.find('button.nodeedit').click(function(){
       var thisObj = $(this);
       if (!thisObj.hasClass('lock'))
