@@ -39,36 +39,16 @@
       <zh-cn><![CDATA[当前条件下没有找到任何用户]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-tips-add-error-1]]></name>
-      <zh-cn><![CDATA[用户名不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-add-error-2]]></name>
+      <name><![CDATA[text-tips-field-error-1]]></name>
       <zh-cn><![CDATA[密码不能为空]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-tips-add-error-3]]></name>
+      <name><![CDATA[text-tips-field-error-2]]></name>
       <zh-cn><![CDATA[两次密码校验不正确]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-add-error-4]]></name>
-      <zh-cn><![CDATA[电子邮件格式不正确]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-tips-add-error-101]]></name>
       <zh-cn><![CDATA[该用户名已经存在]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-1]]></name>
-      <zh-cn><![CDATA[用户名不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-2]]></name>
-      <zh-cn><![CDATA[两次密码校验不正确]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-3]]></name>
-      <zh-cn><![CDATA[电子邮件格式不正确]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-tips-edit-error-101]]></name>

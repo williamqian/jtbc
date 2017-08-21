@@ -310,7 +310,6 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $topic = request::getHTTPPara('topic', 'post');
     $popedom = request::getHTTPPara('popedom', 'post');
     $popedomJson = self::ppGetPopedomJson($popedom);
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
@@ -319,14 +318,14 @@ class ui extends page {
     }
     else
     {
-      if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
+      $table = tpl::take('config.db_table', 'cfg');
+      $prefix = tpl::take('config.db_prefix', 'cfg');
+      smart::pushAutoRequestErrorByTable($error, $table);
       if (count($error) == 0)
       {
         $db = self::db();
         if (!is_null($db))
         {
-          $table = tpl::take('config.db_table', 'cfg');
-          $prefix = tpl::take('config.db_prefix', 'cfg');
           $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'popedom'] = $popedomJson;
@@ -354,7 +353,6 @@ class ui extends page {
     $error = array();
     $account = self::account();
     $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
-    $topic = request::getHTTPPara('topic', 'post');
     $popedom = request::getHTTPPara('popedom', 'post');
     $popedomJson = self::ppGetPopedomJson($popedom);
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
@@ -363,14 +361,14 @@ class ui extends page {
     }
     else
     {
-      if (base::isEmpty($topic)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
+      $table = tpl::take('config.db_table', 'cfg');
+      $prefix = tpl::take('config.db_prefix', 'cfg');
+      smart::pushAutoRequestErrorByTable($error, $table);
       if (count($error) == 0)
       {
         $db = self::db();
         if (!is_null($db))
         {
-          $table = tpl::take('config.db_table', 'cfg');
-          $prefix = tpl::take('config.db_prefix', 'cfg');
           $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'popedom'] = $popedomJson;

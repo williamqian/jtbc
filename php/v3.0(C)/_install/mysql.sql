@@ -6,7 +6,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `jtbc_aboutus`;
 CREATE TABLE `jtbc_aboutus` (
   `a_id` int(11) NOT NULL AUTO_INCREMENT,
-  `a_topic` varchar(200) DEFAULT NULL,
+  `a_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `a_content` text,
   `a_att` text,
   `a_publish` int(11) DEFAULT '0',
@@ -16,12 +16,12 @@ CREATE TABLE `jtbc_aboutus` (
   PRIMARY KEY (`a_id`),
   KEY `a_delete` (`a_delete`,`a_lang`,`a_publish`) USING BTREE,
   KEY `a_time` (`a_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of jtbc_aboutus
 -- ----------------------------
-INSERT INTO `jtbc_aboutus` VALUES ('1', '公司介绍', null, null, '1', '2017-07-11 20:15:30', '0', '0');
+INSERT INTO `jtbc_aboutus` VALUES ('1', '公司介绍', null, null, '1', '2017-07-07 07:07:07', '0', '0');
 
 -- ----------------------------
 -- Table structure for jtbc_career
@@ -29,9 +29,9 @@ INSERT INTO `jtbc_aboutus` VALUES ('1', '公司介绍', null, null, '1', '2017-0
 DROP TABLE IF EXISTS `jtbc_career`;
 CREATE TABLE `jtbc_career` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_topic` varchar(200) DEFAULT NULL,
-  `c_intro` varchar(200) DEFAULT NULL,
-  `c_email` varchar(200) DEFAULT NULL,
+  `c_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `c_intro` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `c_email` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"email"}',
   `c_publish` int(11) DEFAULT '0',
   `c_time` datetime DEFAULT NULL,
   `c_lang` int(11) DEFAULT '0',
@@ -51,8 +51,8 @@ CREATE TABLE `jtbc_career` (
 DROP TABLE IF EXISTS `jtbc_case`;
 CREATE TABLE `jtbc_case` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_topic` varchar(200) DEFAULT NULL,
-  `c_image` varchar(200) DEFAULT NULL,
+  `c_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `c_image` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `c_category` int(11) DEFAULT '0',
   `c_content` text,
   `c_att` text,
@@ -75,9 +75,9 @@ CREATE TABLE `jtbc_case` (
 DROP TABLE IF EXISTS `jtbc_console_account`;
 CREATE TABLE `jtbc_console_account` (
   `ca_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ca_username` varchar(50) DEFAULT NULL,
+  `ca_username` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `ca_password` varchar(50) DEFAULT NULL,
-  `ca_email` varchar(50) DEFAULT NULL,
+  `ca_email` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"email"}',
   `ca_role` int(11) DEFAULT '0',
   `ca_lock` int(11) DEFAULT '0',
   `ca_lastip` varchar(50) DEFAULT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE `jtbc_console_log` (
 DROP TABLE IF EXISTS `jtbc_console_role`;
 CREATE TABLE `jtbc_console_role` (
   `cr_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cr_topic` varchar(200) DEFAULT NULL,
+  `cr_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `cr_popedom` varchar(10000) DEFAULT NULL,
   `cr_lang` varchar(200) DEFAULT NULL,
   `cr_delete` int(11) DEFAULT '0',
@@ -153,7 +153,7 @@ CREATE TABLE `jtbc_console_role` (
 DROP TABLE IF EXISTS `jtbc_consult`;
 CREATE TABLE `jtbc_consult` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_name` varchar(200) DEFAULT NULL,
+  `c_name` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `c_mobile` varchar(200) DEFAULT NULL,
   `c_email` varchar(200) DEFAULT NULL,
   `c_content` varchar(1000) DEFAULT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE `jtbc_consult` (
 DROP TABLE IF EXISTS `jtbc_news`;
 CREATE TABLE `jtbc_news` (
   `n_id` int(11) NOT NULL AUTO_INCREMENT,
-  `n_topic` varchar(200) DEFAULT NULL,
+  `n_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `n_category` int(11) DEFAULT '0',
   `n_content` text,
   `n_att` text,
@@ -200,8 +200,8 @@ CREATE TABLE `jtbc_news` (
 DROP TABLE IF EXISTS `jtbc_team`;
 CREATE TABLE `jtbc_team` (
   `t_id` int(11) NOT NULL AUTO_INCREMENT,
-  `t_topic` varchar(200) DEFAULT NULL,
-  `t_photo` varchar(200) DEFAULT NULL,
+  `t_name` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `t_photo` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `t_position` varchar(200) DEFAULT NULL,
   `t_intro` varchar(200) DEFAULT NULL,
   `t_publish` int(11) DEFAULT '0',
@@ -223,7 +223,7 @@ CREATE TABLE `jtbc_team` (
 DROP TABLE IF EXISTS `jtbc_universal_category`;
 CREATE TABLE `jtbc_universal_category` (
   `uc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `uc_topic` varchar(50) DEFAULT NULL,
+  `uc_topic` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `uc_image` varchar(200) DEFAULT NULL,
   `uc_intro` varchar(1000) DEFAULT NULL,
   `uc_fid` int(11) DEFAULT '0',
@@ -246,9 +246,9 @@ CREATE TABLE `jtbc_universal_category` (
 DROP TABLE IF EXISTS `jtbc_universal_link`;
 CREATE TABLE `jtbc_universal_link` (
   `ul_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ul_topic` varchar(50) DEFAULT NULL,
+  `ul_topic` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `ul_image` varchar(200) DEFAULT NULL,
-  `ul_url` varchar(200) DEFAULT NULL,
+  `ul_url` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `ul_target` varchar(50) DEFAULT NULL,
   `ul_group` int(11) DEFAULT '0',
   `ul_publish` int(11) DEFAULT '0',

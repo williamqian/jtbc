@@ -31,16 +31,12 @@
       <zh-cn><![CDATA[所属模块]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-tips-add-error-1]]></name>
-      <zh-cn><![CDATA[分类名不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-1]]></name>
-      <zh-cn><![CDATA[分类名不能为空]]></zh-cn>
-    </item>
-    <item>
       <name><![CDATA[text-tips-edit-done]]></name>
       <zh-cn><![CDATA[编辑成功]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-topic]]></name>
+      <zh-cn><![CDATA[分类名不能为空]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[log-add-1]]></name>

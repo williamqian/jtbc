@@ -455,6 +455,53 @@ namespace jtbc {
       return $tmpstr;
     }
 
+    public static function pushAutoRequestErrorByTable(&$error, $argTable)
+    {
+      $table = $argTable;
+      $db = page::db();
+      $filename = page::getPara('filename');
+      $filePrefix = base::getLRStr($filename, '.', 'left');
+      if (!is_null($db))
+      {
+        $columns = $db -> showFullColumns($table);
+        foreach ($columns as $i => $item)
+        {
+          $filedName = $item['Field'];
+          $comment = base::getString($item['Comment']);
+          $requestName = base::getLRStr($filedName, '_', 'rightr');
+          if (!base::isEmpty($comment))
+          {
+            $commentAry = json_decode($comment, true);
+            if (!empty($commentAry) && array_key_exists('autoRequestFormat', $commentAry))
+            {
+              $errorBool = false;
+              $requestValue = request::getHTTPPara($requestName, 'post');
+              $format = base::getString($commentAry['autoRequestFormat']);
+              if ($format == 'notEmpty')
+              {
+                if (base::isEmpty($requestValue)) $errorBool = true;
+              }
+              else if ($format == 'email')
+              {
+                if (!verify::isEmail($requestValue)) $errorBool = true;
+              }
+              else if ($format == 'mobile')
+              {
+                if (!verify::isMobile($requestValue)) $errorBool = true;
+              }
+              if ($errorBool == true)
+              {
+                $errorMsg = @tpl::take($filePrefix . '.text-auto-request-error-' . $requestName, 'lng');
+                if (base::isEmpty($errorMsg)) $errorMsg = tpl::take('::console.text-auto-request-error-' . $requestName, 'lng');
+                array_push($error, $errorMsg);
+              }
+            }
+          }
+        }
+      }
+      else array_push($error, tpl::take('::console.text-error-db-102', 'lng'));
+    }
+
     public static function replaceKeyWordHighlight($argString, $argKeyword = null)
     {
       $string = $argString;

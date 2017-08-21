@@ -21,8 +21,8 @@
       <table cellpadding="10" cellspacing="0" class="tableF">
         <tbody>
           <tr>
-            <th valign="top"><t>{$=take('config.topic', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="topic" class="i1" /></td>
+            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
+            <td><input type="text" name="name" class="i1" /></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.photo', 'lng')}<r>*</r></t></th>
@@ -64,8 +64,8 @@
       <table cellpadding="10" cellspacing="0" class="tableF">
         <tbody>
           <tr>
-            <th valign="top"><t>{$=take('config.topic', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="topic" class="i1" value="{$topic}" /></td>
+            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
+            <td><input type="text" name="name" class="i1" value="{$name}" /></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.photo', 'lng')}<r>*</r></t></th>
@@ -112,7 +112,7 @@
         <tr>
           <th width="20" class="center"><label class="checkbox"><input type="checkbox" class="idall" forname="id" value="1" mode="highlightlineall" /><vicon></vicon></label></th>
           <th width="40" class="center">{$=take('global.config.id', 'lng')}</th>
-          <th>{$=take('config.topic', 'lng')}</th>
+          <th>{$=take('global.config.name', 'lng')}</th>
           <th width="120">{$=take('global.config.time', 'lng')}</th>
           <th width="40" class="center">{$=take('global.config.status', 'lng')}</th>
           <th width="60">{$=take('global.config.control', 'lng')}</th>
@@ -122,7 +122,7 @@
         <tr>
           <td class="center"><label class="checkbox"><input type="checkbox" class="id" name="id" value="{$id}" mode="highlightline" /><vicon></vicon></label></td>
           <td class="id center">{$id}</td>
-          <td><span class="mainlink" mode="shortcut" parent="2" shortcut="icon.edit>a.link">{$topic}</span></td>
+          <td><span class="mainlink" mode="shortcut" parent="2" shortcut="icon.edit>a.link">{$name}</span></td>
           <td>{$time}</td>
           <td class="center"><span class="status status-{$publish}"></span></td>
           <td><icons><icon class="edit show-{$-account-popedom-edit}" title="{$=take('global.config.edit', 'lng')}"><a class="link" link="?type=edit&amp;id={$id}"></a></icon><icon class="delete show-{$-account-popedom-delete}" title="{$=take('global.config.delete', 'lng')}" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-delete-id', 'lng')}[{$id}]{$=take('::console.q', 'lng')}" mode="confirmurlexec" urlexec="?type=action&action=delete&id={$id}"></icon></icons></td>

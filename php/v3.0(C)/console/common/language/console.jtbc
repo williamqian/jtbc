@@ -75,6 +75,54 @@
       <zh-cn><![CDATA[操作失败，权限校验失败]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-error-db-102]]></name>
+      <zh-cn><![CDATA[数据库链接失败]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-address]]></name>
+      <zh-cn><![CDATA[地址不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-content]]></name>
+      <zh-cn><![CDATA[内容不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-email]]></name>
+      <zh-cn><![CDATA[电子邮件格式不正确]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-image]]></name>
+      <zh-cn><![CDATA[图片不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-intro]]></name>
+      <zh-cn><![CDATA[简介不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-mobile]]></name>
+      <zh-cn><![CDATA[手机号码格式不正确]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-name]]></name>
+      <zh-cn><![CDATA[姓名不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-photo]]></name>
+      <zh-cn><![CDATA[照片不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-topic]]></name>
+      <zh-cn><![CDATA[标题不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-url]]></name>
+      <zh-cn><![CDATA[链接地址不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-username]]></name>
+      <zh-cn><![CDATA[用户名不能为空]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-popedom-add]]></name>
       <zh-cn><![CDATA[添加]]></zh-cn>
     </item>

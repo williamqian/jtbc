@@ -146,24 +146,22 @@ class ui extends page {
     $username = request::getHTTPPara('username', 'post');
     $password = request::getHTTPPara('password', 'post');
     $cpassword = request::getHTTPPara('cpassword', 'post');
-    $email = request::getHTTPPara('email', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
     }
     else
     {
-      if (base::isEmpty($username)) array_push($error, tpl::take('manage.text-tips-add-error-1', 'lng'));
-      if (base::isEmpty($password)) array_push($error, tpl::take('manage.text-tips-add-error-2', 'lng'));
-      if ($password != $cpassword) array_push($error, tpl::take('manage.text-tips-add-error-3', 'lng'));
-      if (!verify::isEmail($email)) array_push($error, tpl::take('manage.text-tips-add-error-4', 'lng'));
+      $table = tpl::take('config.db_table', 'cfg');
+      $prefix = tpl::take('config.db_prefix', 'cfg');
+      smart::pushAutoRequestErrorByTable($error, $table);
+      if (base::isEmpty($password)) array_push($error, tpl::take('manage.text-tips-field-error-1', 'lng'));
+      if ($password != $cpassword) array_push($error, tpl::take('manage.text-tips-field-error-2', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
         if (!is_null($db))
         {
-          $table = tpl::take('config.db_table', 'cfg');
-          $prefix = tpl::take('config.db_prefix', 'cfg');
           $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "' and " . $prefix . "delete=0";
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
@@ -201,23 +199,21 @@ class ui extends page {
     $username = request::getHTTPPara('username', 'post');
     $password = request::getHTTPPara('password', 'post');
     $cpassword = request::getHTTPPara('cpassword', 'post');
-    $email = request::getHTTPPara('email', 'post');
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
     }
     else
     {
-      if (base::isEmpty($username)) array_push($error, tpl::take('manage.text-tips-edit-error-1', 'lng'));
-      if (!base::isEmpty($password) && $password != $cpassword) array_push($error, tpl::take('manage.text-tips-edit-error-2', 'lng'));
-      if (!verify::isEmail($email)) array_push($error, tpl::take('manage.text-tips-edit-error-3', 'lng'));
+      $table = tpl::take('config.db_table', 'cfg');
+      $prefix = tpl::take('config.db_prefix', 'cfg');
+      smart::pushAutoRequestErrorByTable($error, $table);
+      if (!base::isEmpty($password) && $password != $cpassword) array_push($error, tpl::take('manage.text-tips-field-error-2', 'lng'));
       if (count($error) == 0)
       {
         $db = self::db();
         if (!is_null($db))
         {
-          $table = tpl::take('config.db_table', 'cfg');
-          $prefix = tpl::take('config.db_prefix', 'cfg');
           $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "' and " . $prefix . "delete=0 and " . $prefix . "id<>" . $id;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();

@@ -43,22 +43,6 @@
       <zh-cn><![CDATA[当前条件下没有找到任何成员]]></zh-cn>
     </item>
     <item>
-      <name><![CDATA[text-tips-add-error-1]]></name>
-      <zh-cn><![CDATA[姓名不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-add-error-2]]></name>
-      <zh-cn><![CDATA[照片不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-1]]></name>
-      <zh-cn><![CDATA[姓名不能为空]]></zh-cn>
-    </item>
-    <item>
-      <name><![CDATA[text-tips-edit-error-2]]></name>
-      <zh-cn><![CDATA[照片不能为空]]></zh-cn>
-    </item>
-    <item>
       <name><![CDATA[text-tips-edit-done]]></name>
       <zh-cn><![CDATA[编辑成功]]></zh-cn>
     </item>
