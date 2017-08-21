@@ -437,7 +437,7 @@ namespace jtbc {
       }
       $codename = self::getAbbrTransKey($codename);
       $routeStr = self::getXMLRoute($codename, $type);
-      $key = base::getLRStr($codename, '.', 'right');
+      $keywords = base::getLRStr($codename, '.', 'right');
       $activeValue = self::getActiveValue($type);
       if (!base::isEmpty($nodeName)) $activeValue = $nodeName;
       $globalStr = $routeStr;
@@ -446,9 +446,9 @@ namespace jtbc {
       $globalStr = str_replace('/', '_', $globalStr);
       $globalStr = APPNAME . $globalStr . '_' . $activeValue;
       if (!is_array(@$GLOBALS[$globalStr])) $GLOBALS[$globalStr] = self::getXMLInfo($routeStr, $activeValue);
-      if (isset($GLOBALS[$globalStr][$key]))
+      if (isset($GLOBALS[$globalStr][$keywords]))
       {
-        $result = $GLOBALS[$globalStr][$key];
+        $result = $GLOBALS[$globalStr][$keywords];
         if ($type == 'tpl')
         {
           $genre = page::getPara('genre');
@@ -509,7 +509,22 @@ namespace jtbc {
         }
         if ($parse == 1) $result = self::parse($result);
       }
-      if ($key == '*' && base::isEmpty($result)) $result = $GLOBALS[$globalStr];
+      if (base::isEmpty($result))
+      {
+        if ($keywords == '*') $result = $GLOBALS[$globalStr];
+        else if (is_numeric(strpos($keywords, ',')))
+        {
+          $result = array();
+          $tempResult = $GLOBALS[$globalStr];
+          $keywordsAry = explode(',', $keywords);
+          foreach($keywordsAry as $key => $val)
+          {
+            $value = '';
+            if (isset($tempResult[$val])) $value = $tempResult[$val];
+            $result[$val] = $value;
+          }
+        }
+      }
       return $result;
     }
 
@@ -525,6 +540,12 @@ namespace jtbc {
       $codename = $argCodeName;
       $tpl = $argTpl;
       $xmlAry = self::take($codename, $type);
+      if (!is_array($xmlAry))
+      {
+        $value = $xmlAry;
+        $xmlAry = array();
+        $xmlAry[base::getLRStr($codename, '.', 'right')] = $value;
+      }
       if (is_array($xmlAry))
       {
         $tmpstr = self::take($tpl, 'tpl');
