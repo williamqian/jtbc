@@ -2,7 +2,7 @@
 namespace jtbc;
 class ui extends page {
   public static $account = null;
-  public static $allowFiletype = 'txt,css,js,php,htm,html,asp,aspx,cs,java,jsp,config,jtbc';
+  public static $allowFiletype = 'txt,css,js,htm,html,asp,aspx,cs,php,java,jsp,config,sql,svg,jtbc';
 
   public static function account()
   {
