@@ -170,11 +170,11 @@ class ui extends page {
     {
       $message = $val;
       $info = base::getFolderInfo($val);
-      if (is_array($info)) $message = tpl::take('manage.text-folder-info', 'lng', 0, array('size' => base::htmlEncode(base::formatFileSize($info['size'])), 'file' => base::htmlEncode($info['file']), 'folder' => base::htmlEncode($info['folder'])));
+      if (is_array($info)) $message = tpl::take('manage.text-folder-info', 'lng', 0, array('size' => base::formatFileSize($info['size']), 'file' => base::getString($info['file']), 'folder' => base::getString($info['folder'])));
     }
     else if (is_file($val))
     {
-      $message = tpl::take('manage.text-file-info', 'lng', 0, array('size' => base::htmlEncode(base::formatFileSize(filesize($val)))));
+      $message = tpl::take('manage.text-file-info', 'lng', 0, array('size' => base::formatFileSize(filesize($val))));
     }
     $tmpstr = self::formatMsgResult($status, $message);
     return $tmpstr;
