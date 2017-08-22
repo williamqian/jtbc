@@ -101,7 +101,7 @@ class ui extends page {
             }
             $loopLineString = str_replace('{$-popedom}', $popedomSelect, $loopLineString);
           }
-          if (!in_array($val, $categoryAry)) $loopLineString = str_replace('{$-category}', '', $loopLineString);
+          if (!in_array($val, $categoryAry) || !universal\category::isValidGenre($val)) $loopLineString = str_replace('{$-category}', '', $loopLineString);
           else
           {
             $categoryValue = '';

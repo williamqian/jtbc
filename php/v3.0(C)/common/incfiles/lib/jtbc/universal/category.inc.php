@@ -37,11 +37,11 @@ namespace jtbc\universal {
       $optionselected = tpl::take('global.config.xmlselect_select', 'tpl');
       foreach ($allGenre as $key => $val)
       {
-        $title = tpl::take('global.' . $val . ':category.title', 'cfg');
-        if (!base::isEmpty($title))
+        if (self::isValidGenre($val))
         {
           if ($val == $genre) $tmpstr .= $optionselected;
           else $tmpstr .= $optionUnselected;
+          $title = tpl::take('global.' . $genre . ':category.title', 'cfg');
           $tmpstr = str_replace('{$explain}', base::htmlEncode($title . ' [' . $val . ']'), $tmpstr);
           $tmpstr = str_replace('{$value}', base::htmlEncode($val), $tmpstr);
         }
@@ -244,8 +244,7 @@ namespace jtbc\universal {
       {
         foreach ($allGenre as $key => $val)
         {
-          $title = tpl::take('global.' . $val . ':category.title', 'cfg');
-          if (!base::isEmpty($title))
+          if (self::isValidGenre($val))
           {
             $genre = $val;
             break;
@@ -259,6 +258,15 @@ namespace jtbc\universal {
     {
       $tmpstr = tpl::take('global.universal/category:config.db_prefix', 'cfg');
       return $tmpstr;
+    }
+
+    public static function isValidGenre($argGenre)
+    {
+      $bool = false;
+      $genre = $argGenre;
+      $title = @tpl::take('global.' . $genre . ':category.title', 'cfg');
+      if (!base::isEmpty($title)) $bool = true;
+      return $bool;
     }
   }
 }
