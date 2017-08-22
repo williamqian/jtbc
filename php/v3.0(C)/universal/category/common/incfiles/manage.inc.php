@@ -125,7 +125,7 @@ class ui extends page {
       if ((base::isEmpty($genre) || !in_array($genre, $allGenre)))
       {
         $genre = '';
-        if (!empty($allGenre)) $genre = current($allGenre);
+        if (!empty($allGenre)) $genre = universal\category::getFirstValidGenre($allGenre);
       }
       if (base::isEmpty($genre))
       {

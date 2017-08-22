@@ -37,10 +37,14 @@ namespace jtbc\universal {
       $optionselected = tpl::take('global.config.xmlselect_select', 'tpl');
       foreach ($allGenre as $key => $val)
       {
-        if ($val == $genre) $tmpstr .= $optionselected;
-        else $tmpstr .= $optionUnselected;
-        $tmpstr = str_replace('{$explain}', base::htmlEncode(tpl::take('global.' . $val . ':category.title', 'cfg') . ' [' . $val . ']'), $tmpstr);
-        $tmpstr = str_replace('{$value}', base::htmlEncode($val), $tmpstr);
+        $title = tpl::take('global.' . $val . ':category.title', 'cfg');
+        if (!base::isEmpty($title))
+        {
+          if ($val == $genre) $tmpstr .= $optionselected;
+          else $tmpstr .= $optionUnselected;
+          $tmpstr = str_replace('{$explain}', base::htmlEncode($title . ' [' . $val . ']'), $tmpstr);
+          $tmpstr = str_replace('{$value}', base::htmlEncode($val), $tmpstr);
+        }
       }
       return $tmpstr;
     }
@@ -51,7 +55,7 @@ namespace jtbc\universal {
       $lang = base::getNum($argLang, 0);
       if (!base::isEmpty($genre))
       {
-        $cacheName = 'universal-category-array-' . $genre . '-' . $lang;
+        $cacheName = 'universal-category-array-' . str_replace('/', '-', $genre) . '-' . $lang;
         $categoryAry = cache::get($cacheName);
         if (empty($categoryAry))
         {
@@ -230,6 +234,25 @@ namespace jtbc\universal {
         }
       }
       return $categoryAry;
+    }
+
+    public static function getFirstValidGenre($argAllGenre)
+    {
+      $genre = '';
+      $allGenre = $argAllGenre;
+      if (is_array($allGenre))
+      {
+        foreach ($allGenre as $key => $val)
+        {
+          $title = tpl::take('global.' . $val . ':category.title', 'cfg');
+          if (!base::isEmpty($title))
+          {
+            $genre = $val;
+            break;
+          }
+        }
+      }
+      return $genre;
     }
 
     public static function getPrefix()
