@@ -604,7 +604,7 @@ jtbc.console.lib = {
       var fileURL = paraArray['fileurl'];
       if (!tthis.parent.parent.isAbsoluteURL(fileURL)) fileURL = attObj.attr('folder') + fileURL;
       var pageObj = tthis.previewAtt(filetype, paraArray['filename'], fileURL, liObj.parent().attr('text-preview-link'), '1');
-      pageObj.find('input.title').on('keyup', function(){
+      pageObj.find('input.title').on('input', function(){
         paraArray['filename'] = $(this).val();
         thisObj.html(tthis.parent.parent.htmlEncode(paraArray['filename']));
         liObj.attr('para', JSON.stringify(paraArray));
