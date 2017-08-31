@@ -572,6 +572,9 @@ icons icon a.link {
 .att ul li icons {
   position: absolute; top: 0px; right: 10px
 }
+.att ul li icons icon {
+  vertical-align: middle
+}
 .att ul li:hover {
   background: #f8f8f8
 }
