@@ -563,9 +563,11 @@ jtbc.console.lib = {
   {
     var tthis = this;
     var myObj = argObj;
+    var canInsert = true;
     var insertFun = argInsertFun;
     var attObj = myObj.find('.att');
     var attValObj = attObj.find('input[name=\'att\']');
+    if (typeof(insertFun) == 'undefined') canInsert = false;
     var resetAttInputVal = function()
     {
       var attArray = new Array();
@@ -585,6 +587,7 @@ jtbc.console.lib = {
       var ulObj = attObj.find('ul');
       ulObj.find('li.null').remove();
       ulObj.append('<li para="' + tthis.parent.parent.htmlEncode(para) + '"><em class="filetype move ' + tthis.parent.parent.htmlEncode(paraArray['filetype']) + '">' + tthis.parent.parent.htmlEncode(paraArray['filetype']) + '</em><span class="tit">' + tthis.parent.parent.htmlEncode(paraArray['filename']) + '</span><span class="size">' + tthis.parent.parent.htmlEncode(paraArray['filesizetext']) + '</span><icons><icon class="insert" title="' + ulObj.attr('text-insert') + '"></icon><icon class="delete" title="' + ulObj.attr('text-delete') + '"></icon></icons></li>');
+      if (canInsert == false) ulObj.find('icon.insert').remove();
       resetAttInputVal();
     };
     var initAttValLi = function(){
