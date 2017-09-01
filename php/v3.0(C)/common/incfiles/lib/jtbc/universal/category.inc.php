@@ -41,7 +41,7 @@ namespace jtbc\universal {
         {
           if ($val == $genre) $tmpstr .= $optionselected;
           else $tmpstr .= $optionUnselected;
-          $title = tpl::take('global.' . $genre . ':category.title', 'cfg');
+          $title = tpl::take('global.' . $val . ':category.title', 'cfg');
           $tmpstr = str_replace('{$explain}', base::htmlEncode($title . ' [' . $val . ']'), $tmpstr);
           $tmpstr = str_replace('{$value}', base::htmlEncode($val), $tmpstr);
         }
