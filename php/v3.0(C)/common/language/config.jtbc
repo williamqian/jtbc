@@ -19,6 +19,10 @@
       <zh-cn><![CDATA[附件]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[address]]></name>
+      <zh-cn><![CDATA[地址]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[category]]></name>
       <zh-cn><![CDATA[分类]]></zh-cn>
     </item>
@@ -73,6 +77,10 @@
     <item>
       <name><![CDATA[name]]></name>
       <zh-cn><![CDATA[姓名]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[phone]]></name>
+      <zh-cn><![CDATA[电话]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[photo]]></name>

@@ -193,23 +193,10 @@ namespace jtbc\universal {
 
     public static function getCategoryTopicByID($argGenre, $argLang, $argID)
     {
-      $tmpstr = '';
       $genre = $argGenre;
       $lang = base::getNum($argLang, 0);
       $id = base::getNum($argID, 0);
-      $categoryAry = self::getCategoryAryByGenre($genre, $lang);
-      if (is_array($categoryAry))
-      {
-        $prefix = self::getPrefix();
-        foreach ($categoryAry as $key => $val)
-        {
-          if (is_array($val))
-          {
-            $rsid = base::getNum($val[$prefix . 'id'], 0);
-            if ($rsid == $id) $tmpstr = $val[$prefix . 'topic'];
-          }
-        }
-      }
+      $tmpstr = self::getInfoByID($genre, $lang, $id, 'topic');
       return $tmpstr;
     }
 
@@ -252,6 +239,29 @@ namespace jtbc\universal {
         }
       }
       return $genre;
+    }
+
+    public static function getInfoByID($argGenre, $argLang, $argID, $argName)
+    {
+      $tmpstr = '';
+      $genre = $argGenre;
+      $lang = base::getNum($argLang, 0);
+      $id = base::getNum($argID, 0);
+      $name = $argName;
+      $categoryAry = self::getCategoryAryByGenre($genre, $lang);
+      if (is_array($categoryAry))
+      {
+        $prefix = self::getPrefix();
+        foreach ($categoryAry as $key => $val)
+        {
+          if (is_array($val))
+          {
+            $rsid = base::getNum($val[$prefix . 'id'], 0);
+            if ($rsid == $id) $tmpstr = $val[$prefix . $name];
+          }
+        }
+      }
+      return $tmpstr;
     }
 
     public static function getPrefix()
