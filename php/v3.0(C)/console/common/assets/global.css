@@ -370,6 +370,9 @@ icons icon a.link {
 .container div.leftmenu ul li span.tit em.e15 {
   background-image: url(icon/contact.1.svg)
 }
+.container div.leftmenu ul li span.tit em.e16 {
+  background-image: url(icon/module.1.svg)
+}
 .container div.leftmenu ul li span.tit.open d {
   transform: rotate(180deg)
 }
