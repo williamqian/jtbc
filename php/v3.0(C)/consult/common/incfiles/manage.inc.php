@@ -126,6 +126,7 @@ class ui extends page {
           $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'dispose'] = 0;
+          $preset[$prefix . 'userip'] = request::getRemortIP();
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
           if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getHTTPPara('dispose', 'post'), 0);
@@ -166,7 +167,7 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $specialFiled = $prefix . 'id,' . $prefix . 'delete';
+          $specialFiled = $prefix . 'id,' . $prefix . 'userip,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'dispose'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
