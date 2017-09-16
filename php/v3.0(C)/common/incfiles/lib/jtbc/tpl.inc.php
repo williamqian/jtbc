@@ -435,6 +435,16 @@ namespace jtbc {
         $type = 'tpl';
         $parse = 1;
       }
+      if (is_array($codename))
+      {
+        $codenameLength = count($codename);
+        if ($codenameLength == 2)
+        {
+          $newcodename = $codename[0];
+          if (base::isMobileAgent()) $newcodename = $codename[1];
+          $codename = $newcodename;
+        }
+      }
       $codename = self::getAbbrTransKey($codename);
       $routeStr = self::getXMLRoute($codename, $type);
       $keywords = base::getLRStr($codename, '.', 'right');
