@@ -272,7 +272,17 @@ namespace jtbc {
       {
         $genre = page::getPara('genre');
         if (base::isEmpty($routeStr)) $routeStr = base::getLRStr(page::getPara('filename'), '.', 'left');
-        $routeStr = $dir . '/' . $routeStr . XMLSFX;
+        else
+        {
+          if (is_numeric(strpos($routeStr, ':')))
+          {
+            $routeStr = base::getLRStr($routeStr, ':', 'left') . '/' . $dir . '/' . base::getLRStr($routeStr, ':', 'right') . XMLSFX;
+          }
+          else
+          {
+            $routeStr = $dir . '/' . $routeStr . XMLSFX;
+          }
+        }
         if (!base::isEmpty($genre)) $routeStr = $genre . '/' . $routeStr;
       }
       $routeStr = smart::getActualRoute($routeStr);
