@@ -99,6 +99,10 @@
       <zh-cn><![CDATA[提交]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[subtitle]]></name>
+      <zh-cn><![CDATA[副标题]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[status]]></name>
       <zh-cn><![CDATA[状态]]></zh-cn>
     </item>

@@ -115,6 +115,14 @@
       <zh-cn><![CDATA[照片不能为空]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-auto-request-error-subtitle]]></name>
+      <zh-cn><![CDATA[副标题不能为空]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[text-auto-request-error-title]]></name>
+      <zh-cn><![CDATA[标题不能为空]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-auto-request-error-topic]]></name>
       <zh-cn><![CDATA[标题不能为空]]></zh-cn>
     </item>

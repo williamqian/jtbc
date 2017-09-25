@@ -304,7 +304,7 @@ namespace jtbc {
             }
             if ($filedValid == true)
             {
-              if ($filedTypeN == 'int' || $filedTypeN == 'integer')
+              if ($filedTypeN == 'int' || $filedTypeN == 'integer' || $filedTypeN == 'double')
               {
                 $fieldString .= $filedName . ',';
                 $fieldValues .= base::getNum($requestValue, 0) . ',';
@@ -421,7 +421,7 @@ namespace jtbc {
             }
             if ($filedValid == true)
             {
-              if ($filedTypeN == 'int' || $filedTypeN == 'integer')
+              if ($filedTypeN == 'int' || $filedTypeN == 'integer' || $filedTypeN == 'double')
               {
                 $fieldStringValues .= $filedName . '=' . base::getNum($requestValue, 0) . ',';
               }
