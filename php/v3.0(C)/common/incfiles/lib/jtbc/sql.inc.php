@@ -41,6 +41,10 @@ namespace jtbc {
         }
         $fieldStr = implode(',', $field);
       }
+      else if ($field == 'count(*)')
+      {
+        $fieldStr = 'count(*)';
+      }
       $hasWhere = false;
       $sql = "select " . $fieldStr . " from " . $table;
       $desc = $db -> desc($table);
