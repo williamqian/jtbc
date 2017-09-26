@@ -26,7 +26,8 @@ class ui extends page {
       $tmpstr = str_replace('{$value}', '-1', $tmpstr);
       $table = tpl::take(':/role:config.db_table', 'cfg');
       $prefix = tpl::take(':/role:config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 order by " . $prefix . "time desc";
+      $sql = new sql($db, $table, $prefix, 'time');
+      $sqlstr = $sql -> sql;
       $rq = $db -> query($sqlstr);
       while($rs = $rq -> fetch())
       {
@@ -70,7 +71,9 @@ class ui extends page {
       {
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $id;
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
@@ -105,9 +108,9 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0";
-      if ($lock == 1) $sqlstr .= " and " . $prefix . "lock=1";
-      $sqlstr .=" order by " . $prefix . "time desc";
+      $sql = new sql($db, $table, $prefix, 'time');
+      if ($lock == 1) $sql -> lock = 1;
+      $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
       $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
       if (is_array($rsAry))
@@ -162,7 +165,9 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "' and " . $prefix . "delete=0";
+          $sql = new sql($db, $table, $prefix);
+          $sql -> username = $username;
+          $sqlstr = $sql -> sql;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-add-error-101', 'lng'));
@@ -214,7 +219,10 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "' and " . $prefix . "delete=0 and " . $prefix . "id<>" . $id;
+          $sql = new sql($db, $table, $prefix);
+          $sql -> username = $username;
+          $sql -> set(array('id', '<>'), $id);
+          $sqlstr = $sql -> sql;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-edit-error-101', 'lng'));

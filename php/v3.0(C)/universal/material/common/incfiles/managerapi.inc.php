@@ -50,12 +50,14 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
-      if ($filegroup != -1) $sqlstr .= " and " . $prefix . "filegroup=" . $filegroup;
-      if (!base::isEmpty($keyword)) $sqlstr .= smart::getCutKeywordSQL($prefix . 'topic', $keyword);
-      if ($sort == 1) $sqlstr .= " order by " . $prefix . "hot desc," . $prefix . "id desc";
-      else $sqlstr .= " order by " . $prefix . "time desc," . $prefix . "id desc";
-      $sqlstr .= " limit 100";
+      $sql = new sql($db, $table, $prefix);
+      $sql -> lang = $account -> getLang();
+      if ($filegroup != -1) $sql -> filegroup = $filegroup;
+      if (!base::isEmpty($keyword)) $sql -> setFuzzyLike('topic', $keyword);
+      if ($sort == 1) $sql -> orderBy('hot');
+      else $sql -> orderBy('time');
+      $sql -> orderBy('id');
+      $sqlstr = $sql -> sql . ' limit 100';
       $rq = $db -> query($sqlstr);
       while($rs = $rq -> fetch())
       {

@@ -27,7 +27,8 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 order by " . $prefix . "id desc";
+      $sql = new sql($db, $table, $prefix, 'id');
+      $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
       $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
       if (is_array($rsAry))

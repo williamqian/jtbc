@@ -83,6 +83,7 @@ namespace jtbc {
                 $tempRelation = strtolower($currentKey[1]);
                 if ($tempRelation == 'in') $currentRelation = 'in';
                 else if ($tempRelation == 'like') $currentRelation = 'like';
+                else if ($tempRelation == '<>') $currentRelation = '<>';
               }
               if ($keyCount >= 3)
               {
@@ -108,6 +109,11 @@ namespace jtbc {
                 {
                   if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . " like " . base::getNum($currentVal, 0);
                   else if ($valType == 'string') $sql .= " " . $currentConcat . " " . $currentField  . " like '" . addslashes($currentVal) . "'";
+                }
+                else if ($currentRelation == '<>')
+                {
+                  if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . "<>" . base::getNum($currentVal, 0);
+                  else if ($valType == 'string') $sql .= " " . $currentConcat . " " . $currentField  . "<>'" . addslashes($currentVal) . "'";
                 }
                 else if ($currentRelation == '=')
                 {
@@ -154,6 +160,33 @@ namespace jtbc {
         }
       }
       return $sql;
+    }
+
+    public function orderBy($argField, $argDescOrAsc = 'desc')
+    {
+      $field = $argField;
+      $descOrAsc = $argDescOrAsc;
+      if (strtolower($descOrAsc) == 'asc') $descOrAsc = 'asc';
+      $orderby = $this -> orderby;
+      if (!is_array($orderby))
+      {
+        if (!is_null($orderby))
+        {
+          $tempOrderby = $orderby;
+          $orderby = array();
+          array_push($orderby, array($tempOrderby));
+        }
+        else
+        {
+          $orderby = array();
+          array_push($orderby, array($field, $descOrAsc));
+        }
+      }
+      else
+      {
+        array_push($orderby, array($field, $descOrAsc));
+      }
+      $this -> orderby = $orderby;
     }
 
     public function set($argName, $argValue)

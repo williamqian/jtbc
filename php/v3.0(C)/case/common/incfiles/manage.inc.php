@@ -45,7 +45,8 @@ class ui extends page {
         $prefix = tpl::take('config.db_prefix', 'cfg');
         $sql = new sql($db, $table, $prefix);
         $sql -> id = $id;
-        $rq = $db -> query($sql -> sql);
+        $sqlstr = $sql -> sql;
+        $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
         {
@@ -89,8 +90,9 @@ class ui extends page {
       if (!base::isEmpty($myCategory) && base::checkIDAry($myCategory)) $sql -> setIn('category', $myCategory);
       if ($category != 0) $sql -> setIn('category', base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), $account -> getLang(), $category)));
       if (!base::isEmpty($keyword)) $sql -> setFuzzyLike('topic', $keyword);
+      $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
-      $rsAry = $pagi -> getDataAry($sql -> sql, $page, $pagesize);
+      $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
       if (is_array($rsAry))
       {
         foreach($rsAry as $rs)

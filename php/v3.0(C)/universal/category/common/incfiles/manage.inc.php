@@ -25,7 +25,9 @@ class ui extends page {
         $cfid = base::getNum($argCFid, 0);
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr ="select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $cfid;
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $cfid;
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
@@ -87,7 +89,9 @@ class ui extends page {
         $allGenre = universal\category::getAllGenre();
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $id;
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
@@ -140,7 +144,13 @@ class ui extends page {
         $loopString = $tpl -> getLoopString('{@}');
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "fid=" . $fid . " and " . $prefix . "genre='" . addslashes($genre) . "' and " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang() . " order by " . $prefix . "order asc," . $prefix . "id asc";
+        $sql = new sql($db, $table, $prefix);
+        $sql -> fid = $fid;
+        $sql -> genre = $genre;
+        $sql -> lang = $account -> getLang();
+        $sql -> orderBy('order', 'asc');
+        $sql -> orderBy('id', 'asc');
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         while($rs = $rq -> fetch())
         {

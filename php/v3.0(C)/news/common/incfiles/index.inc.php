@@ -15,7 +15,10 @@ class ui extends page {
     {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "publish=1 and " . $prefix . "id=" . $id;
+      $sql = new sql($db, $table, $prefix);
+      $sql -> publish = 1;
+      $sql -> id = $id;
+      $sqlstr = $sql -> sql;
       $rq = $db -> query($sqlstr);
       $rs = $rq -> fetch();
       if (is_array($rs))
@@ -46,13 +49,15 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "publish=1 and " . $prefix . "lang=" . self::getPara('lang');
+      $sql = new sql($db, $table, $prefix, 'time');
+      $sql -> publish = 1;
+      $sql -> lang = self::getPara('lang');
       if ($category != 0)
       {
         self::setPageTitle(base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), self::getPara('lang'), $category)));
-        $sqlstr .= " and " . $prefix . "category in (" . base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), self::getPara('lang'), $category)) . ")";
+        $sql -> setIn('category', base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), self::getPara('lang'), $category)));
       }
-      $sqlstr .=" order by " . $prefix . "time desc";
+      $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
       $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
       if (is_array($rsAry))

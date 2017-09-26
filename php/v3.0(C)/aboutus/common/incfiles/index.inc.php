@@ -15,9 +15,10 @@ class ui extends page {
     {
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "publish=1";
-      if ($id != 0) $sqlstr .= " and " . $prefix . "id=" . $id;
-      $sqlstr .= " order by " . $prefix . "time desc limit 0,1";
+      $sql = new sql($db, $table, $prefix, 'time');
+      $sql -> publish = 1;
+      if ($id != 0) $sql -> id = $id;
+      $sqlstr = $sql -> sql . " limit 0,1";
       $rq = $db -> query($sqlstr);
       $rs = $rq -> fetch();
       if (is_array($rs))

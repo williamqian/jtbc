@@ -24,7 +24,9 @@ class ui extends page {
       {
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $id;
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
@@ -57,9 +59,12 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
-      if ($filegroup != -1) $sqlstr .= " and " . $prefix . "filegroup=" . $filegroup;
-      $sqlstr .= " order by " . $prefix . "time desc," . $prefix . "id desc";
+      $sql = new sql($db, $table, $prefix);
+      $sql -> lang = $account -> getLang();
+      if ($filegroup != -1) $sql -> filegroup = $filegroup;
+      $sql -> orderBy('time');
+      $sql -> orderBy('id');
+      $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
       $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
       if (is_array($rsAry))
@@ -156,7 +161,9 @@ class ui extends page {
       {
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $id;
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         $rs = $rq -> fetch();
         if (is_array($rs))
