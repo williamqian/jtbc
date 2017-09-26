@@ -43,8 +43,9 @@ class ui extends page {
       {
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
-        $rq = $db -> query($sqlstr);
+        $sql = new sql($db, $table, $prefix);
+        $sql -> id = $id;
+        $rq = $db -> query($sql -> sql);
         $rs = $rq -> fetch();
         if (is_array($rs))
         {
@@ -82,14 +83,14 @@ class ui extends page {
       $loopString = $tpl -> getLoopString('{@}');
       $table = tpl::take('config.db_table', 'cfg');
       $prefix = tpl::take('config.db_prefix', 'cfg');
-      $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "lang=" . $account -> getLang();
-      if ($publish != -1) $sqlstr .= " and " . $prefix . "publish=" . $publish;
-      if (!base::isEmpty($myCategory) && base::checkIDAry($myCategory)) $sqlstr .= " and " . $prefix . "category in (" . $myCategory . ")";
-      if ($category != 0) $sqlstr .= " and " . $prefix . "category in (" . base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), $account -> getLang(), $category)) . ")";
-      if (!base::isEmpty($keyword)) $sqlstr .= smart::getCutKeywordSQL($prefix . 'topic', $keyword);
-      $sqlstr .=" order by " . $prefix . "time desc";
+      $sql = new sql($db, $table, $prefix, 'time');
+      $sql -> lang = $account -> getLang();
+      if ($publish != -1) $sql -> publish = $publish;
+      if (!base::isEmpty($myCategory) && base::checkIDAry($myCategory)) $sql -> setIn('category', $myCategory);
+      if ($category != 0) $sql -> setIn('category', base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), $account -> getLang(), $category)));
+      if (!base::isEmpty($keyword)) $sql -> setFuzzyLike('topic', $keyword);
       $pagi = new pagi($db);
-      $rsAry = $pagi -> getDataAry($sqlstr, $page, $pagesize);
+      $rsAry = $pagi -> getDataAry($sql -> sql, $page, $pagesize);
       if (is_array($rsAry))
       {
         foreach($rsAry as $rs)
