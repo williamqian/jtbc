@@ -833,7 +833,7 @@ namespace jtbc {
           foreach ($osqlAry as $key => $val)
           {
             $valType = gettype($val);
-            if ($valType == 'integer') $sqlstr .= " and " . $paraDBPrefix . $key . "=" . base::getNum($val, 0);
+            if ($valType == 'integer' || $valType == 'double') $sqlstr .= " and " . $paraDBPrefix . $key . "=" . base::getNum($val, 0);
             else if ($valType == 'string') $sqlstr .= " and " . $paraDBPrefix . $key . "='" . addslashes($val) . "'";
           }
         }
