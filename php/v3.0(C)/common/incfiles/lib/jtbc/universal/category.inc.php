@@ -97,6 +97,15 @@ namespace jtbc\universal {
       return $tmpstr;
     }
 
+    public static function getCategoryFamilyID($argGenre, $argLang, $argID)
+    {
+      $genre = $argGenre;
+      $lang = base::getNum($argLang, 0);
+      $id = base::getNum($argID, 0);
+      $tmpstr = base::mergeIdAry($id, self::getCategoryChildID($genre, $lang, $id));
+      return $tmpstr;
+    }
+
     public static function getCategorySelectByGenre($argGenre, $argLang, $argMyCategory, $argVars = '')
     {
       $tmpstr = '';

@@ -55,7 +55,7 @@ class ui extends page {
       if ($category != 0)
       {
         self::setPageTitle(base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), self::getPara('lang'), $category)));
-        $sql -> setIn('category', base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), self::getPara('lang'), $category)));
+        $sql -> setIn('category', universal\category::getCategoryFamilyID(self::getPara('genre'), self::getPara('lang'), $category));
       }
       $sqlstr = $sql -> sql;
       $pagi = new pagi($db);

@@ -88,7 +88,7 @@ class ui extends page {
       $sql -> lang = $account -> getLang();
       if ($publish != -1) $sql -> publish = $publish;
       if (!base::isEmpty($myCategory) && base::checkIDAry($myCategory)) $sql -> setIn('category', $myCategory);
-      if ($category != 0) $sql -> setIn('category', base::mergeIdAry($category, universal\category::getCategoryChildID(self::getPara('genre'), $account -> getLang(), $category)));
+      if ($category != 0) $sql -> setIn('category', universal\category::getCategoryFamilyID(self::getPara('genre'), $account -> getLang(), $category));
       if (!base::isEmpty($keyword)) $sql -> setFuzzyLike('topic', $keyword);
       $sqlstr = $sql -> sql;
       $pagi = new pagi($db);
