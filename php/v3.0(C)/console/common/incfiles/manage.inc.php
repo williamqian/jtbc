@@ -24,7 +24,7 @@ class ui extends page {
       $variable['-sys-para-2'] = PHP_VERSION;
       $variable['-sys-para-3'] = DB;
       $variable['-sys-para-4'] = strtoupper(php_sapi_name());
-      $variable['-sys-para-5'] = gethostbyname($_SERVER['SERVER_NAME']);
+      $variable['-sys-para-5'] = base::getSwapString(@$_SERVER['SERVER_ADDR'], gethostbyname($_SERVER['SERVER_NAME']));
       $variable['-sys-para-6'] = base::formatDate(base::getDateTime(), '100');
       $variable['-sys-para-7'] = get_cfg_var('max_execution_time');
       $variable['-sys-para-8'] = get_cfg_var('post_max_size');
