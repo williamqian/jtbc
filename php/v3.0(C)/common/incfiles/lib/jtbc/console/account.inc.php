@@ -98,7 +98,14 @@ namespace jtbc\console {
             $rsPassword = base::getString($rs[$prefix . 'password']);
             if ($rsPassword == md5($password) || md5(WEBKEY . $rsPassword) == $authentication)
             {
-              if (base::isEmpty($authentication)) $db -> exec("update " . $table . " set " . $prefix . "lasttime='" . addslashes(base::getDateTime()) . "'," . $prefix . "lastip='" . addslashes(request::getRemortIP()) . "' where " . $prefix . "id=" . $rsID);
+              if (base::isEmpty($authentication))
+              {
+                $preset = array();
+                $preset[$prefix . 'lasttime'] = base::getDateTime();
+                $preset[$prefix . 'lastip'] = request::getRemortIP();
+                $sqlstr = smart::getAutoUpdateSQLByVars($table, $prefix . 'id', $rsID, $preset);
+                $re = $db -> exec($sqlstr);
+              }
               if ($rsRole == -1)
               {
                 $rsr = array('super' => 1);
@@ -139,7 +146,12 @@ namespace jtbc\console {
               $todayDate = base::getNum(base::formatDate(base::getDateTime(), '10'), 0);
               $tableLogin = tpl::take(':/account:config.db_table_login', 'cfg');
               $prefixLogin = tpl::take(':/account:config.db_prefix_login', 'cfg');
-              $db -> exec("insert into " . $tableLogin . " (" . $prefixLogin . "account_id," . $prefixLogin . "date," . $prefixLogin . "status) values (" . $rsID . "," . $todayDate . "," . $loginStatus . ")");
+              $preset = array();
+              $preset[$prefixLogin . 'account_id'] = $rsID;
+              $preset[$prefixLogin . 'date'] = $todayDate;
+              $preset[$prefixLogin . 'status'] = $loginStatus;
+              $sqlstr = smart::getAutoInsertSQLByVars($tableLogin, $preset);
+              $db -> exec($sqlstr);
             }
           }
         }
@@ -389,9 +401,15 @@ namespace jtbc\console {
         $prefix = tpl::take(':/account:config.db_prefix', 'cfg');
         if (!is_null($db))
         {
-          $bool = true;
-          setcookie(APPNAME . 'console[authentication]', md5(WEBKEY . md5($newpassword)), 0, COOKIESPATH);
-          $db -> exec("update " . $table . " set " . $prefix . "password='" . addslashes(md5($newpassword)) . "' where " . $prefix . "id=" . $accountId);
+          $preset = array();
+          $preset[$prefix . 'password'] = md5($newpassword);
+          $sqlstr = smart::getAutoUpdateSQLByVars($table, $prefix . 'id', $accountId, $preset);
+          $re = $db -> exec($sqlstr);
+          if (is_numeric($re))
+          {
+            $bool = true;
+            setcookie(APPNAME . 'console[authentication]', md5(WEBKEY . md5($newpassword)), 0, COOKIESPATH);
+          }
         }
       }
       return $bool;

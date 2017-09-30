@@ -6,6 +6,7 @@ namespace jtbc\universal {
   use jtbc\base;
   use jtbc\cache;
   use jtbc\page;
+  use jtbc\sql;
   use jtbc\smart;
   use jtbc\tpl;
   class category
