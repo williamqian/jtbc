@@ -220,7 +220,13 @@ namespace jtbc\universal {
       $prefix = tpl::take('global.universal/category:config.db_prefix', 'cfg');
       if (!is_null($db) && !base::isEmpty($table))
       {
-        $sqlstr = "select * from " . $table . " where " . $prefix . "lang=" . $lang . " and " . $prefix . "delete=0 and " . $prefix . "fid=" . $fid . " and " . $prefix . "genre='" . addslashes($genre) . "' order by " . $prefix . "order asc," . $prefix . "id asc";
+        $sql = new sql($db, $table, $prefix);
+        $sql -> lang = $lang;
+        $sql -> fid = $fid;
+        $sql -> genre = $genre;
+        $sql -> orderBy('order', 'asc');
+        $sql -> orderBy('id', 'asc');
+        $sqlstr = $sql -> sql;
         $rq = $db -> query($sqlstr);
         while($rs = $rq -> fetch())
         {

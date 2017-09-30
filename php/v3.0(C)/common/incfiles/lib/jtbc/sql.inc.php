@@ -43,7 +43,7 @@ namespace jtbc {
       }
       else if ($field == 'count(*)')
       {
-        $fieldStr = 'count(*)';
+        $fieldStr = 'count(*) as count';
       }
       $hasWhere = false;
       $sql = "select " . $fieldStr . " from " . $table;

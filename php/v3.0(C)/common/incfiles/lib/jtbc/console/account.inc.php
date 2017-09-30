@@ -6,6 +6,7 @@ namespace jtbc\console {
   use jtbc\base;
   use jtbc\tpl;
   use jtbc\request;
+  use jtbc\sql;
   use jtbc\page;
   use jtbc\smart;
   class account
@@ -41,7 +42,9 @@ namespace jtbc\console {
         {
           $table = tpl::take(':/account:config.db_table', 'cfg');
           $prefix = tpl::take(':/account:config.db_prefix', 'cfg');
-          $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "'";
+          $sql = new sql($db, $table, $prefix);
+          $sql -> username = $username;
+          $sqlstr = $sql -> sql;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
           if (is_array($rs))
@@ -51,7 +54,11 @@ namespace jtbc\console {
             $todayDate = base::getNum(base::formatDate(base::getDateTime(), '10'), 0);
             $tableLogin = tpl::take(':/account:config.db_table_login', 'cfg');
             $prefixLogin = tpl::take(':/account:config.db_prefix_login', 'cfg');
-            $sqlstr = "select count(*) as num from " . $tableLogin . " where " . $prefixLogin . "status=0 and " . $prefixLogin . "date=" . $todayDate . " and " . $prefixLogin . "account_id=" . $rsID;
+            $sql = new sql($db, $tableLogin, $prefixLogin);
+            $sql -> status = 0;
+            $sql -> date = $todayDate;
+            $sql -> account_id = $rsID;
+            $sqlstr = $sql -> getSQL('count(*)');
             $rq = $db -> query($sqlstr);
             $rs = $rq -> fetch();
             if (is_array($rs)) $num = base::getNum($rs[0], 0);
@@ -77,7 +84,10 @@ namespace jtbc\console {
         {
           $table = tpl::take(':/account:config.db_table', 'cfg');
           $prefix = tpl::take(':/account:config.db_prefix', 'cfg');
-          $sqlstr = "select * from " . $table . " where " . $prefix . "username='" . addslashes($username) . "' and " . $prefix . "delete=0 and " . $prefix . "lock=0";
+          $sql = new sql($db, $table, $prefix);
+          $sql -> username = $username;
+          $sql -> lock = 0;
+          $sqlstr = $sql -> sql;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
           if (is_array($rs))
@@ -98,7 +108,9 @@ namespace jtbc\console {
               {
                 $table = tpl::take(':/role:config.db_table', 'cfg');
                 $prefix = tpl::take(':/role:config.db_prefix', 'cfg');
-                $sqlstrr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $rsRole;
+                $sql = new sql($db, $table, $prefix);
+                $sql -> id = $rsRole;
+                $sqlstr = $sql -> sql;
                 $rqr = $db -> query($sqlstrr);
                 $rsr = $rqr -> fetch();
                 if (is_array($rsr))
@@ -322,7 +334,9 @@ namespace jtbc\console {
         {
           $table = tpl::take(':/role:config.db_table', 'cfg');
           $prefix = tpl::take(':/role:config.db_prefix', 'cfg');
-          $sqlstr = "select * from " . $table . " where " . $prefix . "delete=0 and " . $prefix . "id=" . $id;
+          $sql = new sql($db, $table, $prefix);
+          $sql -> id = $id;
+          $sqlstr = $sql -> sql;
           $rq = $db -> query($sqlstr);
           $rs = $rq -> fetch();
           if (is_array($rs)) $tmpstr = base::getString($rs[$prefix . 'topic']);
