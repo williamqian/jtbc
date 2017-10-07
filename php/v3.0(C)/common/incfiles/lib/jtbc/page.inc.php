@@ -71,12 +71,51 @@ namespace jtbc {
       return $breadcrumb;
     }
 
-    public static function formatResult($argStatus, $argHTML)
+    public static function formatResult($argStatus, $argResult)
     {
       $status = $argStatus;
-      $html = $argHTML;
-      $html = str_replace(']]>', ']]]]><![CDATA[>', $html);
-      $tmpstr = '<?xml version="1.0" encoding="utf-8"?><result status="' . base::getNum($status, 0) . '"><![CDATA[' . $html . ']]></result>';
+      $result = $argResult;
+      $tmpstr = '<?xml version="1.0" encoding="utf-8"?>';
+      if (!is_array($result))
+      {
+        $result = str_replace(']]>', ']]]]><![CDATA[>', $result);
+        $tmpstr .= '<result status="' . base::getNum($status, 0) . '"><![CDATA[' . $result . ']]></result>';
+      }
+      else
+      {
+        $tmpstr .= '<result status="' . base::getNum($status, 0) . '">';
+        if (count($result) == count($result, 1))
+        {
+          $tmpstr .= '<item';
+          foreach ($result as $key => $val)
+          {
+            if (!is_numeric($key))
+            {
+              $tmpstr .= ' ' . base::htmlEncode(base::getLRStr($key, '_', 'rightr')) . '="' . base::htmlEncode($val) . '"';
+            }
+          }
+          $tmpstr .= '></item>';
+        }
+        else
+        {
+          foreach ($result as $i => $item)
+          {
+            if (is_array($item))
+            {
+              $tmpstr .= '<item';
+              foreach ($item as $key => $val)
+              {
+                if (!is_numeric($key))
+                {
+                  $tmpstr .= ' ' . base::htmlEncode(base::getLRStr($key, '_', 'rightr')) . '="' . base::htmlEncode($val) . '"';
+                }
+              }
+              $tmpstr .= '></item>';
+            }
+          }
+        }
+        $tmpstr .= '</result>';
+      }
       return $tmpstr;
     }
 
