@@ -178,41 +178,82 @@ namespace jtbc {
       return $tgenre;
     }
 
-    public static function getFolderByGuide($argFilePrefix = 'guide', $argPath = '')
+    public static function getFolderByGuide($argFilePrefix = 'guide', $argPath = '', $argCacheName = '', $argPrefixVal = '')
     {
       $list = '';
       $order = '';
+      $got = false;
       $path = $argPath;
       $fileprefix = $argFilePrefix;
-      if (base::isEmpty($path)) $path = self::getActualRoute('./');
-      $webdir = dir($path);
-      $myguide = $path . '/common/guide' . XMLSFX;
-      if (file_exists($myguide)) $order = tpl::getXRootAtt($myguide, 'order');
-      while($entry = $webdir -> read())
+      $cacheName = $argCacheName;
+      $prefixVal = $argPrefixVal;
+      $cacheMode = base::getNum(tpl::take('global.config.guide-cache-mode', 'cfg'), 0);
+      $cacheTimeout = base::getNum(tpl::take('global.config.guide-cache-timeout', 'cfg'), 60);
+      if (base::isEmpty($path))
       {
-        if (!(is_numeric(strpos($entry, '.'))))
+        $path = self::getActualRoute('./');
+        if (base::isEmpty($cacheName))
         {
-          if (!(base::checkInstr($order, $entry, ',')))
+          $cacheName = 'folder-guide';
+          if ($fileprefix != 'guide') $cacheName .= '-' . $fileprefix;
+        }
+      }
+      if ($cacheMode == 1 && !base::isEmpty($cacheName))
+      {
+        $cacheData = cache::get($cacheName);
+        if (is_array($cacheData))
+        {
+          if (count($cacheData) == 2)
           {
-            $order .= ',' . $entry;
+            $cacheVal = $cacheData[1];
+            $cacheTimeStamp = $cacheData[0];
+            if ((time() - $cacheTimeStamp) >= $cacheTimeout) cache::remove($cacheName);
+            else
+            {
+              $got = true;
+              $list = $cacheVal;
+            }
           }
         }
       }
-      $webdir -> close();
-      $orderary = explode(',', $order);
-      if (is_array($orderary))
+      if ($got == false)
       {
-        foreach($orderary as $key => $val)
+        $webdir = dir($path);
+        $myguide = $path . '/common/guide' . XMLSFX;
+        if (file_exists($myguide)) $order = tpl::getXRootAtt($myguide, 'order');
+        while($entry = $webdir -> read())
         {
-          if (!base::isEmpty($val))
+          if (!(is_numeric(strpos($entry, '.'))))
           {
-            $filename = $path . $val . '/common/' . $fileprefix . XMLSFX;
-            if (file_exists($filename))
+            if (!(base::checkInstr($order, $entry, ',')))
             {
-              $list .= $path . $val . '|+|';
-              if (tpl::getXRootAtt($filename, 'mode') == 'jtbcf') $list .= self::getFolderByGuide($fileprefix, $path . $val . '/');
+              $order .= ',' . $entry;
             }
           }
+        }
+        $webdir -> close();
+        $orderary = explode(',', $order);
+        if (is_array($orderary))
+        {
+          foreach($orderary as $key => $val)
+          {
+            if (!base::isEmpty($val))
+            {
+              $filename = $path . $val . '/common/' . $fileprefix . XMLSFX;
+              if (file_exists($filename))
+              {
+                $list .= $prefixVal . $val . '|+|';
+                if (tpl::getXRootAtt($filename, 'mode') == 'jtbcf') $list .= self::getFolderByGuide($fileprefix, $path . $val . '/', '', $val . '/');
+              }
+            }
+          }
+        }
+        if ($cacheMode == 1 && !base::isEmpty($cacheName))
+        {
+          $cacheData = array();
+          $cacheData[0] = time();
+          $cacheData[1] = $list;
+          @cache::put($cacheName, $cacheData);
         }
       }
       return $list;

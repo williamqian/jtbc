@@ -139,14 +139,12 @@ class ui extends page {
     if ($account -> checkPopedom(self::getPara('genre')))
     {
       $ary = array();
-      $base = smart::getActualRoute('./');
       $folder = smart::getFolderByGuide();
       $folderAry = explode('|+|', $folder);
       foreach($folderAry as $key => $val)
       {
         if (!base::isEmpty($val))
         {
-          $val = base::getLRStr($val, $base, 'rightr');
           if (!base::isEmpty($val))
           {
             $guide = json_decode(tpl::take('global.' . $val . ':guide.guide', 'cfg'), true);

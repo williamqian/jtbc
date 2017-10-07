@@ -14,14 +14,12 @@ namespace jtbc\universal {
     public static function getAllGenre()
     {
       $allGenre = array();
-      $base = smart::getActualRoute('./');
       $folder = smart::getFolderByGuide('category');
       $folderAry = explode('|+|', $folder);
       foreach($folderAry as $key => $val)
       {
         if (!base::isEmpty($val))
         {
-          $val = base::getLRStr($val, $base, 'rightr');
           array_push($allGenre, $val);
         }
       }

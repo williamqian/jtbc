@@ -275,7 +275,6 @@ namespace jtbc\console {
       $tpl1 = $argTPL1;
       $tpl2 = $argTPL2;
       $pre = $argPre;
-      $base = smart::getActualRoute('./');
       $folder = smart::getFolderByGuide();
       $folderAry = explode('|+|', $folder);
       $tmpstr = $tpl1;
@@ -287,7 +286,6 @@ namespace jtbc\console {
       {
         if (!base::isEmpty($val))
         {
-          $val = base::getLRStr($val, $base, 'rightr');
           if ($this -> checkPopedom($val))
           {
             $myval = $val;

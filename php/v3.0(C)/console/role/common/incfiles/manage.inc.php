@@ -48,7 +48,6 @@ class ui extends page {
     $pre = $argPre;
     $popedom = $argPopedom;
     $popedomArray = array();
-    $base = smart::getActualRoute('./');
     $folder = smart::getFolderByGuide();
     $folderAry = explode('|+|', $folder);
     $categoryAry = universal\category::getAllGenre();
@@ -61,7 +60,6 @@ class ui extends page {
     {
       if (!base::isEmpty($val))
       {
-        $val = base::getLRStr($val, $base, 'rightr');
         $myval = $val;
         if (!base::isEmpty($pre))
         {
