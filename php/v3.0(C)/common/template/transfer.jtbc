@@ -11,16 +11,16 @@
       <default><![CDATA[{@}<li><a href="{$-baseurl}{$=htmlEncode($createURL('detail', '{$id}', null, '{$-genre}'))}">{$topic}</a></li>{@}]]></default>
     </item>
     <item>
+      <name><![CDATA[li-list]]></name>
+      <default><![CDATA[{@}<li name="li{$id}"><a href="{$-baseurl}{$=htmlEncode($createURL('list', '{$id}', null, '{$-genre}'))}">{$topic}</a></li>{@}]]></default>
+    </item>
+    <item>
       <name><![CDATA[dd]]></name>
       <default><![CDATA[{@}<dd><a href="{$-baseurl}{$=htmlEncode($createURL('detail', '{$id}', null, '{$-genre}'))}">{$topic}</a></dd>{@}]]></default>
     </item>
     <item>
-      <name><![CDATA[list]]></name>
-      <default><![CDATA[{@}<li name="li{$id}"><a href="{$-baseurl}{$=htmlEncode($createURL('list', '{$id}', null, '{$-genre}'))}">{$topic}</a></li>{@}]]></default>
-    </item>
-    <item>
-      <name><![CDATA[listdd]]></name>
-      <default><![CDATA[{@}<dd name="li{$id}"><a href="{$-baseurl}{$=htmlEncode($createURL('list', '{$id}', null, '{$-genre}'))}">{$topic}</a></dd>{@}]]></default>
+      <name><![CDATA[dd-list]]></name>
+      <default><![CDATA[{@}<dd name="dd{$id}"><a href="{$-baseurl}{$=htmlEncode($createURL('list', '{$id}', null, '{$-genre}'))}">{$topic}</a></dd>{@}]]></default>
     </item>
   </item_list>
 </xml>
