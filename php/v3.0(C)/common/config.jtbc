@@ -7,7 +7,7 @@
   </configure>
   <item_list>
     <item>
-      <name><![CDATA[guide-cache-mode]]></name>
+      <name><![CDATA[folder-guide-mode]]></name>
       <zh-cn><![CDATA[1]]></zh-cn>
     </item>
     <item>

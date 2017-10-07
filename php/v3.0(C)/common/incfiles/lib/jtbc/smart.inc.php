@@ -187,8 +187,8 @@ namespace jtbc {
       $fileprefix = $argFilePrefix;
       $cacheName = $argCacheName;
       $prefixVal = $argPrefixVal;
-      $cacheMode = base::getNum(tpl::take('global.config.guide-cache-mode', 'cfg'), 0);
-      $cacheTimeout = base::getNum(tpl::take('global.config.guide-cache-timeout', 'cfg'), 60);
+      $cacheMode = base::getNum(tpl::take('global.config.folder-guide-mode', 'cfg'), 0);
+      $cacheTimeout = base::getNum(tpl::take('global.config.folder-guide-timeout', 'cfg'), 60);
       if (base::isEmpty($path))
       {
         $path = self::getActualRoute('./');
