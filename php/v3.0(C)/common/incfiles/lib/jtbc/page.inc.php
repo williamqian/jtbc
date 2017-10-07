@@ -141,8 +141,8 @@ namespace jtbc {
     public static function getResult()
     {
       $tmpstr = '';
-      $type = request::getHTTPPara('type', 'get');
-      $action = request::getHTTPPara('action', 'get');
+      $type = request::get('type');
+      $action = request::get('action');
       if (base::isEmpty($type)) $type = 'default';
       $class = get_called_class();
       $module = 'module' . ucfirst($type);

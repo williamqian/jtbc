@@ -16,7 +16,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $account = self::account();
-    $group = base::getNum(request::getHTTPPara('group', 'get'), 1);
+    $group = base::getNum(request::get('group'), 1);
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       $tmpstr = tpl::take('manage.add', 'tpl');
@@ -32,7 +32,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
@@ -63,9 +63,9 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $group = base::getNum(request::getHTTPPara('group', 'get'), 1);
-    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
-    $publish = base::getNum(request::getHTTPPara('publish', 'get'), -1);
+    $group = base::getNum(request::get('group'), 1);
+    $page = base::getNum(request::get('page'), 0);
+    $publish = base::getNum(request::get('publish'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -136,7 +136,7 @@ class ui extends page {
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getPost('publish'), 0);
           $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -159,7 +159,7 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -178,7 +178,7 @@ class ui extends page {
           $preset = array();
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
-          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getHTTPPara('publish', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getPost('publish'), 0);
           $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -201,8 +201,8 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
-    $batch = base::getString(request::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::get('ids'));
+    $batch = base::getString(request::get('batch'));
     if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
@@ -229,7 +229,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {
@@ -254,7 +254,7 @@ class ui extends page {
     $status = 0;
     $message = '';
     $para = '';
-    $limit = base::getString(request::getHTTPPara('limit', 'get'));
+    $limit = base::getString(request::get('limit'));
     $account = self::account();
     if (!($account -> checkPopedom(self::getPara('genre'), 'add') || $account -> checkPopedom(self::getPara('genre'), 'edit')))
     {

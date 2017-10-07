@@ -34,8 +34,8 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
-    $title = request::getHTTPPara('title', 'post');
+    $id = base::getNum(request::get('id'), 0);
+    $title = request::getPost('title');
     if (!$account -> checkPopedom(self::getPara('genre')))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -46,9 +46,9 @@ class ui extends page {
       if (count($error) == 0)
       {
         $langText = $account -> getLangText();
-        $bool = tpl::bring('index.title', 'lng', request::getHTTPPara('title', 'post'), $langText);
-        if ($bool) $bool = tpl::bring('index.content', 'lng', request::getHTTPPara('content', 'post'), $langText);
-        if ($bool) $bool = tpl::bring('index.att', 'lng', request::getHTTPPara('att', 'post'), $langText);
+        $bool = tpl::bring('index.title', 'lng', request::getPost('title'), $langText);
+        if ($bool) $bool = tpl::bring('index.content', 'lng', request::getPost('content'), $langText);
+        if ($bool) $bool = tpl::bring('index.att', 'lng', request::getPost('att'), $langText);
         if ($bool)
         {
           $status = 1;

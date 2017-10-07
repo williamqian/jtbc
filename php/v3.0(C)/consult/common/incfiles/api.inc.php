@@ -7,10 +7,10 @@ class ui extends page {
     $status = 0;
     $message = '';
     $error = array();
-    $name = request::getHTTPPara('name', 'post');
-    $mobile = request::getHTTPPara('mobile', 'post');
-    $email = request::getHTTPPara('email', 'post');
-    $content = request::getHTTPPara('content', 'post');
+    $name = request::getPost('name');
+    $mobile = request::getPost('mobile');
+    $email = request::getPost('email');
+    $content = request::getPost('content');
     if (base::isEmpty($name)) array_push($error, tpl::take('api.text-tips-add-error-1', 'lng'));
     if (!verify::isMobile($mobile)) array_push($error, tpl::take('api.text-tips-add-error-2', 'lng'));
     if (!verify::isEmail($email)) array_push($error, tpl::take('api.text-tips-add-error-3', 'lng'));

@@ -35,10 +35,10 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $selectmode = 'single';
-    $mode = base::getString(request::getHTTPPara('mode', 'get'));
-    $keyword = base::getString(request::getHTTPPara('keyword', 'get'));
-    $sort = base::getNum(request::getHTTPPara('sort', 'get'), 1);
-    $filegroup = base::getNum(request::getHTTPPara('filegroup', 'get'), -1);
+    $mode = base::getString(request::get('mode'));
+    $keyword = base::getString(request::get('keyword'));
+    $sort = base::getNum(request::get('sort'), 1);
+    $filegroup = base::getNum(request::get('filegroup'), -1);
     if ($mode == 'multiple') $selectmode = 'multiple';
     $db = self::db();
     if (!is_null($db))
@@ -84,7 +84,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $table = tpl::take('config.db_table', 'cfg');
     $prefix = tpl::take('config.db_prefix', 'cfg');
     if (smart::dbFieldNumberAdd($table, $prefix, 'hot', $id)) $status = 1;

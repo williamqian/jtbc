@@ -30,7 +30,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
@@ -61,8 +61,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
-    $dispose = base::getNum(request::getHTTPPara('dispose', 'get'), -1);
+    $page = base::getNum(request::get('page'), 0);
+    $dispose = base::getNum(request::get('dispose'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -132,7 +132,7 @@ class ui extends page {
           $preset[$prefix . 'userip'] = request::getRemortIP();
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
-          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getHTTPPara('dispose', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getPost('dispose'), 0);
           $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -155,7 +155,7 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -174,7 +174,7 @@ class ui extends page {
           $preset = array();
           $preset[$prefix . 'dispose'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
-          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getHTTPPara('dispose', 'post'), 0);
+          if ($account -> checkPopedom(self::getPara('genre'), 'dispose')) $preset[$prefix . 'dispose'] = base::getNum(request::getPost('dispose'), 0);
           $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
@@ -197,8 +197,8 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
-    $batch = base::getString(request::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::get('ids'));
+    $batch = base::getString(request::get('batch'));
     if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
@@ -225,7 +225,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {

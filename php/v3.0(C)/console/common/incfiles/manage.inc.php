@@ -116,9 +116,9 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $username = request::getHTTPPara('username');
-    $password = request::getHTTPPara('password');
-    $remember = request::getHTTPPara('remember');
+    $username = request::getPost('username');
+    $password = request::getPost('password');
+    $remember = request::getPost('remember');
     if (!$account -> checkLoginErrorMax($username))
     {
       if ($account -> checkLoginInfo($username, $password))
@@ -157,9 +157,9 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $password = request::getHTTPPara('password', 'post');
-    $newpassword = request::getHTTPPara('newpassword', 'post');
-    $newcpassword = request::getHTTPPara('newcpassword', 'post');
+    $password = request::getPost('password');
+    $newpassword = request::getPost('newpassword');
+    $newcpassword = request::getPost('newcpassword');
     if (base::isEmpty($password)) $message = tpl::take('manage.text-modifypassword-error-1', 'lng');
     else if (base::isEmpty($newpassword)) $message = tpl::take('manage.text-modifypassword-error-2', 'lng');
     else if ($newpassword != $newcpassword) $message = tpl::take('manage.text-modifypassword-error-3', 'lng');
@@ -187,7 +187,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $lang = base::getNum(request::getHTTPPara('lang', 'get'), 0);
+    $lang = base::getNum(request::get('lang'), 0);
     $account = self::account();
     if ($account -> checkLogin())
     {

@@ -6,14 +6,14 @@ class ui extends page {
     $status = 0;
     $message = '';
     $para = '1';
-    $db_host = request::getHTTPPara('db_host', 'post');
-    $db_username = request::getHTTPPara('db_username', 'post');
-    $db_password = request::getHTTPPara('db_password', 'post');
-    $db_database = request::getHTTPPara('db_database', 'post');
-    $username = request::getHTTPPara('username', 'post');
-    $password = request::getHTTPPara('password', 'post');
-    $cpassword = request::getHTTPPara('cpassword', 'post');
-    $email = request::getHTTPPara('email', 'post');
+    $db_host = request::getPost('db_host');
+    $db_username = request::getPost('db_username');
+    $db_password = request::getPost('db_password');
+    $db_database = request::getPost('db_database');
+    $username = request::getPost('username');
+    $password = request::getPost('password');
+    $cpassword = request::getPost('cpassword');
+    $email = request::getPost('email');
     if (SITESTATUS == 0)
     {
       if (base::isEmpty($db_host)) $message = tpl::take('install.text-tips-install-error-1', 'lng');

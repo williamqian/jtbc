@@ -59,8 +59,8 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
-    $batch = base::getString(request::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::get('ids'));
+    $batch = base::getString(request::get('batch'));
     if ($batch == 'delete' && $account -> checkPopedom(self::getPara('genre'), 'delete'))
     {
       $idAry = explode(',', $ids);
@@ -107,7 +107,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getString(request::getHTTPPara('id', 'get'));
+    $id = base::getString(request::get('id'));
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {

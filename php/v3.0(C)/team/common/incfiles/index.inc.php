@@ -10,7 +10,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
+    $page = base::getNum(request::get('page'), 0);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))

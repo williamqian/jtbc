@@ -9,7 +9,7 @@ class ui extends page {
   public static function moduleDetail()
   {
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $db = self::db();
     if (!is_null($db))
     {

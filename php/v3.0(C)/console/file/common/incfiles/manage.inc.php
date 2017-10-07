@@ -32,7 +32,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $pathnavHTML = tpl::take('::console.link', 'tpl', 0, array('text' => '/', 'link' => '?type=list'));
     if (base::isEmpty($path)) $path = $pathRoot;
@@ -110,7 +110,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $filemode = 'xml';
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $filetype = strtolower(base::getLRStr($path, '.', 'right'));
     $pathnavHTML = tpl::take('::console.link', 'tpl', 0, array('text' => '/', 'link' => '?type=list'));
@@ -165,7 +165,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $val = base::getString(request::getHTTPPara('val', 'get'));
+    $val = base::getString(request::get('val'));
     if (is_dir($val))
     {
       $message = $val;
@@ -185,8 +185,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $name = base::getString(request::getHTTPPara('name', 'get'));
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $name = base::getString(request::get('name'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
@@ -214,7 +214,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
@@ -245,8 +245,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $content = base::getString(request::getHTTPPara('content', 'post'));
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $content = base::getString(request::getPost('content'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
@@ -277,8 +277,8 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $name = base::getString(request::getHTTPPara('name', 'get'));
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $name = base::getString(request::get('name'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
@@ -306,7 +306,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $path = base::getString(request::getHTTPPara('path', 'get'));
+    $path = base::getString(request::get('path'));
     $pathRoot = smart::getActualRoute('./');
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))

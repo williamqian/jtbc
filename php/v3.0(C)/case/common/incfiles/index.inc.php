@@ -9,7 +9,7 @@ class ui extends page {
   public static function moduleDetail()
   {
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $db = self::db();
     if (!is_null($db))
     {
@@ -37,8 +37,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
-    $category = base::getNum(request::getHTTPPara('category', 'get'), 0);
+    $page = base::getNum(request::get('page'), 0);
+    $category = base::getNum(request::get('category'), 0);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))

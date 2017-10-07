@@ -49,8 +49,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $genre = request::getHTTPPara('genre', 'get');
-    $fid = base::getNum(request::getHTTPPara('fid', 'get'), 0);
+    $genre = request::get('genre');
+    $fid = base::getNum(request::get('fid'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
@@ -77,7 +77,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
@@ -119,8 +119,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $fid = base::getNum(request::getHTTPPara('fid', 'get'), 0);
-    $genre = base::getString(request::getHTTPPara('genre', 'get'));
+    $fid = base::getNum(request::get('fid'), 0);
+    $genre = base::getString(request::get('genre'));
     $db = self::db();
     if (!is_null($db))
     {
@@ -225,7 +225,7 @@ class ui extends page {
     $error = array();
     $account = self::account();
     cache::removeByKey('universal-category');
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -265,7 +265,7 @@ class ui extends page {
     $error = array();
     $account = self::account();
     cache::removeByKey('universal-category');
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
+    $ids = base::getString(request::get('ids'));
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -304,8 +304,8 @@ class ui extends page {
     $message = '';
     $account = self::account();
     cache::removeByKey('universal-category');
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
-    $batch = base::getString(request::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::get('ids'));
+    $batch = base::getString(request::get('batch'));
     if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
@@ -328,7 +328,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     cache::removeByKey('universal-category');
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
@@ -354,7 +354,7 @@ class ui extends page {
     $status = 0;
     $message = '';
     $para = '';
-    $limit = base::getString(request::getHTTPPara('limit', 'get'));
+    $limit = base::getString(request::get('limit'));
     $account = self::account();
     if (!($account -> checkPopedom(self::getPara('genre'), 'add') || $account -> checkPopedom(self::getPara('genre'), 'edit')))
     {

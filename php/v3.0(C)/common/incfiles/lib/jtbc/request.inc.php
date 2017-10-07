@@ -5,6 +5,20 @@
 namespace jtbc {
   class request
   {
+    public static function get($argName)
+    {
+      $name = $argName;
+      $tmpstr = self::getHTTPPara($name, 'get');
+      return $tmpstr;
+    }
+
+    public static function getPost($argName)
+    {
+      $name = $argName;
+      $tmpstr = self::getHTTPPara($name, 'post');
+      return $tmpstr;
+    }
+
     public static function getHTTPPara($argName, $argType = 'auto')
     {
       $tmpstr = '';

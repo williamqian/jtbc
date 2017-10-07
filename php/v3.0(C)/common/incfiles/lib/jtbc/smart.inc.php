@@ -329,7 +329,7 @@ namespace jtbc {
                   if (is_array($source)) $requestValue = base::getString($source[$requestName]);
                   else
                   {
-                    $requestValue = request::getHTTPPara($requestName, 'post');
+                    $requestValue = request::getPost($requestName);
                     if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
                     else $requestValue = base::getString(implode(',', $requestValue));
                   }
@@ -446,7 +446,7 @@ namespace jtbc {
                   if (is_array($source)) $requestValue = base::getString($source[$requestName]);
                   else
                   {
-                    $requestValue = request::getHTTPPara($requestName, 'post');
+                    $requestValue = request::getPost($requestName);
                     if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
                     else $requestValue = base::getString(implode(',', $requestValue));
                   }
@@ -516,7 +516,7 @@ namespace jtbc {
             if (!empty($commentAry) && array_key_exists('autoRequestFormat', $commentAry))
             {
               $errorBool = false;
-              $requestValue = request::getHTTPPara($requestName, 'post');
+              $requestValue = request::getPost($requestName);
               $format = base::getString($commentAry['autoRequestFormat']);
               if ($format == 'notEmpty')
               {

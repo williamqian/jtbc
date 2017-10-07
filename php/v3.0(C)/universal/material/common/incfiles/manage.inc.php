@@ -15,7 +15,7 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
@@ -46,8 +46,8 @@ class ui extends page {
   {
     $status = 1;
     $tmpstr = '';
-    $page = base::getNum(request::getHTTPPara('page', 'get'), 0);
-    $filegroup = base::getNum(request::getHTTPPara('filegroup', 'get'), -1);
+    $page = base::getNum(request::get('page'), 0);
+    $filegroup = base::getNum(request::get('filegroup'), -1);
     $pagesize = base::getNum(tpl::take('config.pagesize', 'cfg'), 0);
     $db = self::db();
     if (!is_null($db))
@@ -149,7 +149,7 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     if (!($account -> checkPopedom(self::getPara('genre'), 'edit')))
     {
       $message = tpl::take('::console.text-tips-error-403', 'lng');
@@ -207,8 +207,8 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
-    $topic = request::getHTTPPara('topic', 'post');
+    $id = base::getNum(request::get('id'), 0);
+    $topic = request::getPost('topic');
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -248,8 +248,8 @@ class ui extends page {
     $status = 0;
     $message = '';
     $account = self::account();
-    $ids = base::getString(request::getHTTPPara('ids', 'get'));
-    $batch = base::getString(request::getHTTPPara('batch', 'get'));
+    $ids = base::getString(request::get('ids'));
+    $batch = base::getString(request::get('batch'));
     if (base::checkIDAry($ids))
     {
       $table = tpl::take('config.db_table', 'cfg');
@@ -272,7 +272,7 @@ class ui extends page {
     $tmpstr = '';
     $status = 0;
     $message = '';
-    $id = base::getNum(request::getHTTPPara('id', 'get'), 0);
+    $id = base::getNum(request::get('id'), 0);
     $account = self::account();
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {

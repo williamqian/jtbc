@@ -38,7 +38,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $account = self::account();
-    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
+    $symbol = base::getString(request::get('symbol'));
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       $tmpstr = tpl::take('manage.add', 'tpl');
@@ -56,8 +56,8 @@ class ui extends page {
     $tmpstr = '';
     $currentNode = '';
     $currentValue = '';
-    $node = base::getString(request::getHTTPPara('node', 'get'));
-    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
+    $node = base::getString(request::get('node'));
+    $symbol = base::getString(request::get('symbol'));
     if (base::isEmpty($symbol)) $symbol = '.tpl.index';
     $account = self::account();
     $tmpstr = tpl::take('manage.list-disabled', 'tpl');
@@ -109,7 +109,7 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $account = self::account();
-    $symbol = base::getString(request::getHTTPPara('symbol', 'get'));
+    $symbol = base::getString(request::get('symbol'));
     if ($account -> checkPopedom(self::getPara('genre')))
     {
       if (!base::isEmpty($symbol))
@@ -163,8 +163,8 @@ class ui extends page {
     $status = 1;
     $tmpstr = '';
     $account = self::account();
-    $genre = base::getString(request::getHTTPPara('genre', 'get'));
-    $mold = base::getString(request::getHTTPPara('mold', 'get'));
+    $genre = base::getString(request::get('genre'));
+    $mold = base::getString(request::get('mold'));
     if ($account -> checkPopedom(self::getPara('genre')))
     {
       $ary = array();
@@ -199,8 +199,8 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $nodename = base::getString(request::getHTTPPara('nodename', 'post'));
-    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
+    $nodename = base::getString(request::getPost('nodename'));
+    $symbol = base::getString(request::getPost('symbol'));
     if (!$account -> checkPopedom(self::getPara('genre'), 'add'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -276,9 +276,9 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $node = base::getString(request::getHTTPPara('node', 'post'));
-    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
-    $content = base::getString(request::getHTTPPara('content', 'post'));
+    $node = base::getString(request::getPost('node'));
+    $symbol = base::getString(request::getPost('symbol'));
+    $content = base::getString(request::getPost('content'));
     if (!$account -> checkPopedom(self::getPara('genre'), 'edit'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
@@ -313,8 +313,8 @@ class ui extends page {
     $message = '';
     $error = array();
     $account = self::account();
-    $nodename = base::getString(request::getHTTPPara('nodename', 'post'));
-    $symbol = base::getString(request::getHTTPPara('symbol', 'post'));
+    $nodename = base::getString(request::getPost('nodename'));
+    $symbol = base::getString(request::getPost('symbol'));
     if (!$account -> checkPopedom(self::getPara('genre'), 'delete'))
     {
       array_push($error, tpl::take('::console.text-tips-error-403', 'lng'));
