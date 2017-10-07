@@ -74,6 +74,17 @@ namespace jtbc {
       return $bool;
     }
 
+    public static function getGlobalsVars($argName)
+    {
+      $tmpstr = '';
+      $name = $argName;
+      if (!base::isEmpty($name))
+      {
+        $tmpstr = base::getSwapString(@$GLOBALS[$name], base::getSwapString(@$GLOBALS['RS_' . $name], @$GLOBALS['RST_' . $name]));
+      }
+      return $tmpstr;
+    }
+
     public static function getActiveValue($argType)
     {
       $tmpstr = '';
@@ -123,15 +134,15 @@ namespace jtbc {
       $ns = __NAMESPACE__;
       if (!base::isEmpty($string))
       {
-        if (substr($string, 0 ,1) == '$')
+        if (substr($string, 0, 1) == '$')
         {
           $string = substr($string, 1, strlen($string) - 1);
           $tstr = page::getPara($string);
         }
-        else if (substr($string, 0 ,1) == '#')
+        else if (substr($string, 0, 1) == '#')
         {
           $string = substr($string, 1, strlen($string) - 1);
-          @eval('$tstr = $GLOBALS[' . $string . '];');
+          $tstr = self::getGlobalsVars($string);
         }
         else
         {
@@ -153,6 +164,22 @@ namespace jtbc {
                     else if (method_exists($ns . '\\base', $funName)) $string = str_replace('$' . $funName, $ns . '\\base::' . $funName, $string);
                     else if (method_exists($ns . '\\tpl', $funName)) $string = str_replace('$' . $funName, $ns . '\\tpl::' . $funName, $string);
                     else if (method_exists($ns . '\\smart', $funName)) $string = str_replace('$' . $funName, $ns . '\\smart::' . $funName, $string);
+                  }
+                }
+              }
+            }
+            else if (is_numeric(strpos($string, '#')))
+            {
+              $regm = preg_match_all('(#(.[^(\)|\,)]*))', $string, $innerVars);
+              if ($regm)
+              {
+                for ($i = 0; $i <= count($innerVars[0]) - 1; $i ++)
+                {
+                  $varsName = trim($innerVars[1][$i]);
+                  if (!base::isEmpty($varsName))
+                  {
+                    $varsName = str_replace('\'', '', $varsName);
+                    $string = str_replace('#' . $varsName, $ns . '\\tpl::getGlobalsVars(\'' . $varsName . '\')', $string);
                   }
                 }
               }
