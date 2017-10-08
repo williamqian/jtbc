@@ -17,6 +17,7 @@ class ui extends page {
       $prefix = tpl::take('config.db_prefix', 'cfg');
       $sql = new sql($db, $table, $prefix, 'time');
       $sql -> publish = 1;
+      $sql -> lang = self::getPara('lang');
       if ($id != 0) $sql -> id = $id;
       $sqlstr = $sql -> sql . " limit 0,1";
       $rq = $db -> query($sqlstr);
