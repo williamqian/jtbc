@@ -81,12 +81,12 @@ namespace jtbc\universal {
           {
             if (is_array($val))
             {
-              $rsid = base::getNum($val[$prefix . 'id'], 0);
-              $rsfid = base::getNum($val[$prefix . 'fid'], -1);
-              if ($rsfid == $fid)
+              $rsId = base::getNum($val[$prefix . 'id'], 0);
+              $rsFid = base::getNum($val[$prefix . 'fid'], -1);
+              if ($rsFid == $fid)
               {
-                $tmpstr .= $rsid . ',';
-                $tmpstr .= self::getCategoryChildID($genre, $lang, $rsid);
+                $tmpstr .= $rsId . ',';
+                $tmpstr .= self::getCategoryChildID($genre, $lang, $rsId);
               }
             }
           }
@@ -124,14 +124,14 @@ namespace jtbc\universal {
         {
           if (is_array($val))
           {
-            $rsid = base::getNum($val[$prefix . 'id'], 0);
-            $rsfid = base::getNum($val[$prefix . 'fid'], -1);
-            if ($rsfid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsid)))
+            $rsId = base::getNum($val[$prefix . 'id'], 0);
+            $rsFid = base::getNum($val[$prefix . 'fid'], -1);
+            if ($rsFid == $fid && (base::isEmpty($myCategory) || base::checkInstr($myCategory, $rsId)))
             {
               $explain = base::getRepeatedString(tpl::take('global.config.spstr', 'lng'), $rank) . base::htmlEncode($val[$prefix . 'topic']);
-              if ($rsid == $id) $tmpstr .= tpl::take('global.config.xmlselect_select', 'tpl', 0, array('explain' => $explain, 'value' => $rsid));
-              else $tmpstr .= tpl::take('global.config.xmlselect_unselect', 'tpl', 0, array('explain' => $explain, 'value' => $rsid));
-              $tmpstr .= self::getCategorySelectByGenre($genre, $lang, $myCategory, 'id=' . $id . ';fid=' . $rsid . ';rank=' . $rank);
+              if ($rsId == $id) $tmpstr .= tpl::take('global.config.xmlselect_select', 'tpl', 0, array('explain' => $explain, 'value' => $rsId));
+              else $tmpstr .= tpl::take('global.config.xmlselect_unselect', 'tpl', 0, array('explain' => $explain, 'value' => $rsId));
+              $tmpstr .= self::getCategorySelectByGenre($genre, $lang, $myCategory, 'id=' . $id . ';fid=' . $rsId . ';rank=' . $rank);
             }
           }
         }
@@ -155,15 +155,15 @@ namespace jtbc\universal {
         {
           if (is_array($val))
           {
-            $rsid = base::getNum($val[$prefix . 'id'], 0);
-            $rsfid = base::getNum($val[$prefix . 'fid'], 0);
+            $rsId = base::getNum($val[$prefix . 'id'], 0);
+            $rsFid = base::getNum($val[$prefix . 'fid'], 0);
             $rsTopic = base::getString($val[$prefix . 'topic']);
-            if ($rsid == $id)
+            if ($rsId == $id)
             {
               $tmpstr = $baseArrowHTML . $baseHTML;
               $tmpstr = str_replace('{$text}', base::htmlEncode($rsTopic), $tmpstr);
-              $tmpstr = str_replace('{$link}', base::htmlEncode(smart::createURL('list', $rsid, null, $genre)), $tmpstr);
-              if ($rsfid != 0) $tmpstr = self::getCategoryBreadcrumbByID($genre, $lang, $rsfid) . $tmpstr;
+              $tmpstr = str_replace('{$link}', base::htmlEncode(smart::createURL('list', $rsId, null, $genre)), $tmpstr);
+              if ($rsFid != 0) $tmpstr = self::getCategoryBreadcrumbByID($genre, $lang, $rsFid) . $tmpstr;
             }
           }
         }
@@ -185,13 +185,13 @@ namespace jtbc\universal {
         {
           if (is_array($val))
           {
-            $rsid = base::getNum($val[$prefix . 'id'], 0);
-            $rsfid = base::getNum($val[$prefix . 'fid'], 0);
+            $rsId = base::getNum($val[$prefix . 'id'], 0);
+            $rsFid = base::getNum($val[$prefix . 'fid'], 0);
             $rsTopic = base::getString($val[$prefix . 'topic']);
-            if ($rsid == $id)
+            if ($rsId == $id)
             {
-              $tmpstr = tpl::take('::console.link-nav', 'tpl', 0, array('text' => base::htmlEncode($rsTopic), 'link' => base::htmlEncode('?type=list&category=' . $rsid)));
-              if ($rsfid != 0) $tmpstr = self::getCategoryNavByID($genre, $lang, $rsfid) . $tmpstr;
+              $tmpstr = tpl::take('::console.link-nav', 'tpl', 0, array('text' => base::htmlEncode($rsTopic), 'link' => base::htmlEncode('?type=list&category=' . $rsId)));
+              if ($rsFid != 0) $tmpstr = self::getCategoryNavByID($genre, $lang, $rsFid) . $tmpstr;
             }
           }
         }
@@ -229,9 +229,9 @@ namespace jtbc\universal {
         $rq = $db -> query($sqlstr);
         while($rs = $rq -> fetch())
         {
-          $rsid = base::getNum($rs[$prefix . 'id'], 0);
-          $categoryAry['id' . $rsid] = $rs;
-          $categoryAry = array_merge($categoryAry, self::getDBCategoryAryByGenre($genre, $lang, $rsid));
+          $rsId = base::getNum($rs[$prefix . 'id'], 0);
+          $categoryAry['id' . $rsId] = $rs;
+          $categoryAry = array_merge($categoryAry, self::getDBCategoryAryByGenre($genre, $lang, $rsId));
         }
       }
       return $categoryAry;
@@ -270,8 +270,8 @@ namespace jtbc\universal {
         {
           if (is_array($val))
           {
-            $rsid = base::getNum($val[$prefix . 'id'], 0);
-            if ($rsid == $id) $tmpstr = $val[$prefix . $name];
+            $rsId = base::getNum($val[$prefix . 'id'], 0);
+            if ($rsId == $id) $tmpstr = $val[$prefix . $name];
           }
         }
       }

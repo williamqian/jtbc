@@ -90,6 +90,9 @@ a.link {
 .hand {
   cursor: pointer
 }
+.highlight {
+  background-color: #ffff00
+}
 .pagehide {
   display: none !important
 }
@@ -287,6 +290,21 @@ a.link {
 }
 .cupboard .tinyform li {
   padding: 10px 0px; text-align: center
+}
+.cupboard .search {
+  background: #fff; padding: 20px; font-size: 1.4rem
+}
+.cupboard .search .result {
+  padding-bottom: 20px
+}
+.cupboard .search .result li {
+  padding: 10px 0px; border-bottom: #ddd 1px dotted
+}
+.cupboard .search .result li a {
+  display: block
+}
+.cupboard .search .result li a.url {
+  color: #008000; font-size: 1.2rem; padding-top: 10px
 }
 .pagi {
   line-height: 100%; text-align: center

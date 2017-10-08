@@ -61,10 +61,10 @@ class ui extends page {
       $rq = $db -> query($sqlstr);
       while($rs = $rq -> fetch())
       {
-        $rstopic = base::getString($rs[$prefix . 'topic']);
+        $rsTopic = base::getString($rs[$prefix . 'topic']);
         $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
         $loopLineString = str_replace('{$-filejson}', base::htmlEncode(self::ppGetFileJSON($rs, $prefix)), $loopLineString);
-        $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), $loopLineString);
+        $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rsTopic, $keyword))), $loopLineString);
         $tpl -> insertLoopLine(tpl::parse($loopLineString));
       }
       $tmpstr = $tpl -> mergeTemplate();

@@ -31,12 +31,12 @@ class ui extends page {
       $rq = $db -> query($sqlstr);
       while($rs = $rq -> fetch())
       {
-        $rsID = base::getNum($rs[$prefix . 'id'], 0);
+        $rsId = base::getNum($rs[$prefix . 'id'], 0);
         $rsTopic = base::getString($rs[$prefix . 'topic']);
-        if ($role == $rsID) $tmpstr .= $optionselected;
+        if ($role == $rsId) $tmpstr .= $optionselected;
         else $tmpstr .= $optionUnselected;
         $tmpstr = str_replace('{$explain}', base::htmlEncode($rsTopic), $tmpstr);
-        $tmpstr = str_replace('{$value}', $rsID, $tmpstr);
+        $tmpstr = str_replace('{$value}', $rsId, $tmpstr);
       }
     }
     return $tmpstr;

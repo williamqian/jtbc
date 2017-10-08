@@ -50,11 +50,11 @@ class ui extends page {
         $rs = $rq -> fetch();
         if (is_array($rs))
         {
-          $rscategory = base::getNum($rs[$prefix . 'category'], 0);
+          $rsCategory = base::getNum($rs[$prefix . 'category'], 0);
           $tmpstr = tpl::take('manage.edit', 'tpl');
           $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
-          $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rscategory), $tmpstr);
+          $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rsCategory), $tmpstr);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);
         }
@@ -97,11 +97,11 @@ class ui extends page {
       {
         foreach($rsAry as $rs)
         {
-          $rstopic = base::getString($rs[$prefix . 'topic']);
-          $rscategory = base::getNum($rs[$prefix . 'category'], 0);
+          $rsTopic = base::getString($rs[$prefix . 'topic']);
+          $rsCategory = base::getNum($rs[$prefix . 'category'], 0);
           $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
-          $loopLineString = str_replace('{$-category-topic}', base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rscategory)), $loopLineString);
-          $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rstopic, $keyword))), $loopLineString);
+          $loopLineString = str_replace('{$-category-topic}', base::htmlEncode(universal\category::getCategoryTopicByID(self::getPara('genre'), $account -> getLang(), $rsCategory)), $loopLineString);
+          $loopLineString = str_replace('{$-topic-keyword-highlight}', smart::replaceKeyWordHighlight(base::htmlEncode(smart::replaceKeyWordHighlight($rsTopic, $keyword))), $loopLineString);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
         }
       }

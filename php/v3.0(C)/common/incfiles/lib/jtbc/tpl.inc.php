@@ -168,7 +168,7 @@ namespace jtbc {
                 }
               }
             }
-            else if (is_numeric(strpos($string, '#')))
+            if (is_numeric(strpos($string, '#')))
             {
               $regm = preg_match_all('(#(.[^(\)|\,)]*))', $string, $innerVars);
               if ($regm)

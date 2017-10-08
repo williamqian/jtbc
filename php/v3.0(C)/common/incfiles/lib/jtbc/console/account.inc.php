@@ -50,14 +50,14 @@ namespace jtbc\console {
           if (is_array($rs))
           {
             $num = 0;
-            $rsID = base::getNum($rs[$prefix . 'id'], 0);
+            $rsId = base::getNum($rs[$prefix . 'id'], 0);
             $todayDate = base::getNum(base::formatDate(base::getDateTime(), '10'), 0);
             $tableLogin = tpl::take(':/account:config.db_table_login', 'cfg');
             $prefixLogin = tpl::take(':/account:config.db_prefix_login', 'cfg');
             $sql = new sql($db, $tableLogin, $prefixLogin);
             $sql -> status = 0;
             $sql -> date = $todayDate;
-            $sql -> account_id = $rsID;
+            $sql -> account_id = $rsId;
             $sqlstr = $sql -> getSQL('count(*)');
             $rq = $db -> query($sqlstr);
             $rs = $rq -> fetch();
@@ -92,7 +92,7 @@ namespace jtbc\console {
           $rs = $rq -> fetch();
           if (is_array($rs))
           {
-            $rsID = base::getNum($rs[$prefix . 'id'], 0);
+            $rsId = base::getNum($rs[$prefix . 'id'], 0);
             $rsRole = base::getNum($rs[$prefix . 'role'], 0);
             $rsUsername = base::getString($rs[$prefix . 'username']);
             $rsPassword = base::getString($rs[$prefix . 'password']);
@@ -103,7 +103,7 @@ namespace jtbc\console {
                 $preset = array();
                 $preset[$prefix . 'lasttime'] = base::getDateTime();
                 $preset[$prefix . 'lastip'] = request::getRemortIP();
-                $sqlstr = smart::getAutoUpdateSQLByVars($table, $prefix . 'id', $rsID, $preset);
+                $sqlstr = smart::getAutoUpdateSQLByVars($table, $prefix . 'id', $rsId, $preset);
                 $re = $db -> exec($sqlstr);
               }
               if ($rsRole == -1)
@@ -147,7 +147,7 @@ namespace jtbc\console {
               $tableLogin = tpl::take(':/account:config.db_table_login', 'cfg');
               $prefixLogin = tpl::take(':/account:config.db_prefix_login', 'cfg');
               $preset = array();
-              $preset[$prefixLogin . 'account_id'] = $rsID;
+              $preset[$prefixLogin . 'account_id'] = $rsId;
               $preset[$prefixLogin . 'date'] = $todayDate;
               $preset[$prefixLogin . 'status'] = $loginStatus;
               $sqlstr = smart::getAutoInsertSQLByVars($tableLogin, $preset);
