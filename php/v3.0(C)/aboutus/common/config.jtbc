@@ -8,7 +8,7 @@
   <item_list>
     <item>
       <name><![CDATA[db_table]]></name>
-      <zh-cn><![CDATA[jtbc_aboutus]]></zh-cn>
+      <zh-cn><![CDATA[{$>db.table.prefix}aboutus]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[db_prefix]]></name>

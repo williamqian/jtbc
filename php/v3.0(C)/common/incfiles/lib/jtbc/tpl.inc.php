@@ -496,17 +496,21 @@ namespace jtbc {
       if (isset($GLOBALS[$globalStr][$keywords]))
       {
         $result = $GLOBALS[$globalStr][$keywords];
-        if ($type == 'tpl')
+        if ($type == 'cfg')
+        {
+          $result = str_replace('{$>db.table.prefix}', DB_TABLE_PREFIX, $result);
+        }
+        else if ($type == 'tpl')
         {
           $genre = page::getPara('genre');
           $tthis = base::getLRStr($codename, '.', 'leftr');
           $tthisGenre = $genre;
           if (is_numeric(strpos($codename, ':'))) $tthisGenre = base::getLRStr(base::getLRStr($codename, ':', 'leftr'), 'global.', 'right');
           $result = str_replace('{$>genre}', $genre, $result);
-          $result = str_replace('{$>this}', $tthis, $result);
-          $result = str_replace('{$>this.genre}', $tthisGenre, $result);
           $result = str_replace('{$>now}', base::getDateTime(), $result);
           $result = str_replace('{$>ns}', $ns . '\\', $result);
+          $result = str_replace('{$>this}', $tthis, $result);
+          $result = str_replace('{$>this.genre}', $tthisGenre, $result);
           if (is_numeric(strpos($genre, '/')))
           {
             $genreAry = explode('/', $genre);
