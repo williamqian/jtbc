@@ -120,7 +120,10 @@ namespace jtbc {
       $codename = $argCodeName;
       if (!base::isEmpty($codename))
       {
-        if (substr($codename, 0, 1) == '.') $codename = 'global.' . base::getLRStr($codename, '.', 'rightr');
+        if (substr($codename, 0, 1) == '.')
+        {
+          if (substr_count($codename, '.') == 2) $codename = 'global.' . base::getLRStr($codename, '.', 'rightr');
+        }
         else if (substr($codename, 0, 2) == '::') $codename = 'global.' . CONSOLEDIR . ':' . base::getLRStr($codename, '::', 'right');
         else if (substr($codename, 0, 2) == ':/') $codename = 'global.' . CONSOLEDIR . '/' . base::getLRStr($codename, ':/', 'right');
       }
@@ -298,7 +301,7 @@ namespace jtbc {
       else
       {
         $genre = page::getPara('genre');
-        if (base::isEmpty($routeStr)) $routeStr = base::getLRStr(page::getPara('filename'), '.', 'left');
+        if (base::isEmpty($routeStr)) $routeStr = $dir . '/' . base::getLRStr(page::getPara('filename'), '.', 'left') . XMLSFX;
         else
         {
           if (is_numeric(strpos($routeStr, ':')))
