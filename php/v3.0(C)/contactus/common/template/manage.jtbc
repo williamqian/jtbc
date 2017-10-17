@@ -21,7 +21,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1 editor">{$=htmlEncode($takeByNode('index.content', '{$-lang-text}', 'lng'))}</textarea></td>
+            <td><textarea name="content" class="t1 content editor">{$=htmlEncode($takeByNode('index.content', '{$-lang-text}', 'lng'))}</textarea></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.att', 'lng')}</t></th>

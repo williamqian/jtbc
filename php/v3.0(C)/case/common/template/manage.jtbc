@@ -38,7 +38,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1 editor"></textarea></td>
+            <td><textarea name="content" class="t1 content editor"></textarea></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.att', 'lng')}</t></th>
@@ -95,7 +95,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1 editor">{$content}</textarea></td>
+            <td><textarea name="content" class="t1 content editor">{$content}</textarea></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.att', 'lng')}</t></th>

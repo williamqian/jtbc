@@ -11,10 +11,11 @@ jtbc.console.manage = {
   {
     var tthis = this;
     tthis.parent.parent.editor.baseHref = tthis.obj.attr('folder');
-    tthis.para['editor-content'] = tthis.parent.parent.editor.replace('content');
-    tthis.parent.lib.initAttEvents(tthis.obj, function(argContent){ tthis.parent.parent.editor.insertHTML(tthis.para['editor-content'], 'content', argContent); });
+    var editor = tthis.obj.find('textarea.content');
+    var myEditor = tthis.parent.parent.editor.replace(editor.get(0));
+    tthis.parent.lib.initAttEvents(tthis.obj, function(argContent){ tthis.parent.parent.editor.insertHTML(myEditor, 'content', argContent); });
     tthis.obj.find('.form_button').find('button.submit').on('before', function(){
-      tthis.obj.find('textarea[name=\'content\']').val(tthis.parent.parent.editor.getHTML(tthis.para['editor-content'], 'content'));
+      editor.val(tthis.parent.parent.editor.getHTML(myEditor, 'content'));
     }).attr('done', 'custom').on('done', function(){
       tthis.obj.find('toplink').find('a.link').first().click();
     });
@@ -23,10 +24,11 @@ jtbc.console.manage = {
   {
     var tthis = this;
     tthis.parent.parent.editor.baseHref = tthis.obj.attr('folder');
-    tthis.para['editor-content'] = tthis.parent.parent.editor.replace('content');
-    tthis.parent.lib.initAttEvents(tthis.obj, function(argContent){ tthis.parent.parent.editor.insertHTML(tthis.para['editor-content'], 'content', argContent); });
+    var editor = tthis.obj.find('textarea.content');
+    var myEditor = tthis.parent.parent.editor.replace(editor.get(0));
+    tthis.parent.lib.initAttEvents(tthis.obj, function(argContent){ tthis.parent.parent.editor.insertHTML(myEditor, 'content', argContent); });
     tthis.obj.find('.form_button').find('button.submit').on('before', function(){
-      tthis.obj.find('textarea[name=\'content\']').val(tthis.parent.parent.editor.getHTML(tthis.para['editor-content'], 'content'));
+      editor.val(tthis.parent.parent.editor.getHTML(myEditor, 'content'));
     });
   },
   initCommon: function()
