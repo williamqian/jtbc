@@ -20,8 +20,7 @@ class ui extends page {
       $sql -> lang = self::getPara('lang');
       if ($id != 0) $sql -> id = $id;
       $sqlstr = $sql -> sql . " limit 0,1";
-      $rq = $db -> query($sqlstr);
-      $rs = $rq -> fetch();
+      $rs = $db -> fetch($sqlstr);
       if (is_array($rs))
       {
         $rsTopic = base::getString($rs[$prefix . 'topic']);

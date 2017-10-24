@@ -717,9 +717,7 @@ namespace jtbc {
       {
         if (!is_null($db))
         {
-          $myAry = array();
-          $rq = $db -> query($sql);
-          while($rs = $rq -> fetch()) array_push($myAry, $rs);
+          $myAry = $db -> fetchAll($sql);
           if (!base::isEmpty($paraCache))
           {
             $cacheData = array();
@@ -903,9 +901,7 @@ namespace jtbc {
         {
           if (!is_null($db))
           {
-            $myAry = array();
-            $rq = $db -> query($sqlstr);
-            while($rs = $rq -> fetch()) array_push($myAry, $rs);
+            $myAry = $db -> fetchAll($sqlstr);
             if (!base::isEmpty($paraCache))
             {
               $cacheData = array();

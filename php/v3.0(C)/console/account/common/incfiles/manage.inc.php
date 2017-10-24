@@ -28,8 +28,8 @@ class ui extends page {
       $prefix = tpl::take(':/role:config.db_prefix', 'cfg');
       $sql = new sql($db, $table, $prefix, 'time');
       $sqlstr = $sql -> sql;
-      $rq = $db -> query($sqlstr);
-      while($rs = $rq -> fetch())
+      $rsa = $db -> fetchAll($sqlstr);
+      foreach ($rsa as $i => $rs)
       {
         $rsId = base::getNum($rs[$prefix . 'id'], 0);
         $rsTopic = base::getString($rs[$prefix . 'topic']);
@@ -74,8 +74,7 @@ class ui extends page {
         $sql = new sql($db, $table, $prefix);
         $sql -> id = $id;
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        $rs = $rq -> fetch();
+        $rs = $db -> fetch($sqlstr);
         if (is_array($rs))
         {
           $rsRole = base::getNum($rs[$prefix . 'role'], 0);
@@ -168,8 +167,7 @@ class ui extends page {
           $sql = new sql($db, $table, $prefix);
           $sql -> username = $username;
           $sqlstr = $sql -> sql;
-          $rq = $db -> query($sqlstr);
-          $rs = $rq -> fetch();
+          $rs = $db -> fetch($sqlstr);
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-add-error-101', 'lng'));
           else
           {
@@ -223,8 +221,7 @@ class ui extends page {
           $sql -> username = $username;
           $sql -> set(array('id', '<>'), $id);
           $sqlstr = $sql -> sql;
-          $rq = $db -> query($sqlstr);
-          $rs = $rq -> fetch();
+          $rs = $db -> fetch($sqlstr);
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-edit-error-101', 'lng'));
           else
           {

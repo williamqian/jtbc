@@ -29,6 +29,28 @@ namespace jtbc {
       }
     }
 
+    public function fetch($argSQLString, $argMode = 0)
+    {
+      $rs = null;
+      $sqlString = $argSQLString;
+      $mode = $argMode;
+      $rq = $this -> conn -> query($sqlString);
+      if ($mode == 1) $rs = $rq -> fetch(PDO::FETCH_ASSOC);
+      else $rs = $rq -> fetch();
+      return $rs;
+    }
+
+    public function fetchAll($argSQLString, $argMode = 0)
+    {
+      $rs = null;
+      $sqlString = $argSQLString;
+      $mode = $argMode;
+      $rq = $this -> conn -> query($sqlString);
+      if ($mode == 1) $rs = $rq -> fetchAll(PDO::FETCH_ASSOC);
+      else $rs = $rq -> fetchAll();
+      return $rs;
+    }
+
     public function query($argSQLString)
     {
       $sqlString = $argSQLString;

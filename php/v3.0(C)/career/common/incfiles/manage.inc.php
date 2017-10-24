@@ -42,8 +42,7 @@ class ui extends page {
         $sql = new sql($db, $table, $prefix);
         $sql -> id = $id;
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        $rs = $rq -> fetch();
+        $rs = $db -> fetch($sqlstr);
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');

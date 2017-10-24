@@ -19,8 +19,7 @@ class ui extends page {
       $sql -> publish = 1;
       $sql -> id = $id;
       $sqlstr = $sql -> sql;
-      $rq = $db -> query($sqlstr);
-      $rs = $rq -> fetch();
+      $rs = $db -> fetch($sqlstr);
       if (is_array($rs))
       {
         $rsTopic = base::getString($rs[$prefix . 'topic']);

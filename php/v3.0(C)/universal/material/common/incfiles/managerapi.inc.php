@@ -58,8 +58,8 @@ class ui extends page {
       else $sql -> orderBy('time');
       $sql -> orderBy('id');
       $sqlstr = $sql -> sql . ' limit 100';
-      $rq = $db -> query($sqlstr);
-      while($rs = $rq -> fetch())
+      $rsa = $db -> fetchAll($sqlstr);
+      foreach ($rsa as $i => $rs)
       {
         $rsTopic = base::getString($rs[$prefix . 'topic']);
         $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);

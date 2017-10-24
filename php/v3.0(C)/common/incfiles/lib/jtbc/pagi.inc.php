@@ -17,8 +17,7 @@ namespace jtbc {
     {
       $rscount = 0;
       $sqlstr = "select count(*) from " . base::getLRStr(base::getLRStr($this -> sqlstr, 'from', 'rightr'), 'order by', 'leftr');
-      $rq = $this -> db -> query($sqlstr);
-      $rs = $rq -> fetch();
+      $rs = $this -> db -> fetch($sqlstr);
       if (is_array($rs)) $rscount = base::getNum($rs[0], 0);
       return $rscount;
     }
@@ -49,14 +48,8 @@ namespace jtbc {
       }
       if ($rslimit > 0 && $pagesize > 0)
       {
-        $index = 0;
         $sqlstr = $this -> sqlstr . ' limit ' . ($rslimit - $pagesize) . ',' . $pagesize;
-        $rq = $this -> db -> query($sqlstr);
-        while($rs = $rq -> fetch())
-        {
-          $dataAry[$index] = $rs;
-          $index += 1;
-        }
+        $dataAry = $this -> db -> fetchAll($sqlstr);
       }
       return $dataAry;
     }

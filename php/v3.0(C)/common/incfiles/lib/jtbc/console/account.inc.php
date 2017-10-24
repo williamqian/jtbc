@@ -45,8 +45,7 @@ namespace jtbc\console {
           $sql = new sql($db, $table, $prefix);
           $sql -> username = $username;
           $sqlstr = $sql -> sql;
-          $rq = $db -> query($sqlstr);
-          $rs = $rq -> fetch();
+          $rs = $db -> fetch($sqlstr);
           if (is_array($rs))
           {
             $num = 0;
@@ -59,8 +58,7 @@ namespace jtbc\console {
             $sql -> date = $todayDate;
             $sql -> account_id = $rsId;
             $sqlstr = $sql -> getSQL('count(*)');
-            $rq = $db -> query($sqlstr);
-            $rs = $rq -> fetch();
+            $rs = $db -> fetch($sqlstr);
             if (is_array($rs)) $num = base::getNum($rs[0], 0);
             $numMax = base::getNum(tpl::take('::config.login-error-max', 'cfg'), 0);
             if ($numMax < $num) $bool = true;
@@ -88,8 +86,7 @@ namespace jtbc\console {
           $sql -> username = $username;
           $sql -> lock = 0;
           $sqlstr = $sql -> sql;
-          $rq = $db -> query($sqlstr);
-          $rs = $rq -> fetch();
+          $rs = $db -> fetch($sqlstr);
           if (is_array($rs))
           {
             $rsId = base::getNum($rs[$prefix . 'id'], 0);
@@ -118,8 +115,7 @@ namespace jtbc\console {
                 $sql = new sql($db, $table, $prefix);
                 $sql -> id = $rsRole;
                 $sqlstr = $sql -> sql;
-                $rqr = $db -> query($sqlstrr);
-                $rsr = $rqr -> fetch();
+                $rsr = $db -> fetch($sqlstrr);
                 if (is_array($rsr))
                 {
                   $rsPopedom = base::getString($rsr[$prefix . 'popedom']);
@@ -347,8 +343,7 @@ namespace jtbc\console {
           $sql = new sql($db, $table, $prefix);
           $sql -> id = $id;
           $sqlstr = $sql -> sql;
-          $rq = $db -> query($sqlstr);
-          $rs = $rq -> fetch();
+          $rs = $db -> fetch($sqlstr);
           if (is_array($rs)) $tmpstr = base::getString($rs[$prefix . 'topic']);
         }
       }

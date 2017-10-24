@@ -226,8 +226,8 @@ namespace jtbc\universal {
         $sql -> orderBy('order', 'asc');
         $sql -> orderBy('id', 'asc');
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        while($rs = $rq -> fetch())
+        $rsa = $db -> fetchAll($sqlstr);
+        foreach ($rsa as $i => $rs)
         {
           $rsId = base::getNum($rs[$prefix . 'id'], 0);
           $categoryAry['id' . $rsId] = $rs;

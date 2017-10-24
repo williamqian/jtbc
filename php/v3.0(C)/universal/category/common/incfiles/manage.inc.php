@@ -28,8 +28,7 @@ class ui extends page {
         $sql = new sql($db, $table, $prefix);
         $sql -> id = $cfid;
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        $rs = $rq -> fetch();
+        $rs = $db -> fetch($sqlstr);
         if (is_array($rs))
         {
           $rsId = base::getNum($rs[$prefix . 'id'], 0);
@@ -92,8 +91,7 @@ class ui extends page {
         $sql = new sql($db, $table, $prefix);
         $sql -> id = $id;
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        $rs = $rq -> fetch();
+        $rs = $db -> fetch($sqlstr);
         if (is_array($rs))
         {
           $rsGenre = base::getString($rs[$prefix . 'genre']);
@@ -151,8 +149,8 @@ class ui extends page {
         $sql -> orderBy('order', 'asc');
         $sql -> orderBy('id', 'asc');
         $sqlstr = $sql -> sql;
-        $rq = $db -> query($sqlstr);
-        while($rs = $rq -> fetch())
+        $rsa = $db -> fetchAll($sqlstr);
+        foreach ($rsa as $i => $rs)
         {
           $loopLineString = tpl::replaceTagByAry($loopString, $rs, 10);
           $tpl -> insertLoopLine(tpl::parse($loopLineString));
