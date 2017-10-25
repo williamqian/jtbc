@@ -78,8 +78,8 @@ namespace jtbc {
     {
       $table = $argTable;
       $query = $this -> query('show full columns from ' . $table);
-      $desc = $query -> fetchAll(PDO::FETCH_ASSOC);
-      return $desc;
+      $fullColumns = $query -> fetchAll(PDO::FETCH_ASSOC);
+      return $fullColumns;
     }
   }
 }
