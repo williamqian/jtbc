@@ -15,7 +15,7 @@
         <div class="item">
           <p class="photo"><img src="{$photo}" alt="" /></p>
           <p class="topic">{$name} <em>({$position})</em></p>
-          <p class="intro">{$=encodeTextArea($GLOBALS['RS_intro'])}</p>
+          <p class="intro">{$=encodeTextArea(#intro)}</p>
           <p class="clear"></p>
         </div>{@}
       </div>

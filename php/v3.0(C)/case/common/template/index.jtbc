@@ -34,7 +34,7 @@
       <div class="selector"><ul mode="pitchon" pitchon="li[name='li{$category}']">{$=transfer('genre=universal/category;type=@order;baseurl=./;tpl=li-list', array('fid' => 0, 'genre' => '{$>genre}'))}</ul></div>
       <div class="full content">
         <h1>{$topic}</h1>
-        <div class="text">{$=encodeText($GLOBALS['RS_content'])}</div>
+        <div class="text">{$=encodeText(#content)}</div>
       </div>
     </div>
   </div>

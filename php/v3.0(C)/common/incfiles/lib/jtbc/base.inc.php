@@ -69,6 +69,18 @@ namespace jtbc {
       $date = self::getMKTime($date);
       switch($type)
       {
+        case '-7':
+          $tmpstr = date('w', $date);
+          break;
+        case '-6':
+          $tmpstr = date('s', $date);
+          break;
+        case '-5':
+          $tmpstr = date('i', $date);
+          break;
+        case '-4':
+          $tmpstr = date('H', $date);
+          break;
         case '-3':
           $tmpstr = date('d', $date);
           break;
@@ -86,6 +98,9 @@ namespace jtbc {
           break;
         case '3':
           $tmpstr = date('Y/m/d', $date);
+          break;
+        case '4':
+          $tmpstr = date('H:i:s', $date);
           break;
         case '10':
           $tmpstr = date('Ymd', $date);

@@ -15,7 +15,7 @@
         <h1>{$=take('index.slogan', 'lng')}</h1>{@}
         <div class="item">
           <p class="topic">{$topic}</p>
-          <ul>{$=formatLine($GLOBALS['RS_intro'], '<li>$line</li>')}</ul>
+          <ul>{$=formatLine(#intro, '<li>$line</li>')}</ul>
           <p class="tips">{$=take('index.text-tips-1', 'lng')}</p>
           <p class="email"><a href="mailto:{$email}">{$email}</a></p>
         </div>{@}

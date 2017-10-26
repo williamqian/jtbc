@@ -19,7 +19,7 @@
       <div class="main">
         <div class="content">
           <h1>{$topic}</h1>
-          <div class="text">{$=encodeText($GLOBALS['RS_content'])}</div>
+          <div class="text">{$=encodeText(#content)}</div>
         </div>
       </div>
     </div>
