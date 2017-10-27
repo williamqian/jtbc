@@ -34,15 +34,19 @@ namespace jtbc {
       return $bool;
     }
 
-    public static function encodeText($argString)
+    public static function encodeText($argString, $argMode = 0)
     {
       $string = $argString;
+      $mode = self::getNum($argMode, 0);
       if (!self::isEmpty($string))
       {
         $string = str_replace('$', '&#36;', $string);
         $string = str_replace('\'', '&#39;', $string);
-        $string = str_replace('.', '&#46;', $string);
-        $string = str_replace('@', '&#64;', $string);
+        if ($mode == 0)
+        {
+          $string = str_replace('.', '&#46;', $string);
+          $string = str_replace('@', '&#64;', $string);
+        };
       }
       return $string;
     }

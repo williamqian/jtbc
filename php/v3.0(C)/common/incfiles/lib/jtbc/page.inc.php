@@ -201,6 +201,7 @@ namespace jtbc {
       self::$para['folder'] = base::getLRStr($_SERVER['SCRIPT_NAME'], '/', 'leftr') . '/';
       self::$para['filename'] = base::getLRStr($_SERVER['SCRIPT_NAME'], '/', 'right');
       self::$para['lang'] = smart::getForeLang();
+      self::$para['referer'] = @$_SERVER['HTTP_REFERER'];
       self::$para['uri'] = $_SERVER['SCRIPT_NAME'];
       self::$para['urs'] = $_SERVER['QUERY_STRING'];
       self::$para['url'] = self::$para['uri'];
