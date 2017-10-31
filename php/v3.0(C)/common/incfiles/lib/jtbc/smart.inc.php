@@ -119,7 +119,7 @@ namespace jtbc {
       return $lang;
     }
 
-    public static function getActualRoute($argRoutestr, $argType = 0)
+    public static function getActualRoute($argRoutestr = '', $argType = 0)
     {
       $route = '';
       $type = $argType;
