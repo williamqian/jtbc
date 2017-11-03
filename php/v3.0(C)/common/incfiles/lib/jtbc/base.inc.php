@@ -327,7 +327,8 @@ namespace jtbc {
       $tmpstr = '';
       $length = self::getNum($argLength, 0);
       $mode = self::getString($argMode);
-      switch ($mode) {
+      switch($mode)
+      {
         case 'number':
           $chars = '1234567890';
         default:
