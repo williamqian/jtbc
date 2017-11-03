@@ -321,15 +321,19 @@ namespace jtbc {
       if (count($regArys) == 2) $tmpstr = $regArys[1];
       return $tmpstr;
     }
-
-    public static function getRandomString($argLength = 16)
+    
+    public static function getRandomString($argLength = 16, $type = 'normal')
     {
       $tmpstr = '';
       $length = self::getNum($argLength, 0);
-      $chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+      switch ($type) {
+        case 'normal':
+          $chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+        case 'number':
+          $chars = '1234567890';
+      }
       $max = strlen($chars) - 1;
-      for($i = 0; $i < $length; $i++)
-      {
+      for ($i = 0; $i < $length; $i++) {
         $tmpstr .= $chars[rand(0, $max)];
       }
       return $tmpstr;
