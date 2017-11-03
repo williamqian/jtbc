@@ -331,8 +331,10 @@ namespace jtbc {
       {
         case 'number':
           $chars = '1234567890';
+          break;
         default:
           $chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+          break;
       }
       $max = strlen($chars) - 1;
       for($i = 0; $i < $length; $i++) 
