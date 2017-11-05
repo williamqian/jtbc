@@ -379,6 +379,27 @@ namespace jtbc {
       return $tmpstr;
     }
 
+    public static function getSupplementString($argString1, $argString2, $argMode = 0)
+    {
+      $tmpstr = '';
+      $string1 = $argString1;
+      $string2 = $argString2;
+      $mode = self::getNum($argMode, 0);
+      if (!self::isEmpty($string1))
+      {
+        switch($mode)
+        {
+          case 1:
+            $tmpstr = $string1 . $string2;
+            break;
+          default:
+            $tmpstr = $string2 . $string1;
+            break;
+        }
+      }
+      return $tmpstr;
+    }
+
     public static function htmlEncode($argString)
     {
       $string = $argString;
