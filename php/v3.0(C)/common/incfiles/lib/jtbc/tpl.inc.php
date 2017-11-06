@@ -120,7 +120,37 @@ namespace jtbc {
       $codename = $argCodeName;
       if (!base::isEmpty($codename))
       {
-        if (substr($codename, 0, 1) == '.')
+        if (substr($codename, 0, 3) == '../')
+        {
+          $parent = smart::getGenreByAppellation('parent');
+          $grandparent = smart::getGenreByAppellation('grandparent');
+          $greatgrandparent = smart::getGenreByAppellation('greatgrandparent');
+          if (substr($codename, 0, 9) == '../../../')
+          {
+            if (!is_null($greatgrandparent))
+            {
+              if (is_numeric(strpos($codename, ':'))) $codename = str_replace('../../../', 'global.' . $greatgrandparent . '/', $codename);
+              else $codename = str_replace('../../../', 'global.' . $greatgrandparent . ':', $codename);
+            }
+          }
+          else if (substr($codename, 0, 6) == '../../')
+          {
+            if (!is_null($grandparent))
+            {
+              if (is_numeric(strpos($codename, ':'))) $codename = str_replace('../../', 'global.' . $grandparent . '/', $codename);
+              else $codename = str_replace('../../', 'global.' . $grandparent . ':', $codename);
+            }
+          }
+          else if (substr($codename, 0, 3) == '../')
+          {
+            if (!is_null($parent))
+            {
+              if (is_numeric(strpos($codename, ':'))) $codename = str_replace('../', 'global.' . $parent . '/', $codename);
+              else $codename = str_replace('../', 'global.' . $parent . ':', $codename);
+            }
+          }
+        }
+        else if (substr($codename, 0, 1) == '.')
         {
           if (substr_count($codename, '.') == 2) $codename = 'global.' . base::getLRStr($codename, '.', 'rightr');
         }
@@ -514,40 +544,12 @@ namespace jtbc {
           $result = str_replace('{$>ns}', $ns . '\\', $result);
           $result = str_replace('{$>this}', $tthis, $result);
           $result = str_replace('{$>this.genre}', $tthisGenre, $result);
-          if (is_numeric(strpos($genre, '/')))
-          {
-            $genreAry = explode('/', $genre);
-            $genreAryCount = count($genreAry);
-            if ($genreAryCount == 2) $result = str_replace('{$>genre.parent}', $genreAry[0], $result);
-            else if ($genreAryCount == 3)
-            {
-              $result = str_replace('{$>genre.parent}', $genreAry[0] . '/' . $genreAry[1], $result);
-              $result = str_replace('{$>genre.grandparent}', $genreAry[0], $result);
-            }
-            else if ($genreAryCount == 4)
-            {
-              $result = str_replace('{$>genre.parent}', $genreAry[0] . '/' . $genreAry[1] . '/' . $genreAry[2], $result);
-              $result = str_replace('{$>genre.grandparent}', $genreAry[0] . '/' . $genreAry[1], $result);
-              $result = str_replace('{$>genre.greatgrandparent}', $genreAry[0], $result);
-            }
-          }
-          if (is_numeric(strpos($tthisGenre, '/')))
-          {
-            $tthisGenreAry = explode('/', $tthisGenre);
-            $tthisGenreAryCount = count($tthisGenreAry);
-            if ($tthisGenreAryCount == 2) $result = str_replace('{$>this.genre.parent}', $tthisGenreAry[0], $result);
-            else if ($tthisGenreAryCount == 3)
-            {
-              $result = str_replace('{$>this.genre.parent}', $tthisGenreAry[0] . '/' . $tthisGenreAry[1], $result);
-              $result = str_replace('{$>this.genre.grandparent}', $tthisGenreAry[0], $result);
-            }
-            else if ($tthisGenreAryCount == 4)
-            {
-              $result = str_replace('{$>this.genre.parent}', $tthisGenreAry[0] . '/' . $tthisGenreAry[1] . '/' . $tthisGenreAry[2], $result);
-              $result = str_replace('{$>this.genre.grandparent}', $tthisGenreAry[0] . '/' . $tthisGenreAry[1], $result);
-              $result = str_replace('{$>this.genre.greatgrandparent}', $tthisGenreAry[0], $result);
-            }
-          }
+          $result = str_replace('{$>genre.parent}', smart::getGenreByAppellation('parent', $genre), $result);
+          $result = str_replace('{$>genre.grandparent}', smart::getGenreByAppellation('grandparent', $genre), $result);
+          $result = str_replace('{$>genre.greatgrandparent}', smart::getGenreByAppellation('greatgrandparent', $genre), $result);
+          $result = str_replace('{$>this.genre.parent}', smart::getGenreByAppellation('parent', $tthisGenre), $result);
+          $result = str_replace('{$>this.genre.grandparent}', smart::getGenreByAppellation('grandparent', $tthisGenre), $result);
+          $result = str_replace('{$>this.genre.greatgrandparent}', smart::getGenreByAppellation('greatgrandparent', $tthisGenre), $result);
         }
         if (is_array($vars))
         {

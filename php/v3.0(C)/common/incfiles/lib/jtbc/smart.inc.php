@@ -259,6 +259,35 @@ namespace jtbc {
       return $list;
     }
 
+    public static function getGenreByAppellation($argAppellation, $argOriGenre = '')
+    {
+      $genre = null;
+      $appellation = $argAppellation;
+      $oriGenre = $argOriGenre;
+      if (base::isEmpty($oriGenre)) $oriGenre = page::getPara('genre');
+      if (is_numeric(strpos($oriGenre, '/')))
+      {
+        $oriGenreAry = explode('/', $oriGenre);
+        $oriGenreAryCount = count($oriGenreAry);
+        if ($oriGenreAryCount == 2)
+        {
+          if ($appellation == 'parent') $genre = $oriGenreAry[0];
+        }
+        else if ($oriGenreAryCount == 3)
+        {
+          if ($appellation == 'grandparent') $genre = $oriGenreAry[0];
+          else if ($appellation == 'parent') $genre = $oriGenreAry[0] . '/' . $oriGenreAry[1];
+        }
+        else if ($oriGenreAryCount == 4)
+        {
+          if ($appellation == 'greatgrandparent') $genre = $oriGenreAry[0];
+          else if ($appellation == 'grandparent') $genre = $oriGenreAry[0] . '/' . $oriGenreAry[1];
+          else if ($appellation == 'parent') $genre = $oriGenreAry[0] . '/' . $oriGenreAry[1] . '/' . $oriGenreAry[2];
+        }
+      }
+      return $genre;
+    }
+
     public static function getCutKeywordSQL($argField, $argKeyword)
     {
       $sql = '';
