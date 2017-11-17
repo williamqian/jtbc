@@ -10,6 +10,7 @@ namespace jtbc {
     private $prefix;
     private $pocket = array();
     private $orderby = null;
+    private $additionalSQL = null;
 
     public function getFieldInfo($argDesc, $argField)
     {
@@ -32,6 +33,7 @@ namespace jtbc {
       $prefix = $this -> prefix;
       $pocket = $this -> pocket;
       $orderby = $this -> orderby;
+      $additionalSQL = $this -> additionalSQL;
       $fieldStr = '*';
       if (is_array($field))
       {
@@ -138,6 +140,10 @@ namespace jtbc {
             }
           }
         }
+      }
+      if (!is_null($additionalSQL))
+      {
+        $sql .= $additionalSQL;
       }
       if (!is_null($orderby))
       {
@@ -256,6 +262,11 @@ namespace jtbc {
       $name = $argName;
       $value = $argValue;
       $this -> set(array($name, '!='), $value);
+    }
+
+    public function setAdditionalSQL($argAdditionalSQL)
+    {
+      $this -> additionalSQL = $argAdditionalSQL;
     }
 
     public function __get($argName)
