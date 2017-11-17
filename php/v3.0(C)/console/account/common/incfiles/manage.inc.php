@@ -219,7 +219,7 @@ class ui extends page {
         {
           $sql = new sql($db, $table, $prefix);
           $sql -> username = $username;
-          $sql -> set(array('id', '<>'), $id);
+          $sql -> setUnequal('id', $id);
           $sqlstr = $sql -> sql;
           $rs = $db -> fetch($sqlstr);
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-edit-error-101', 'lng'));

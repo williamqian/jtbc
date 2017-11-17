@@ -87,7 +87,9 @@ namespace jtbc {
                 $tempRelation = strtolower($currentKey[1]);
                 if ($tempRelation == 'in') $currentRelation = 'in';
                 else if ($tempRelation == 'like') $currentRelation = 'like';
-                else if ($tempRelation == '<>') $currentRelation = '<>';
+                else if ($tempRelation == '!=') $currentRelation = '!=';
+                else if ($tempRelation == '>=') $currentRelation = '>=';
+                else if ($tempRelation == '<=') $currentRelation = '<=';
               }
               if ($keyCount >= 3)
               {
@@ -114,10 +116,18 @@ namespace jtbc {
                   if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . " like " . base::getNum($currentVal, 0);
                   else if ($valType == 'string') $sql .= " " . $currentConcat . " " . $currentField  . " like '" . addslashes($currentVal) . "'";
                 }
-                else if ($currentRelation == '<>')
+                else if ($currentRelation == '!=')
                 {
-                  if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . "<>" . base::getNum($currentVal, 0);
-                  else if ($valType == 'string') $sql .= " " . $currentConcat . " " . $currentField  . "<>'" . addslashes($currentVal) . "'";
+                  if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . "!=" . base::getNum($currentVal, 0);
+                  else if ($valType == 'string') $sql .= " " . $currentConcat . " " . $currentField  . "!='" . addslashes($currentVal) . "'";
+                }
+                else if ($currentRelation == '>=')
+                {
+                  if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . ">=" . base::getNum($currentVal, 0);
+                }
+                else if ($currentRelation == '<=')
+                {
+                  if ($valType == 'integer' || $valType == 'double') $sql .= " " . $currentConcat . " " . $currentField . "<=" . base::getNum($currentVal, 0);
                 }
                 else if ($currentRelation == '=')
                 {
@@ -202,6 +212,20 @@ namespace jtbc {
       $this -> pocket = $pocket;
     }
 
+    public function setMin($argName, $argValue)
+    {
+      $name = $argName;
+      $value = $argValue;
+      $this -> set(array($name, '>='), $value);
+    }
+
+    public function setMax($argName, $argValue)
+    {
+      $name = $argName;
+      $value = $argValue;
+      $this -> set(array($name, '<='), $value);
+    }
+
     public function setIn($argName, $argValue)
     {
       $name = $argName;
@@ -225,6 +249,13 @@ namespace jtbc {
       {
         if (!base::isEmpty($val)) $this -> setLike($name, '%' . $val . '%');
       }
+    }
+
+    public function setUnequal($argName, $argValue)
+    {
+      $name = $argName;
+      $value = $argValue;
+      $this -> set(array($name, '!='), $value);
     }
 
     public function __get($argName)
