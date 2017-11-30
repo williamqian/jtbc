@@ -115,7 +115,7 @@ namespace jtbc\console {
                 $sql = new sql($db, $table, $prefix);
                 $sql -> id = $rsRole;
                 $sqlstr = $sql -> sql;
-                $rsr = $db -> fetch($sqlstrr);
+                $rsr = $db -> fetch($sqlstr);
                 if (is_array($rsr))
                 {
                   $rsPopedom = base::getString($rsr[$prefix . 'popedom']);
