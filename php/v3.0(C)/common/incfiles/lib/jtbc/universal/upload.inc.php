@@ -149,6 +149,35 @@ namespace jtbc\universal {
       return $bool;
     }
 
+    public static function unlinkByIds($argIds)
+    {
+      $bool = false;
+      $ids = $argIds;
+      $db = page::db();
+      if (!is_null($db) && base::checkIDAry($ids))
+      {
+        $table = tpl::take('global.universal/upload:config.db_table', 'cfg');
+        $prefix = tpl::take('global.universal/upload:config.db_prefix', 'cfg');
+        if (!base::isEmpty($table) && !base::isEmpty($prefix))
+        {
+          $bool = true;
+          $sqlstr = "select * from " . $table . " where " . $prefix . "id in (" . $ids . ")";
+          $rsa = $db -> fetchAll($sqlstr);
+          foreach ($rsa as $i => $rs)
+          {
+            $rsGenre = base::getString($rs[$prefix . 'genre']);
+            $rsFilepath = base::getString($rs[$prefix . 'filepath']);
+            $fileFullPath = smart::getActualRoute($rsGenre . '/' . $rsFilepath);
+            if (is_file($fileFullPath))
+            {
+              if (!unlink($fileFullPath)) $bool = false;
+            }
+          }
+        }
+      }
+      return $bool;
+    }
+
     public static function up2self($argFile, $argLimit = '', $argTargetPath = '', $argNeedUploadId = true)
     {
       $file = $argFile;

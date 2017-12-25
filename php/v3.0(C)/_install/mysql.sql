@@ -8,7 +8,7 @@ CREATE TABLE `jtbc_aboutus` (
   `a_id` int(11) NOT NULL AUTO_INCREMENT,
   `a_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `a_content` text,
-  `a_att` text,
+  `a_att` text COMMENT '{"uploadStatusAutoUpdate":"true"}',
   `a_publish` int(11) DEFAULT '0',
   `a_time` datetime DEFAULT NULL,
   `a_lang` int(11) DEFAULT '0',
@@ -17,7 +17,6 @@ CREATE TABLE `jtbc_aboutus` (
   KEY `a_delete` (`a_delete`,`a_lang`,`a_publish`) USING BTREE,
   KEY `a_time` (`a_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of jtbc_aboutus
 -- ----------------------------
@@ -42,20 +41,16 @@ CREATE TABLE `jtbc_career` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_career
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_case
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_case`;
 CREATE TABLE `jtbc_case` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
-  `c_image` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `c_image` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty","uploadStatusAutoUpdate":"true"}',
   `c_category` int(11) DEFAULT '0',
   `c_content` text,
-  `c_att` text,
+  `c_att` text COMMENT '{"uploadStatusAutoUpdate":"true"}',
   `c_publish` int(11) DEFAULT '0',
   `c_time` datetime DEFAULT NULL,
   `c_lang` int(11) DEFAULT '0',
@@ -64,10 +59,6 @@ CREATE TABLE `jtbc_case` (
   KEY `c_delete` (`c_delete`,`c_lang`,`c_publish`) USING BTREE,
   KEY `c_time` (`c_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of jtbc_case
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for jtbc_console_account
@@ -89,10 +80,6 @@ CREATE TABLE `jtbc_console_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_console_account
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_console_account_login
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_console_account_login`;
@@ -104,10 +91,6 @@ CREATE TABLE `jtbc_console_account_login` (
   PRIMARY KEY (`cal_id`),
   KEY `cal_account_id` (`cal_account_id`,`cal_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of jtbc_console_account_login
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for jtbc_console_log
@@ -126,10 +109,6 @@ CREATE TABLE `jtbc_console_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_console_log
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_console_role
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_console_role`;
@@ -142,10 +121,6 @@ CREATE TABLE `jtbc_console_role` (
   `cr_time` datetime DEFAULT NULL,
   PRIMARY KEY (`cr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of jtbc_console_role
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for jtbc_consult
@@ -168,10 +143,6 @@ CREATE TABLE `jtbc_consult` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_consult
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_news
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_news`;
@@ -180,7 +151,7 @@ CREATE TABLE `jtbc_news` (
   `n_topic` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `n_category` int(11) DEFAULT '0',
   `n_content` text,
-  `n_att` text,
+  `n_att` text COMMENT '{"uploadStatusAutoUpdate":"true"}',
   `n_publish` int(11) DEFAULT '0',
   `n_time` datetime DEFAULT NULL,
   `n_lang` int(11) DEFAULT '0',
@@ -191,17 +162,13 @@ CREATE TABLE `jtbc_news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_news
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_team
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_team`;
 CREATE TABLE `jtbc_team` (
   `t_id` int(11) NOT NULL AUTO_INCREMENT,
   `t_name` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
-  `t_photo` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
+  `t_photo` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty","uploadStatusAutoUpdate":"true"}',
   `t_position` varchar(200) DEFAULT NULL,
   `t_intro` varchar(200) DEFAULT NULL,
   `t_publish` int(11) DEFAULT '0',
@@ -214,17 +181,13 @@ CREATE TABLE `jtbc_team` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_team
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_universal_category
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_universal_category`;
 CREATE TABLE `jtbc_universal_category` (
   `uc_id` int(11) NOT NULL AUTO_INCREMENT,
   `uc_topic` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
-  `uc_image` varchar(200) DEFAULT NULL,
+  `uc_image` varchar(200) DEFAULT NULL COMMENT '{"uploadStatusAutoUpdate":"true"}',
   `uc_intro` varchar(1000) DEFAULT NULL,
   `uc_fid` int(11) DEFAULT '0',
   `uc_order` int(11) DEFAULT '0',
@@ -237,17 +200,13 @@ CREATE TABLE `jtbc_universal_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_universal_category
--- ----------------------------
-
--- ----------------------------
 -- Table structure for jtbc_universal_link
 -- ----------------------------
 DROP TABLE IF EXISTS `jtbc_universal_link`;
 CREATE TABLE `jtbc_universal_link` (
   `ul_id` int(11) NOT NULL AUTO_INCREMENT,
   `ul_topic` varchar(50) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
-  `ul_image` varchar(200) DEFAULT NULL,
+  `ul_image` varchar(200) DEFAULT NULL COMMENT '{"uploadStatusAutoUpdate":"true"}',
   `ul_url` varchar(200) DEFAULT NULL COMMENT '{"autoRequestFormat":"notEmpty"}',
   `ul_target` varchar(50) DEFAULT NULL,
   `ul_group` int(11) DEFAULT '0',
@@ -259,10 +218,6 @@ CREATE TABLE `jtbc_universal_link` (
   KEY `ul_publish` (`ul_publish`,`ul_lang`,`ul_delete`),
   KEY `ul_group` (`ul_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of jtbc_universal_link
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for jtbc_universal_material
@@ -288,5 +243,24 @@ CREATE TABLE `jtbc_universal_material` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of jtbc_universal_material
+-- Table structure for jtbc_universal_upload
 -- ----------------------------
+DROP TABLE IF EXISTS `jtbc_universal_upload`;
+CREATE TABLE `jtbc_universal_upload` (
+  `uu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uu_topic` varchar(200) DEFAULT NULL,
+  `uu_filesize` int(11) DEFAULT '0',
+  `uu_filesizetext` varchar(50) DEFAULT NULL,
+  `uu_filetype` varchar(50) DEFAULT NULL,
+  `uu_filepath` varchar(200) DEFAULT NULL,
+  `uu_fileurl` varchar(200) DEFAULT NULL,
+  `uu_filemode` int(11) DEFAULT '0',
+  `uu_genre` varchar(200) DEFAULT NULL,
+  `uu_associated_id` int(11) DEFAULT '0',
+  `uu_status` int(11) DEFAULT '0',
+  `uu_delete` int(11) DEFAULT '0',
+  `uu_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`uu_id`),
+  KEY `uu_genre` (`uu_genre`),
+  KEY `uu_status` (`uu_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
