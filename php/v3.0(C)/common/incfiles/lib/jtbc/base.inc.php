@@ -219,6 +219,19 @@ namespace jtbc {
       return $filegroup;
     }
 
+    public static function getJsonPara($argJson, $argName)
+    {
+      $tmpstr = '';
+      $json = $argJson;
+      $name = $argName;
+      $jsonArray = json_decode($json, true);
+      if (is_array($jsonArray))
+      {
+        if (array_key_exists($name, $jsonArray)) $tmpstr = $jsonArray[$name];
+      }
+      return $tmpstr;
+    }
+
     public static function getLeft($argString, $argLen)
     {
       $string = $argString;

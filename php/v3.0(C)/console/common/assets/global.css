@@ -993,6 +993,15 @@ icons icon a.link {
 .upfile button.upbtn {
   height: 28px; position: absolute; top: 1px; right: 1px; z-index: 100
 }
+.upload_status {
+  display: inline-block; width: 4px; height: 12px; margin-right: 4px; background: #999; vertical-align: middle
+}
+.upload_status_1 {
+  background-color: #105a2d
+}
+.upload_status_2 {
+  background-color: #ff0000
+}
 .fullscreen .container {
   z-index: 100000
 }

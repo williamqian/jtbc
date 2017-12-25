@@ -52,6 +52,8 @@ class ui extends page {
         if ($bool)
         {
           $status = 1;
+          self::statusReset(self::getPara('genre'), 0);
+          self::statusUpdate(self::getPara('genre'), 0, request::getPost('att'));
           $message = tpl::take('manage.text-tips-edit-done', 'lng');
           $account -> creatAutoLog('manage.log-edit-1');
         }
@@ -74,7 +76,7 @@ class ui extends page {
     }
     else
     {
-      $upResult = upload::up2self(@$_FILES['file']);
+      $upResult = universal\upload::up2self(@$_FILES['file']);
       $upResultArray = json_decode($upResult, 1);
       if (is_array($upResultArray))
       {

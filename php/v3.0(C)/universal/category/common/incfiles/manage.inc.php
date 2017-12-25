@@ -205,7 +205,9 @@ class ui extends page {
           if (is_numeric($re))
           {
             $status = 1;
-            $account -> creatAutoLog('manage.log-add-1', array('id' => $db -> lastInsertId));
+            $id = $db -> lastInsertId;
+            universal\upload::statusAutoUpdate(self::getPara('genre'), $id, $table, $prefix);
+            $account -> creatAutoLog('manage.log-add-1', array('id' => $id));
           }
         }
       }
@@ -244,6 +246,7 @@ class ui extends page {
           if (is_numeric($re))
           {
             $status = 1;
+            universal\upload::statusAutoUpdate(self::getPara('genre'), $id, $table, $prefix);
             $message = tpl::take('manage.text-tips-edit-done', 'lng');
             $account -> creatAutoLog('manage.log-edit-1', array('id' => $id));
           }
@@ -360,7 +363,7 @@ class ui extends page {
     }
     else
     {
-      $upResult = upload::up2self(@$_FILES['file'], $limit);
+      $upResult = universal\upload::up2self(@$_FILES['file'], $limit);
       $upResultArray = json_decode($upResult, 1);
       if (is_array($upResultArray))
       {

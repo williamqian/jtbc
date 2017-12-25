@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xml mode="jtbcf" author="jetiben" order="category,link,material">
+<xml mode="jtbcf" author="jetiben" order="upload,category,link,material">
   <configure>
     <node>item</node>
     <field>name,zh-cn</field>

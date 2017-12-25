@@ -105,7 +105,7 @@ class ui extends page {
       $db = self::db();
       if (!is_null($db))
       {
-        $upResult = upload::up2self(@$_FILES['file']);
+        $upResult = universal\upload::up2self(@$_FILES['file'], '', '', false);
         $upResultArray = json_decode($upResult, 1);
         if (is_array($upResultArray))
         {
@@ -167,7 +167,7 @@ class ui extends page {
         if (is_array($rs))
         {
           $rsFilePath = base::getString($rs[$prefix . 'filepath']);
-          $upResult = upload::up2self(@$_FILES['file'], '', $rsFilePath);
+          $upResult = universal\upload::up2self(@$_FILES['file'], '', $rsFilePath, false);
           $upResultArray = json_decode($upResult, 1);
           if (is_array($upResultArray))
           {

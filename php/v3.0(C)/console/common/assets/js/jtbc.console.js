@@ -751,7 +751,12 @@ jtbc.console.lib = {
           btnObj.removeClass('lock').html(btnObj.attr('text'));
           if (result.find('result').attr('status') == '1')
           {
-            var paraArray = JSON.parse(result.find('result').attr('para'));
+            var upsourceArray = new Object();
+            var para = result.find('result').attr('para');
+            var paraArray = JSON.parse(para);
+            upsourceArray.fileurl = paraArray['fileurl'];
+            upsourceArray.uploadid = paraArray['uploadid'];
+            thisObj.parent().find('input.upsource').val(JSON.stringify(upsourceArray));
             thisObj.parent().find('input.fileurl').val(paraArray['fileurl']);
           }
           else
@@ -760,6 +765,14 @@ jtbc.console.lib = {
             else tthis.popupAlert(result.find('result').attr('message'), thisObj.attr('text-ok'), function(){});
           };
         });
+      };
+    });
+    myObj.find('input.upsource').each(function(){
+      var thisObj = $(this);
+      if (thisObj.val())
+      {
+        var paraArray = JSON.parse(thisObj.val());
+        thisObj.parent().find('input.fileurl').val(paraArray['fileurl']);
       };
     });
   },
