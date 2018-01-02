@@ -94,17 +94,10 @@ jtbc.console.manage = {
       };
     });
   },
-  initCommon: function()
-  {
-    var tthis = this;
-    tthis.obj = tthis.parent.obj.find('.manager');
-    tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + tthis.obj.attr('genre') + '/';
-    tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + tthis.obj.attr('filename');
-  },
   ready: function()
   {
     var tthis = this;
-    tthis.initCommon();
+    tthis.parent.lib.initMainCommon(tthis);
     var myModule = tthis.obj.attr('module');
     if (myModule == 'list') tthis.initList();
     else if (myModule == 'edit') tthis.initEdit();

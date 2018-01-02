@@ -26,7 +26,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.image', 'lng')}<r>*</r></t></th>
-            <td><div class="upfile"><input type="hidden" name="image" class="upsource" /><input type="text" name="image-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=image" /></div></td>
+            <td><div mode="upfile" class="upfile"><input type="hidden" name="image" class="upsource" /><input type="text" name="image-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=image" /></div></td>
           </tr>
           <tr>
             <th></th>
@@ -38,12 +38,12 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1 content editor"></textarea></td>
+            <td><textarea name="content" mode="editor" class="t1 content editor"></textarea></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.att', 'lng')}</t></th>
             <td>
-              <div class="att" folder="{$=$folder}">
+              <div class="att" mode="att" folder="{$=$folder}" editor="textarea.content">
                 <div class="icons"><icons><icon class="db" root="{$=getActualRoute()}" title="{$=take('::console.from-material', 'lng')}"></icon><icon class="upload" title="{$=take('global.config.upload', 'lng')}"></icon></icons></div>
                 <h6>{$=take('::console.att-list', 'lng')}<input type="hidden" name="att" value="" /><input type="file" class="upload hide" multiple="multiple" action="?type=action&action=upload" /></h6>
                 <ul text-null="{$=take('::console.att-list-null', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" text-insert="{$=take('global.config.insert', 'lng')}" text-delete="{$=take('global.config.delete', 'lng')}">
@@ -60,7 +60,7 @@
         </tbody>
       </table>
       <div class="form_tips"></div>
-      <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>
+      <div class="form_button"><button class="b2 submit" doneclick="toplink a.link:first">{$=take('global.config.submit', 'lng')}</button></div>
     </form>
   </div>
 </div>
@@ -83,7 +83,7 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.image', 'lng')}<r>*</r></t></th>
-            <td><div class="upfile"><input type="hidden" name="image" value="{$image}" class="upsource" /><input type="text" name="image-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=image" /></div></td>
+            <td><div mode="upfile" class="upfile"><input type="hidden" name="image" value="{$image}" class="upsource" /><input type="text" name="image-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=image" /></div></td>
           </tr>
           <tr>
             <th></th>
@@ -95,12 +95,12 @@
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1 content editor">{$content}</textarea></td>
+            <td><textarea name="content" mode="editor" class="t1 content editor">{$content}</textarea></td>
           </tr>
           <tr>
             <th valign="top"><t>{$=take('global.config.att', 'lng')}</t></th>
             <td>
-              <div class="att" folder="{$=$folder}">
+              <div class="att" mode="att" folder="{$=$folder}" editor="textarea.content">
                 <div class="icons"><icons><icon class="db" root="{$=getActualRoute()}" title="{$=take('::console.from-material', 'lng')}"></icon><icon class="upload" title="{$=take('global.config.upload', 'lng')}"></icon></icons></div>
                 <h6>{$=take('::console.att-list', 'lng')}<input type="hidden" name="att" value="{$att}" /><input type="file" class="upload hide" multiple="multiple" action="?type=action&action=upload" /></h6>
                 <ul text-null="{$=take('::console.att-list-null', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" text-insert="{$=take('global.config.insert', 'lng')}" text-delete="{$=take('global.config.delete', 'lng')}">
@@ -135,14 +135,14 @@
   <toplink mode="pitchon" pitchon=".mid-list-1" upitchon="{$=htmlEncode($get('mid'))}">{$=take('{$>this}.part-toplink', 'tpl', '1')}</toplink>
   <div class="table">
     <h3>{$=take('manage.text-tit-list', 'lng')}</h3>
-    <rightarea><div class="searchbox"><form action="{$=htmlEncode($replaceQuerystring('keyword', null))}" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('global.config.keyword', 'lng')}" value="{$-keyword}" /><input type="submit" class="search" value="" /></form></div></rightarea>
+    <rightarea><div mode="searchbox" class="searchbox"><form action="{$=htmlEncode($replaceQuerystring('keyword', null))}" onsubmit="return false"><input type="text" name="keyword" class="keyword" placeholder="{$=take('global.config.keyword', 'lng')}" value="{$-keyword}" /><input type="submit" class="search" value="" /></form></div></rightarea>
     <table cellpadding="10" cellspacing="1" class="tableL">
       <thead>
         <tr>
           <th width="20" class="center"><label class="checkbox"><input type="checkbox" class="idall" forname="id" value="1" mode="highlightlineall" /><vicon></vicon></label></th>
           <th width="40" class="center">{$=take('global.config.id', 'lng')}</th>
           <th>{$=take('global.config.topic', 'lng')}</th>
-          <th width="120"><icons><icon class="category" title="{$=take('::console.text-filter-category', 'lng')}" fid="{$-category}" url="{$=htmlEncode($replaceQuerystring('type', 'category'))}"></icon></icons>{$=take('global.config.category', 'lng')}</th>
+          <th width="120"><icons mode="categoryfilter"><icon class="category" title="{$=take('::console.text-filter-category', 'lng')}" fid="{$-category}" url="{$=htmlEncode($replaceQuerystring('type', 'category'))}"></icon></icons>{$=take('global.config.category', 'lng')}</th>
           <th width="120">{$=take('global.config.time', 'lng')}</th>
           <th width="40" class="center">{$=take('global.config.status', 'lng')}</th>
           <th width="60">{$=take('global.config.control', 'lng')}</th>
@@ -164,7 +164,7 @@
       </tbody>
     </table>
     <div class="control">
-      <div class="batch show-{$-batch-show}"><span class="text">{$=take('::console.batch-tips', 'lng')}</span><select class="batch">{$=xmlSelect('::sel_batch.*|null,{$-batch-list}', '', 'select')}</select><span class="ok" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-batch', 'lng')}">{$=take('::console.control-confirm', 'lng')}</span></div>
+      <div mode="batchswitch" class="batch show-{$-batch-show}"><span class="text">{$=take('::console.batch-tips', 'lng')}</span><select class="batch">{$=xmlSelect('::sel_batch.*|null,{$-batch-list}', '', 'select')}</select><span class="ok" confirm_b3="{$=take('::console.control-cancel', 'lng')}" confirm_b2="{$=take('::console.control-confirm', 'lng')}" confirm_text="{$=take('::console.control-confirm-batch', 'lng')}">{$=take('::console.control-confirm', 'lng')}</span></div>
       <div class="pagi">{$=pagi('{$-pagi-pagenum}', '{$-pagi-pagetotal}', $replaceQuerystring('page', '[~page]'))}</div>
     </div>
   </div>

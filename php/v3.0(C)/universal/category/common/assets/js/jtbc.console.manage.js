@@ -21,7 +21,6 @@ jtbc.console.manage = {
           if (dataObj.find('result').attr('status') == '1')
           {
             var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
-            tthis.parent.lib.initUpFileEvents(pageObj);
             pageObj.find('.tinyform').find('button.submit').attr('message', 'custom').on('message', function(){
               pageObj.find('span.tips').addClass('h').html($(this).attr('msg').split('|')[0]);
             }).attr('done', 'custom').on('done', function(){
@@ -45,7 +44,6 @@ jtbc.console.manage = {
           if (dataObj.find('result').attr('status') == '1')
           {
             var pageObj = tthis.parent.lib.popupPage(dataObj.find('result').text());
-            tthis.parent.lib.initUpFileEvents(pageObj);
             pageObj.find('.tinyform').find('button.submit').attr('message', 'custom').on('message', function(){
               pageObj.find('span.tips').addClass('h').html($(this).attr('msg').split('|')[0]);
             }).attr('done', 'custom').on('done', function(){
@@ -58,24 +56,16 @@ jtbc.console.manage = {
         });
       };
     });
-    tthis.parent.lib.initBatchSwitchEvents(tthis.obj);
     tthis.parent.lib.dragSort(tthis.obj.find('.tableL tbody'), 'tr', 'td.sort', function(){}, function(){
       var ids = tthis.parent.lib.getCheckBoxValue(tthis.obj.find('input.id'));
       var url = tthis.para['fileurl'] + '?type=action&action=sort&ids=' + encodeURIComponent(ids);
       $.get(url, function(data){});
     });
   },
-  initCommon: function()
-  {
-    var tthis = this;
-    tthis.obj = tthis.parent.obj.find('.manager');
-    tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + tthis.obj.attr('genre') + '/';
-    tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + tthis.obj.attr('filename');
-  },
   ready: function()
   {
     var tthis = this;
-    tthis.initCommon();
+    tthis.parent.lib.initMainCommon(tthis);
     var myModule = tthis.obj.attr('module');
     if (myModule == 'list') tthis.initList();
   }

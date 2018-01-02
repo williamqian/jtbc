@@ -133,11 +133,6 @@ jtbc.console.manage = {
       tthis.obj.find('input[name=\'lang\']').val(tthis.parent.lib.getCheckBoxValue(tthis.obj.find('input[name=\'lang-select\']:checked')));
     });
   },
-  initList: function()
-  {
-    var tthis = this;
-    tthis.parent.lib.initBatchSwitchEvents(tthis.obj);
-  },
   initAdd: function()
   {
     var tthis = this;
@@ -145,8 +140,6 @@ jtbc.console.manage = {
     tthis.bindSelectLangEvents();
     tthis.obj.find('.form_button').find('button.submit').on('before', function(){
       tthis.obj.find('input[name=\'lang\']').trigger('update');
-    }).attr('done', 'custom').on('done', function(){
-      tthis.obj.find('toplink').find('a.link').first().click();
     });
   },
   initEdit: function()
@@ -158,20 +151,12 @@ jtbc.console.manage = {
       tthis.obj.find('input[name=\'lang\']').trigger('update');
     });
   },
-  initCommon: function()
-  {
-    var tthis = this;
-    tthis.obj = tthis.parent.obj.find('.manager');
-    tthis.parent.para['current-main-path'] = tthis.parent.para['root'] + tthis.obj.attr('genre') + '/';
-    tthis.parent.para['current-main-fileurl'] = tthis.para['fileurl'] = tthis.parent.para['current-main-path'] + tthis.obj.attr('filename');
-  },
   ready: function()
   {
     var tthis = this;
-    tthis.initCommon();
+    tthis.parent.lib.initMainCommon(tthis);
     var myModule = tthis.obj.attr('module');
-    if (myModule == 'list') tthis.initList();
-    else if (myModule == 'add') tthis.initAdd();
+    if (myModule == 'add') tthis.initAdd();
     else if (myModule == 'edit') tthis.initEdit();
   }
 }.ready();

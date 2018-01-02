@@ -24,6 +24,14 @@ jtbc.console = {
         {
           thisObj.find('button.submit').on('click', function(){
             var btnObj = $(this);
+            thisObj.find('textarea.editor').each(function(){
+              try {
+                var myEditorObj = $(this);
+                var myCurrentEditorIndex = myEditorObj.attr('editor-index');
+                var myEditor = tthis.para['editor-instance-' + myCurrentEditorIndex];
+                myEditorObj.val(tthis.parent.editor.getHTML(myEditor, 'content'));
+              } catch(e){};
+            });
             if (!btnObj.hasClass('lock'))
             {
               btnObj.addClass('lock');
@@ -45,11 +53,33 @@ jtbc.console = {
                 else if (dataObj.find('result').attr('status') == '1')
                 {
                   if (btnObj.attr('done') == 'custom') btnObj.trigger('done');
+                  else if (typeof(btnObj.attr('doneclick')) != 'undefined') tthis.obj.find(btnObj.attr('doneclick')).trigger('click');
                   else thisObj.find('.form_tips').html('<em>' + btnObj.attr('msg') + '</em>');
                 };
               });
             };
           });
+        }
+        else if (thisObj.attr('mode') == 'att')
+        {
+          var myObj = thisObj.parent();
+          var myEditorString = thisObj.attr('editor');
+          if (typeof(myEditorString) != 'undefined')
+          {
+            var myEditorObj = thisObj.parent().parent().parent().find(myEditorString);
+            if (myEditorObj.length == 1)
+            {
+              var myCurrentEditorIndex = myEditorObj.attr('editor-index');
+              var myEditor = tthis.para['editor-instance-' + myCurrentEditorIndex];
+              tthis.lib.initAttEvents(myObj, function(argContent){ tthis.parent.editor.insertHTML(myEditor, 'content', argContent); });
+            }
+            else tthis.lib.initAttEvents(myObj);
+          }
+          else tthis.lib.initAttEvents(myObj);
+        }
+        else if (thisObj.attr('mode') == 'categoryfilter')
+        {
+          tthis.lib.initCategoryFilterEvents(thisObj);
         }
         else if (thisObj.attr('mode') == 'confirmurlexec')
         {
@@ -61,6 +91,19 @@ jtbc.console = {
               $.get(url, function(data){ tthis.loadMainURLRefresh(); btnObj.parent().find('button.b3').click(); });
             });
           });
+        }
+        else if (thisObj.attr('mode') == 'batchswitch')
+        {
+          tthis.lib.initBatchSwitchEvents(thisObj);
+        }
+        else if (thisObj.attr('mode') == 'editor')
+        {
+          var myEditorIndex = tthis.para['editor-index'];
+          if (isNaN(myEditorIndex)) myEditorIndex = 0;
+          var myCurrentEditorIndex = myEditorIndex + 1;
+          thisObj.attr('editor-index', myCurrentEditorIndex);
+          tthis.para['editor-index'] = myCurrentEditorIndex;
+          tthis.para['editor-instance-' + myCurrentEditorIndex] = tthis.parent.editor.replace(thisObj.get(0));
         }
         else if (thisObj.attr('mode') == 'highlightline')
         {
@@ -114,6 +157,10 @@ jtbc.console = {
             });
           };
         }
+        else if (thisObj.attr('mode') == 'searchbox')
+        {
+          tthis.lib.initSearchBoxEvents(thisObj);
+        }
         else if (thisObj.attr('mode') == 'shortcut')
         {
           var pointObj = thisObj.parent();
@@ -135,7 +182,11 @@ jtbc.console = {
         else if (thisObj.attr('mode') == 'selectoption')
         {
           thisObj.val(thisObj.attr('val'));
-        };
+        }
+        else if (thisObj.attr('mode') == 'upfile')
+        {
+          tthis.lib.initUpFileEvents(thisObj);
+        };  
       };
     });
   },
@@ -682,14 +733,14 @@ jtbc.console.lib = {
   {
     var tthis = this;
     var myObj = argObj;
-    myObj.find('div.batch').find('span.ok').click(function(){
+    myObj.find('span.ok').click(function(){
       var thisObj = $(this);
       var batch = thisObj.parent().find('select.batch').val();
       if (batch != 'null')
       {
         tthis.popupConfirm(thisObj.attr('confirm_text'), thisObj.attr('confirm_b2'), thisObj.attr('confirm_b3'), function(argObj){
           var btnObj = argObj;
-          var ids = tthis.getCheckBoxValue(myObj.find('input.id:checked'));
+          var ids = tthis.getCheckBoxValue(myObj.parent().parent().find('input.id:checked'));
           var url = tthis.parent.para['current-main-fileurl'] + '?type=action&action=batch';
           url += '&batch=' + encodeURIComponent(batch) + '&ids=' + encodeURIComponent(ids);
           $.get(url, function(data){ tthis.parent.loadMainURLRefresh(); btnObj.parent().find('button.b3').click(); });
@@ -780,13 +831,21 @@ jtbc.console.lib = {
   {
     var tthis = this;
     var myObj = argObj;
-    myObj.find('.searchbox').find('input.search').on('click', function(){
+    myObj.find('input.search').on('click', function(){
       var thisObj = $(this);
       var parmname = thisObj.attr('parmname') || 'keyword';
       var keyword = thisObj.parent().find('input.keyword').val();
       var url = tthis.parent.para['current-main-fileurl'] + thisObj.parent().attr('action') + '&' + parmname + '=' + encodeURIComponent(keyword);
       tthis.parent.loadMainURL(url);
     });
+  },
+  initMainCommon: function(argObj)
+  {
+    var myObj = argObj;
+    myObj.obj = myObj.parent.obj.find('.manager');
+    try { myObj.parent.parent.editor.baseHref = myObj.obj.attr('folder'); } catch(e){};
+    myObj.parent.para['current-main-path'] = myObj.parent.para['root'] + myObj.obj.attr('genre') + '/';
+    myObj.parent.para['current-main-fileurl'] = myObj.para['fileurl'] = myObj.parent.para['current-main-path'] + myObj.obj.attr('filename');
   },
   loadSelectMaterialPage: function(argMode, argCallBack)
   {
