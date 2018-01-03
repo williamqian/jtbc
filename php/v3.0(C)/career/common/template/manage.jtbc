@@ -19,24 +19,7 @@
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('config.topic', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="topic" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('config.intro', 'lng')}<r>*</r></t></th>
-            <td><textarea name="intro" class="t1"></textarea></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('config.email', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="email" class="i1" /></td>
-          </tr>
-          <tr class="show-{$-account-popedom-publish}">
-            <th valign="top"><t>{$=take('global.config.publish', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch"><b></b><u></u><em></em><input type="hidden" name="publish" class="val" value="0" /></span></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit" doneclick="toplink a.link:first">{$=take('global.config.submit', 'lng')}</button></div>
@@ -54,28 +37,7 @@
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('config.topic', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="topic" class="i1" value="{$topic}" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('config.intro', 'lng')}<r>*</r></t></th>
-            <td><textarea name="intro" class="t1">{$intro}</textarea></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('config.email', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="email" class="i1" value="{$email}" /></td>
-          </tr>
-          <tr class="show-{$-account-popedom-publish}">
-            <th valign="top"><t>{$=take('global.config.publish', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch switch-{$publish}"><b></b><u></u><em></em><input type="hidden" name="publish" class="val" value="{$publish}" /></span></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.time', 'lng')}</t></th>
-            <td><input type="text" name="time" class="i1" value="{$time}" /></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>

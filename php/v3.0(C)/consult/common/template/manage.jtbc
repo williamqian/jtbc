@@ -19,28 +19,7 @@
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="name" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.mobile', 'lng')}</t></th>
-            <td><input type="text" name="mobile" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.email', 'lng')}</t></th>
-            <td><input type="text" name="email" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1"></textarea></td>
-          </tr>
-          <tr class="show-{$-account-popedom-dispose}">
-            <th valign="top"><t>{$=take('global.config.dispose', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch"><b></b><u></u><em></em><input type="hidden" name="dispose" class="val" value="0" /></span></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit" doneclick="toplink a.link:first">{$=take('global.config.submit', 'lng')}</button></div>
@@ -58,32 +37,7 @@
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="name" class="i1" value="{$name}"  /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.mobile', 'lng')}</t></th>
-            <td><input type="text" name="mobile" class="i1" value="{$mobile}" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.email', 'lng')}</t></th>
-            <td><input type="text" name="email" class="i1" value="{$email}" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.content', 'lng')}</t></th>
-            <td><textarea name="content" class="t1">{$content}</textarea></td>
-          </tr>
-          <tr class="show-{$-account-popedom-dispose}">
-            <th valign="top"><t>{$=take('global.config.dispose', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch switch-{$dispose}"><b></b><u></u><em></em><input type="hidden" name="dispose" class="val" value="{$dispose}" /></span></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.time', 'lng')}</t></th>
-            <td><input type="text" name="time" class="i1" value="{$time}" /></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>

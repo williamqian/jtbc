@@ -525,9 +525,72 @@ namespace jtbc {
       return $tmpstr;
     }
 
-    public static function pushAutoRequestErrorByTable(&$error, $argTable)
+    public static function getAutoFieldFormatByTable($argTable, $argMode = 0, $argVars = null, $argTplPath = '::console')
+    {
+      $tmpstr = '';
+      $table = $argTable;
+      $mode = $argMode;
+      $vars = $argVars;
+      $tplPath = $argTplPath;
+      $db = page::db();
+      $filename = page::getPara('filename');
+      $filePrefix = base::getLRStr($filename, '.', 'left');
+      if (!is_null($db))
+      {
+        $columns = $db -> showFullColumns($table);
+        foreach ($columns as $i => $item)
+        {
+          $filedName = $item['Field'];
+          $comment = base::getString($item['Comment']);
+          $simplifiedFiledName = base::getLRStr($filedName, '_', 'rightr');
+          if (!base::isEmpty($comment))
+          {
+            $commentAry = json_decode($comment, true);
+            if (!empty($commentAry) && array_key_exists('fieldType', $commentAry))
+            {
+              $currentFieldRequired = '';
+              if (array_key_exists('autoRequestFormat', $commentAry)) $currentFieldRequired = tpl::take($tplPath . '.required', 'tpl');
+              $currentFieldType = base::getString($commentAry['fieldType']);
+              $fieldFormatLine = tpl::take($tplPath . '.fieldformat-' . $currentFieldType, 'tpl');
+              $fieldFormatLine = str_replace('{$-required}', $currentFieldRequired, $fieldFormatLine);
+              $fieldFormatLine = str_replace('{$filedname}', base::htmlEncode($simplifiedFiledName), $fieldFormatLine);
+              if ($currentFieldType == 'att')
+              {
+                $fieldRelatedEditor = base::getString(@$commentAry['fieldRelatedEditor']);
+                if (!base::isEmpty($fieldRelatedEditor)) $fieldFormatLine = str_replace('{$-fieldRelatedEditor}', 'textarea.' . $fieldRelatedEditor, $fieldFormatLine);
+              }
+              if (array_key_exists('fieldHasTips', $commentAry))
+              {
+                $fieldTipsKey = $simplifiedFiledName;
+                $fieldHasTips = base::getString($commentAry['fieldHasTips']);
+                $fieldFormatLineTips = tpl::take($tplPath . '.field-tips', 'tpl');
+                if ($fieldHasTips != 'auto') $fieldTipsKey = $simplifiedFiledName;
+                $currentFieldTips = @tpl::take($filePrefix . '.text-tips-field-' . $fieldTipsKey, 'lng');
+                if (base::isEmpty($currentFieldTips)) $currentFieldTips = tpl::take($tplPath . '.text-tips-field-' . $fieldTipsKey, 'lng');
+                $fieldFormatLineTips = str_replace('{$tips}', base::htmlEncode($currentFieldTips), $fieldFormatLineTips);
+                $fieldFormatLine .= $fieldFormatLineTips;
+              }
+              if ($mode == 0) $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', '', $fieldFormatLine);
+              $currentFieldHideMode = base::getNum(@$commentAry['fieldHideMode'], -1);
+              if ($currentFieldHideMode != $mode) $tmpstr .= $fieldFormatLine;
+            }
+          }
+        }
+        if (is_array($vars))
+        {
+          foreach ($vars as $key => $val)
+          {
+            $tmpstr = str_replace('{$' . $key . '}', $val, $tmpstr) . $key;
+          }
+        }
+      }
+      return $tmpstr;
+    }
+
+    public static function pushAutoRequestErrorByTable(&$error, $argTable, $argTplPath = '::console')
     {
       $table = $argTable;
+      $tplPath = $argTplPath;
       $db = page::db();
       $filename = page::getPara('filename');
       $filePrefix = base::getLRStr($filename, '.', 'left');
@@ -562,14 +625,14 @@ namespace jtbc {
               if ($errorBool == true)
               {
                 $errorMsg = @tpl::take($filePrefix . '.text-auto-request-error-' . $requestName, 'lng');
-                if (base::isEmpty($errorMsg)) $errorMsg = tpl::take('::console.text-auto-request-error-' . $requestName, 'lng');
+                if (base::isEmpty($errorMsg)) $errorMsg = tpl::take($tplPath . '.text-auto-request-error-' . $requestName, 'lng');
                 array_push($error, $errorMsg);
               }
             }
           }
         }
       }
-      else array_push($error, tpl::take('::console.text-error-db-102', 'lng'));
+      else array_push($error, tpl::take($tplPath . '.text-error-db-102', 'lng'));
     }
 
     public static function replaceKeyWordHighlight($argString, $argKeyword = null)

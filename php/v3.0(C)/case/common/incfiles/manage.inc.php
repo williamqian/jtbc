@@ -19,7 +19,10 @@ class ui extends page {
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
+      $table = tpl::take('config.db_table', 'cfg');
+      $autoFieldFormatByTable = smart::getAutoFieldFormatByTable($table);
       $tmpstr = tpl::take('manage.add', 'tpl');
+      $tmpstr = str_replace('{$-auto-field-format-by-table}', $autoFieldFormatByTable, $tmpstr);
       $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
       $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $category), $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
@@ -51,6 +54,8 @@ class ui extends page {
         {
           $rsCategory = base::getNum($rs[$prefix . 'category'], 0);
           $tmpstr = tpl::take('manage.edit', 'tpl');
+          $autoFieldFormatByTable = smart::getAutoFieldFormatByTable($table, 1);
+          $tmpstr = str_replace('{$-auto-field-format-by-table}', $autoFieldFormatByTable, $tmpstr);
           $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = str_replace('{$-category-nav}', universal\category::getCategoryNavByID(self::getPara('genre'), $account -> getLang(), $category), $tmpstr);
           $tmpstr = str_replace('{$-category-select}', universal\category::getCategorySelectByGenre(self::getPara('genre'), $account -> getLang(), $account -> getGenrePopedom(self::getPara('genre'), 'category'), 'id=' . $rsCategory), $tmpstr);

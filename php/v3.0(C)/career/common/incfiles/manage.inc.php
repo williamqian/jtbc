@@ -18,7 +18,10 @@ class ui extends page {
     $account = self::account();
     if ($account -> checkPopedom(self::getPara('genre'), 'add'))
     {
+      $table = tpl::take('config.db_table', 'cfg');
+      $autoFieldFormatByTable = smart::getAutoFieldFormatByTable($table);
       $tmpstr = tpl::take('manage.add', 'tpl');
+      $tmpstr = str_replace('{$-auto-field-format-by-table}', $autoFieldFormatByTable, $tmpstr);
       $tmpstr = tpl::parse($tmpstr);
       $tmpstr = $account -> replaceAccountTag($tmpstr);
     }
@@ -46,6 +49,8 @@ class ui extends page {
         if (is_array($rs))
         {
           $tmpstr = tpl::take('manage.edit', 'tpl');
+          $autoFieldFormatByTable = smart::getAutoFieldFormatByTable($table, 1);
+          $tmpstr = str_replace('{$-auto-field-format-by-table}', $autoFieldFormatByTable, $tmpstr);
           $tmpstr = tpl::replaceTagByAry($tmpstr, $rs, 10);
           $tmpstr = tpl::parse($tmpstr);
           $tmpstr = $account -> replaceAccountTag($tmpstr);

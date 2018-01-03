@@ -19,32 +19,7 @@
     <h3>{$=take('manage.text-tit-add', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=add" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="name" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.photo', 'lng')}<r>*</r></t></th>
-            <td><div mode="upfile" class="upfile"><input type="hidden" name="photo" class="upsource" /><input type="text" name="photo-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=photo" /></div></td>
-          </tr>
-          <tr>
-            <th></th>
-            <td><span class="info-1">{$=take('manage.text-tips-1', 'lng')}</span></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.position', 'lng')}</t></th>
-            <td><input type="text" name="position" class="i1" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.intro', 'lng')}</t></th>
-            <td><textarea name="intro" class="t1"></textarea></td>
-          </tr>
-          <tr class="show-{$-account-popedom-publish}">
-            <th valign="top"><t>{$=take('global.config.publish', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch"><b></b><u></u><em></em><input type="hidden" name="publish" class="val" value="0" /></span></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit" doneclick="toplink a.link:first">{$=take('global.config.submit', 'lng')}</button></div>
@@ -62,36 +37,7 @@
     <h3>{$=take('manage.text-tit-edit', 'lng')}</h3>
     <form mode="ajaxpost" action="?type=action&amp;action=edit&amp;id={$id}" onsubmit="return false;">
       <table cellpadding="10" cellspacing="0" class="tableF">
-        <tbody>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.name', 'lng')}<r>*</r></t></th>
-            <td><input type="text" name="name" class="i1" value="{$name}" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.photo', 'lng')}<r>*</r></t></th>
-            <td><div mode="upfile" class="upfile"><input type="hidden" name="photo" value="{$photo}" class="upsource" /><input type="text" name="photo-fileurl" class="i1 fileurl" text-preview-title="{$=take('::console.att-preview-title', 'lng')}" text-preview-link="{$=take('::console.att-preview-link', 'lng')}" /><button class="b4 upbtn" text="{$=take('global.config.upload', 'lng')}" uploading="{$=take('::console.uploading', 'lng')}">{$=take('global.config.upload', 'lng')}</button><input type="file" class="upfiles hide" text-ok="{$=take('::console.iknow', 'lng')}" action="?type=action&amp;action=upload&amp;limit=photo" /></div></td>
-          </tr>
-          <tr>
-            <th></th>
-            <td><span class="info-1">{$=take('manage.text-tips-1', 'lng')}</span></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.position', 'lng')}</t></th>
-            <td><input type="text" name="position" class="i1" value="{$position}" /></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.intro', 'lng')}</t></th>
-            <td><textarea name="intro" class="t1">{$intro}</textarea></td>
-          </tr>
-          <tr class="show-{$-account-popedom-publish}">
-            <th valign="top"><t>{$=take('global.config.publish', 'lng')}</t></th>
-            <td><span mode="inputswitch" class="switch switch-{$publish}"><b></b><u></u><em></em><input type="hidden" name="publish" class="val" value="{$publish}" /></span></td>
-          </tr>
-          <tr>
-            <th valign="top"><t>{$=take('global.config.time', 'lng')}</t></th>
-            <td><input type="text" name="time" class="i1" value="{$time}" /></td>
-          </tr>
-        </tbody>
+        <tbody>{$-auto-field-format-by-table}</tbody>
       </table>
       <div class="form_tips"></div>
       <div class="form_button"><button class="b2 submit">{$=take('global.config.submit', 'lng')}</button></div>
