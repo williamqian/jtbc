@@ -551,13 +551,20 @@ namespace jtbc {
               $currentFieldRequired = '';
               if (array_key_exists('autoRequestFormat', $commentAry)) $currentFieldRequired = tpl::take($tplPath . '.required', 'tpl');
               $currentFieldType = base::getString($commentAry['fieldType']);
-              $fieldFormatLine = tpl::take($tplPath . '.fieldformat-' . $currentFieldType, 'tpl');
+              if (strpos($currentFieldType, '.')) $fieldFormatLine = tpl::take($currentFieldType, 'tpl');
+              else $fieldFormatLine = tpl::take($tplPath . '.fieldformat-' . $currentFieldType, 'tpl');
               $fieldFormatLine = str_replace('{$-required}', $currentFieldRequired, $fieldFormatLine);
               $fieldFormatLine = str_replace('{$filedname}', base::htmlEncode($simplifiedFiledName), $fieldFormatLine);
               if ($currentFieldType == 'att')
               {
                 $fieldRelatedEditor = base::getString(@$commentAry['fieldRelatedEditor']);
-                if (!base::isEmpty($fieldRelatedEditor)) $fieldFormatLine = str_replace('{$-fieldRelatedEditor}', 'textarea.' . $fieldRelatedEditor, $fieldFormatLine);
+                if (!base::isEmpty($fieldRelatedEditor)) $fieldRelatedEditor = 'textarea.' . $fieldRelatedEditor;
+                $fieldFormatLine = str_replace('{$-fieldRelatedEditor}', $fieldRelatedEditor, $fieldFormatLine);
+              }
+              else if ($currentFieldType == 'checkbox' || $currentFieldType == 'radio' || $currentFieldType == 'select')
+              {
+                $fieldRelatedFile = base::getString(@$commentAry['fieldRelatedFile']);
+                $fieldFormatLine = str_replace('{$-fieldRelatedFile}', $fieldRelatedFile, $fieldFormatLine);
               }
               if (array_key_exists('fieldHasTips', $commentAry))
               {
