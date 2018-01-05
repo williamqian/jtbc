@@ -171,11 +171,10 @@ class ui extends page {
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-add-error-101', 'lng'));
           else
           {
-            $specialFiled = $prefix . 'id,' . $prefix . 'lock,' . $prefix . 'lastip,' . $prefix . 'lasttime,' . $prefix . 'delete';
             $preset = array();
             $preset[$prefix . 'password'] = md5($password);
             $preset[$prefix . 'time'] = base::getDateTime();
-            $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
+            $sqlstr = smart::getAutoRequestInsertSQL($table, $preset);
             $re = $db -> exec($sqlstr);
             if (is_numeric($re))
             {
@@ -225,8 +224,8 @@ class ui extends page {
           if (is_array($rs)) array_push($error, tpl::take('manage.text-tips-edit-error-101', 'lng'));
           else
           {
-            $specialFiled = $prefix . 'id,' . $prefix . 'password,' . $prefix . 'lock,' . $prefix . 'lastip,' . $prefix . 'lasttime,' . $prefix . 'time,' . $prefix . 'delete';
-            $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id);
+            $specialFiled = $prefix . 'password';
+            $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $specialFiled);
             $re = $db -> exec($sqlstr);
             if (is_numeric($re))
             {

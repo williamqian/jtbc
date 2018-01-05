@@ -308,11 +308,11 @@ namespace jtbc {
     {
       $table = $argTable;
       $vars = $argVars;
-      $tmpstr = self::getAutoRequestInsertSQL($table, null, $vars, null, '', '', 1);
+      $tmpstr = self::getAutoRequestInsertSQL($table, $vars, null, null, '', '', 1);
       return $tmpstr;
     }
 
-    public static function getAutoRequestInsertSQL($argTable, $argSpecialFiled, $argVars = null, $argSource = null, $argNamePre = '', $argNameSuffix = '', $argMode = 0)
+    public static function getAutoRequestInsertSQL($argTable, $argVars = null, $argSpecialFiled = null, $argSource = null, $argNamePre = '', $argNameSuffix = '', $argMode = 0)
     {
       $tmpstr = '';
       $table = $argTable;
@@ -325,17 +325,18 @@ namespace jtbc {
       $db = page::db();
       if (!is_null($db))
       {
-        $desc = $db -> desc($table);
-        if (is_array($desc))
+        $columns = $db -> showFullColumns($table);
+        if (is_array($columns))
         {
           $fieldString = '';
           $fieldValues = '';
           $tmpstr = 'insert into ' . $table . ' (';
-          foreach ($desc as $i => $item)
+          foreach ($columns as $i => $item)
           {
             $filedValid = false;
             $filedName = $item['Field'];
             $filedType = $item['Type'];
+            $comment = base::getString($item['Comment']);
             $filedTypeN = $filedType;
             $filedTypeL = null;
             if (is_numeric(strpos($filedType, '(')))
@@ -352,15 +353,27 @@ namespace jtbc {
             {
               if (!base::checkInstr($specialFiled, $filedName, ','))
               {
-                $filedValid = true;
-                if (base::isEmpty($requestValue))
+                $manual = false;
+                if (!base::isEmpty($comment))
                 {
-                  if (is_array($source)) $requestValue = base::getString($source[$requestName]);
-                  else
+                  $commentAry = json_decode($comment, true);
+                  if (!empty($commentAry) && array_key_exists('manual', $commentAry))
                   {
-                    $requestValue = request::getPost($requestName);
-                    if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
-                    else $requestValue = base::getString(implode(',', $requestValue));
+                    if ($commentAry['manual'] == 'true') $manual = true;
+                  }
+                }
+                if ($manual == false)
+                {
+                  $filedValid = true;
+                  if (base::isEmpty($requestValue))
+                  {
+                    if (is_array($source)) $requestValue = base::getString($source[$requestName]);
+                    else
+                    {
+                      $requestValue = request::getPost($requestName);
+                      if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
+                      else $requestValue = base::getString(implode(',', $requestValue));
+                    }
                   }
                 }
               }
@@ -423,11 +436,11 @@ namespace jtbc {
       $vars = $argVars;
       $idFiled = $argIdFiled;
       $id = base::getNum($argId, 0);
-      $tmpstr = self::getAutoRequestUpdateSQL($table, null, $idFiled, $id, $vars, null, '', '', 1);
+      $tmpstr = self::getAutoRequestUpdateSQL($table, $idFiled, $id, $vars, null, null, '', '', 1);
       return $tmpstr;
     }
 
-    public static function getAutoRequestUpdateSQL($argTable, $argSpecialFiled, $argIdFiled, $argId, $argVars = null, $argSource = null, $argNamePre = '', $argNameSuffix = '', $argMode = 0)
+    public static function getAutoRequestUpdateSQL($argTable, $argIdFiled, $argId, $argVars = null, $argSpecialFiled = null, $argSource = null, $argNamePre = '', $argNameSuffix = '', $argMode = 0)
     {
       $tmpstr = '';
       $table = $argTable;
@@ -442,16 +455,17 @@ namespace jtbc {
       $db = page::db();
       if (!is_null($db))
       {
-        $desc = $db -> desc($table);
-        if (is_array($desc))
+        $columns = $db -> showFullColumns($table);
+        if (is_array($columns))
         {
           $fieldStringValues = '';
           $tmpstr = 'update ' . $table . ' set ';
-          foreach ($desc as $i => $item)
+          foreach ($columns as $i => $item)
           {
             $filedValid = false;
             $filedName = $item['Field'];
             $filedType = $item['Type'];
+            $comment = base::getString($item['Comment']);
             $filedTypeN = $filedType;
             $filedTypeL = null;
             if (is_numeric(strpos($filedType, '(')))
@@ -464,20 +478,31 @@ namespace jtbc {
             if (!base::isEmpty($namePre)) $requestName = $namePre . $requestName;
             if (!base::isEmpty($nameSuffix)) $requestName = $requestName . $nameSuffix;
             if (is_array($vars)) $requestValue = base::getString(@$vars[$filedName]);
-
             if ($mode == 0)
             {
               if (!base::checkInstr($specialFiled, $filedName, ','))
               {
-                $filedValid = true;
-                if (base::isEmpty($requestValue))
+                $manual = false;
+                if (!base::isEmpty($comment))
                 {
-                  if (is_array($source)) $requestValue = base::getString($source[$requestName]);
-                  else
+                  $commentAry = json_decode($comment, true);
+                  if (!empty($commentAry) && array_key_exists('manual', $commentAry))
                   {
-                    $requestValue = request::getPost($requestName);
-                    if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
-                    else $requestValue = base::getString(implode(',', $requestValue));
+                    if ($commentAry['manual'] == 'true') $manual = true;
+                  }
+                }
+                if ($manual == false)
+                {
+                  $filedValid = true;
+                  if (base::isEmpty($requestValue))
+                  {
+                    if (is_array($source)) $requestValue = base::getString($source[$requestName]);
+                    else
+                    {
+                      $requestValue = request::getPost($requestName);
+                      if (!is_array($requestValue)) $requestValue = base::getString($requestValue);
+                      else $requestValue = base::getString(implode(',', $requestValue));
+                    }
                   }
                 }
               }

@@ -186,13 +186,12 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
           if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getPost('publish'), 0);
-          $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
+          $sqlstr = smart::getAutoRequestInsertSQL($table, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {
@@ -232,12 +231,11 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'publish'] = 0;
           $preset[$prefix . 'lang'] = $account -> getLang();
           if ($account -> checkPopedom(self::getPara('genre'), 'publish')) $preset[$prefix . 'publish'] = base::getNum(request::getPost('publish'), 0);
-          $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
+          $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {

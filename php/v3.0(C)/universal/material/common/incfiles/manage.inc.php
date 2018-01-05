@@ -221,10 +221,10 @@ class ui extends page {
         {
           $table = tpl::take('config.db_table', 'cfg');
           $prefix = tpl::take('config.db_prefix', 'cfg');
-          $specialFiled = $prefix . 'id,' . $prefix . 'filepath,' . $prefix . 'fileurl,' . $prefix . 'filetype,' . $prefix . 'filesize,' . $prefix . 'filegroup,' . $prefix . 'hot,' . $prefix . 'delete';
+          $specialFiled = $prefix . 'filepath,' . $prefix . 'fileurl,' . $prefix . 'filetype,' . $prefix . 'filesize,' . $prefix . 'filegroup,' . $prefix . 'hot';
           $preset = array();
           $preset[$prefix . 'lang'] = $account -> getLang();
-          $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id, $preset);
+          $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $preset, $specialFiled);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {

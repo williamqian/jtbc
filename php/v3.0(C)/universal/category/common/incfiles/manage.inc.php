@@ -195,12 +195,11 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $specialFiled = $prefix . 'id,' . $prefix . 'delete';
           $preset = array();
           $preset[$prefix . 'order'] = 888888;
           $preset[$prefix . 'lang'] = $account -> getLang();
           $preset[$prefix . 'time'] = base::getDateTime();
-          $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
+          $sqlstr = smart::getAutoRequestInsertSQL($table, $preset);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {
@@ -240,8 +239,8 @@ class ui extends page {
         $db = self::db();
         if (!is_null($db))
         {
-          $specialFiled = $prefix . 'id,' . $prefix . 'fid,' . $prefix . 'order,' . $prefix . 'time,' . $prefix . 'genre,' . $prefix . 'lang,' . $prefix . 'delete';
-          $sqlstr = smart::getAutoRequestUpdateSQL($table, $specialFiled, $prefix . 'id', $id);
+          $specialFiled = $prefix . 'fid,' . $prefix . 'order,' . $prefix . 'time,' . $prefix . 'genre,' . $prefix . 'lang';
+          $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $specialFiled);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {
