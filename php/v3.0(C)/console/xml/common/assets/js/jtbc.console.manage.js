@@ -156,7 +156,7 @@ jtbc.console.manage = {
               var currentChildGenreObj = pageObj.find('select[name=\'child-genre\']');
               if (currentChildGenreObj.length >= 1) currentGenre = currentChildGenreObj.last().attr('parent') + currentChildGenreObj.last().val();
               symbolP1 = currentGenre;
-              if (currentGenre.charAt(currentGenre.length - 1) == '/') symbolP1 = currentGenre.substr(currentGenre.length - 1);
+              if (currentGenre.charAt(currentGenre.length - 1) == '/') symbolP1 = currentGenre.substr(0, currentGenre.length - 1);
               symbolP2 = pageObj.find('select[name=\'mold\']').val();
               symbolP3 = pageObj.find('select[name=\'file\']').val();
               if (!symbolP3) tthis.parent.lib.popupMiniAlert(thisObj.attr('text-error-1'));
