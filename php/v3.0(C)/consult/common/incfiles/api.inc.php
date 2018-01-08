@@ -22,12 +22,12 @@ class ui extends page {
       {
         $table = tpl::take('config.db_table', 'cfg');
         $prefix = tpl::take('config.db_prefix', 'cfg');
-        $specialFiled = $prefix . 'id,' . $prefix . 'dispose,' . $prefix . 'delete';
         $preset = array();
+        $preset[$prefix . 'dispose'] = 0;
         $preset[$prefix . 'userip'] = request::getRemortIP();
         $preset[$prefix . 'lang'] = self::getPara('lang');
         $preset[$prefix . 'time'] = base::getDateTime();
-        $sqlstr = smart::getAutoRequestInsertSQL($table, $specialFiled, $preset);
+        $sqlstr = smart::getAutoRequestInsertSQL($table, $preset);
         $re = $db -> exec($sqlstr);
         if (is_numeric($re))
         {

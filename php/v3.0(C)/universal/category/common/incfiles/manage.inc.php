@@ -240,7 +240,7 @@ class ui extends page {
         if (!is_null($db))
         {
           $specialFiled = $prefix . 'fid,' . $prefix . 'order,' . $prefix . 'time,' . $prefix . 'genre,' . $prefix . 'lang';
-          $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $specialFiled);
+          $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, null, $specialFiled);
           $re = $db -> exec($sqlstr);
           if (is_numeric($re))
           {

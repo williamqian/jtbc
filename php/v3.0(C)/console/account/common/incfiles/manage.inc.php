@@ -225,7 +225,7 @@ class ui extends page {
           else
           {
             $specialFiled = $prefix . 'password';
-            $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, $specialFiled);
+            $sqlstr = smart::getAutoRequestUpdateSQL($table, $prefix . 'id', $id, null, $specialFiled);
             $re = $db -> exec($sqlstr);
             if (is_numeric($re))
             {
