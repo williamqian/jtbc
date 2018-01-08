@@ -27,12 +27,24 @@
       <zh-cn><![CDATA[分类]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[color]]></name>
+      <zh-cn><![CDATA[颜色]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[content]]></name>
       <zh-cn><![CDATA[内容]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[control]]></name>
       <zh-cn><![CDATA[操作]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[date]]></name>
+      <zh-cn><![CDATA[日期]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[description]]></name>
+      <zh-cn><![CDATA[描述]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[delete]]></name>
@@ -51,11 +63,23 @@
       <zh-cn><![CDATA[电子邮件]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[file]]></name>
+      <zh-cn><![CDATA[文件]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[group]]></name>
       <zh-cn><![CDATA[分组]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[height]]></name>
+      <zh-cn><![CDATA[高度]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[keyword]]></name>
+      <zh-cn><![CDATA[关键词]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[keywords]]></name>
       <zh-cn><![CDATA[关键词]]></zh-cn>
     </item>
     <item>
@@ -69,6 +93,14 @@
     <item>
       <name><![CDATA[insert]]></name>
       <zh-cn><![CDATA[插入]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[language]]></name>
+      <zh-cn><![CDATA[语言]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[leader]]></name>
+      <zh-cn><![CDATA[领导]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[mobile]]></name>
@@ -95,6 +127,18 @@
       <zh-cn><![CDATA[发布]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[rank]]></name>
+      <zh-cn><![CDATA[等级]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[size]]></name>
+      <zh-cn><![CDATA[尺寸]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[source]]></name>
+      <zh-cn><![CDATA[来源]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[submit]]></name>
       <zh-cn><![CDATA[提交]]></zh-cn>
     </item>
@@ -105,6 +149,10 @@
     <item>
       <name><![CDATA[status]]></name>
       <zh-cn><![CDATA[状态]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[template]]></name>
+      <zh-cn><![CDATA[模板]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[title]]></name>
@@ -119,8 +167,20 @@
       <zh-cn><![CDATA[时间]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[url]]></name>
+      <zh-cn><![CDATA[网址]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[upload]]></name>
       <zh-cn><![CDATA[上传]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[userip]]></name>
+      <zh-cn><![CDATA[用户IP]]></zh-cn>
+    </item>
+    <item>
+      <name><![CDATA[width]]></name>
+      <zh-cn><![CDATA[宽度]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[spstr]]></name>

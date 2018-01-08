@@ -79,6 +79,13 @@
 </tr>]]></default>
     </item>
     <item>
+      <name><![CDATA[fieldformat-switch]]></name>
+      <default><![CDATA[<tr>
+  <th valign="top"><t>{$=getSwapString($take('config.{$filedname}', 'lng'), $take('global.config.{$filedname}', 'lng'))}{$-required}</t></th>
+  <td><span mode="inputswitch" class="switch switch-{${$filedname}}"><b></b><u></u><em></em><input type="hidden" name="{$filedname}" class="val" value="{${$filedname}}" /></span></td>
+</tr>]]></default>
+    </item>
+    <item>
       <name><![CDATA[fieldformat-text]]></name>
       <default><![CDATA[<tr>
   <th valign="top"><t>{$=getSwapString($take('config.{$filedname}', 'lng'), $take('global.config.{$filedname}', 'lng'))}{$-required}</t></th>

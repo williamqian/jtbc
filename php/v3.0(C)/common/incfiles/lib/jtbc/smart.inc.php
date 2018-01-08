@@ -566,6 +566,7 @@ namespace jtbc {
         foreach ($columns as $i => $item)
         {
           $filedName = $item['Field'];
+          $filedDefault = $item['Default'];
           $comment = base::getString($item['Comment']);
           $simplifiedFiledName = base::getLRStr($filedName, '_', 'rightr');
           if (!base::isEmpty($comment))
@@ -602,7 +603,27 @@ namespace jtbc {
                 $fieldFormatLineTips = str_replace('{$tips}', base::htmlEncode($currentFieldTips), $fieldFormatLineTips);
                 $fieldFormatLine .= $fieldFormatLineTips;
               }
-              if ($mode == 0) $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', '', $fieldFormatLine);
+              if ($mode == 0)
+              {
+                $bindDefault = true;
+                if (base::isEmpty($filedDefault)) $bindDefault = false;
+                else
+                {
+                  if (array_key_exists('fieldBindDefault', $commentAry))
+                  {
+                    $fieldBindDefault = base::getString($commentAry['fieldBindDefault']);
+                    if ($fieldBindDefault == 'false') $bindDefault = false;
+                  }
+                }
+                if ($bindDefault == false)
+                {
+                  $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', '', $fieldFormatLine);
+                }
+                else
+                {
+                  $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', base::htmlEncode($filedDefault), $fieldFormatLine);
+                }
+              }
               $currentFieldHideMode = base::getNum(@$commentAry['fieldHideMode'], -1);
               if ($currentFieldHideMode != $mode) $tmpstr .= $fieldFormatLine;
             }
