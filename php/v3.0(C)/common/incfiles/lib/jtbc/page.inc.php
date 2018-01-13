@@ -22,6 +22,7 @@ namespace jtbc {
         $db -> dbUsername = DB_USERNAME;
         $db -> dbPassword = DB_PASSWORD;
         $db -> dbDatabase = DB_DATABASE;
+        $db -> dbStructureCache = DB_STRUCTURE_CACHE;
         $db -> init();
         if ($db -> errStatus != 0) $db = null;
         else self::$db = $db;

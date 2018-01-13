@@ -12,6 +12,7 @@ namespace jtbc {
     public $dbUsername;
     public $dbPassword;
     public $dbDatabase;
+    public $dbStructureCache = false;
     public $errStatus = 0;
     public $errMessage;
     public $lastInsertId;
@@ -69,16 +70,30 @@ namespace jtbc {
     public function desc($argTable)
     {
       $table = $argTable;
-      $query = $this -> query('desc ' . $table);
-      $desc = $query -> fetchAll(PDO::FETCH_ASSOC);
+      $desc = null;
+      $cacheName = 'db_structure_desc_' . $table;
+      if ($this -> dbStructureCache == true) $desc = cache::get($cacheName);
+      if (empty($desc))
+      {
+        $query = $this -> query('desc ' . $table);
+        $desc = $query -> fetchAll(PDO::FETCH_ASSOC);
+        if ($this -> dbStructureCache == true) @cache::put($cacheName, $desc);
+      }
       return $desc;
     }
 
     public function showFullColumns($argTable)
     {
       $table = $argTable;
-      $query = $this -> query('show full columns from ' . $table);
-      $fullColumns = $query -> fetchAll(PDO::FETCH_ASSOC);
+      $fullColumns = null;
+      $cacheName = 'db_structure_fullcolumns_' . $table;
+      if ($this -> dbStructureCache == true) $fullColumns = cache::get($cacheName);
+      if (empty($fullColumns))
+      {
+        $query = $this -> query('show full columns from ' . $table);
+        $fullColumns = $query -> fetchAll(PDO::FETCH_ASSOC);
+        if ($this -> dbStructureCache == true) @cache::put($cacheName, $fullColumns);
+      }
       return $fullColumns;
     }
   }
