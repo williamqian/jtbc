@@ -621,6 +621,9 @@ namespace jtbc {
                 }
                 else
                 {
+                  if ($filedDefault == '$NOW') $filedDefault = base::getDateTime();
+                  else if ($filedDefault == '$CURRENT_TIMESTAMP') $filedDefault = strtotime(base::getDateTime());
+                  else if ($filedDefault == '$REMOTE_IP') $filedDefault = request::getRemortIP();
                   $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', base::htmlEncode($filedDefault), $fieldFormatLine);
                 }
               }
