@@ -350,7 +350,7 @@ namespace jtbc {
           break;
       }
       $max = strlen($chars) - 1;
-      for($i = 0; $i < $length; $i++) 
+      for($i = 0; $i < $length; $i ++)
       {
         $tmpstr .= $chars[rand(0, $max)];
       }

@@ -624,6 +624,13 @@ namespace jtbc {
                   if ($filedDefault == '$NOW') $filedDefault = base::getDateTime();
                   else if ($filedDefault == '$CURRENT_TIMESTAMP') $filedDefault = strtotime(base::getDateTime());
                   else if ($filedDefault == '$REMOTE_IP') $filedDefault = request::getRemortIP();
+                  else if ($filedDefault == '$RANDOM_STRING') $filedDefault = base::getRandomString();
+                  else if ($filedDefault == '$RANDOM_STRING_8') $filedDefault = base::getRandomString(8);
+                  else if ($filedDefault == '$RANDOM_STRING_16') $filedDefault = base::getRandomString(16);
+                  else if ($filedDefault == '$RANDOM_STRING_32') $filedDefault = base::getRandomString(32);
+                  else if ($filedDefault == '$RANDOM_STRING_N4') $filedDefault = base::getRandomString(4, 'number');
+                  else if ($filedDefault == '$RANDOM_STRING_N6') $filedDefault = base::getRandomString(6, 'number');
+                  else if ($filedDefault == '$RANDOM_STRING_N8') $filedDefault = base::getRandomString(8, 'number');
                   $fieldFormatLine = str_replace('{$' . $simplifiedFiledName . '}', base::htmlEncode($filedDefault), $fieldFormatLine);
                 }
               }
