@@ -103,6 +103,10 @@
       <zh-cn><![CDATA[领导]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[linkurl]]></name>
+      <zh-cn><![CDATA[链接地址]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[mobile]]></name>
       <zh-cn><![CDATA[手机号]]></zh-cn>
     </item>

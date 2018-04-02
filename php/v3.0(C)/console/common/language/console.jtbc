@@ -107,6 +107,10 @@
       <zh-cn><![CDATA[简介不能为空]]></zh-cn>
     </item>
     <item>
+      <name><![CDATA[text-auto-request-error-linkurl]]></name>
+      <zh-cn><![CDATA[链接地址不能为空]]></zh-cn>
+    </item>
+    <item>
       <name><![CDATA[text-auto-request-error-mobile]]></name>
       <zh-cn><![CDATA[手机号码格式不正确]]></zh-cn>
     </item>
@@ -132,7 +136,7 @@
     </item>
     <item>
       <name><![CDATA[text-auto-request-error-url]]></name>
-      <zh-cn><![CDATA[链接地址不能为空]]></zh-cn>
+      <zh-cn><![CDATA[网址不能为空]]></zh-cn>
     </item>
     <item>
       <name><![CDATA[text-auto-request-error-username]]></name>
