@@ -37,6 +37,15 @@ namespace jtbc {
       }
       return $bool;
     }
+    public static function isDateTime($argStrers)
+    {
+        $bool = false;
+        $strers = $argStrers;
+        if (date('Y-m-d H:i:s', strtotime($strers)) == $strers) {
+            $bool = true;
+        }
+        return $bool;
+    }
   }
 }
 //******************************//
